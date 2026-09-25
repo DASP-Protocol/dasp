@@ -1,4 +1,5 @@
 :root {
+  --vp-layout-top-height: 36px;
   --vp-c-brand-1: #315da8;
   --vp-c-brand-2: #274e90;
   --vp-c-brand-3: #315da8;
@@ -132,6 +133,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
   .start-section { align-items: flex-start; flex-direction: column; padding: 40px 0; }
 }
 @media (max-width: 480px) {
+  :root { --vp-layout-top-height: 56px; }
   .dasp-home { padding: 0 24px; }
   .dasp-home .intro { padding-top: 36px; }
   .dasp-home .hero-copy h1 { font-size: 39px; }

@@ -6,6 +6,7 @@ export default defineConfig({
   base: '/dasp/',
   cleanUrls: false,
   lastUpdated: true,
+  scrollOffset: { selector: '.draft-ribbon', padding: 128 },
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/dasp/brand/dasp-favicon.svg' }],
     ['link', { rel: 'icon', sizes: '32x32', type: 'image/png', href: '/dasp/brand/dasp-icon-32.png' }],
@@ -46,7 +47,8 @@ export default defineConfig({
       { text: 'Build', link: '/build/' },
       { text: 'Specification', link: '/specification/' },
       { text: 'Conformance', link: '/conformance/' },
-      { text: 'Reference', link: '/reference/' }
+      { text: 'Reference', link: '/reference/' },
+      { text: 'About', link: '/project/about' }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/DASP-Protocol/dasp' }],
     search: { provider: 'local' },
