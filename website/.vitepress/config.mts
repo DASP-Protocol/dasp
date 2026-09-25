@@ -8,7 +8,8 @@ export default defineConfig({
   lastUpdated: true,
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/dasp/mark.svg' }],
-    ['meta', { name: 'theme-color', content: '#f6f5ef' }]
+    ['meta', { name: 'theme-color', content: '#f7f8fa', media: '(prefers-color-scheme: light)' }],
+    ['meta', { name: 'theme-color', content: '#151b24', media: '(prefers-color-scheme: dark)' }]
   ],
   themeConfig: {
     logo: '/mark.svg',
