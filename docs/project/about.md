@@ -16,6 +16,8 @@ DASP carries these requirements into a generic CloudEvents-based specification. 
 
 Elixir and TypeScript are the first experimental client packages. The project keeps the specification, shared checks, documentation site, and client work in one repository.
 
+The [Elixir client](../../clients/elixir/README.md) is built on [Jido Signal](https://github.com/agentjido/jido_signal), Jido's event envelope library. It uses Jido signals in Elixir and the generic DASP CloudEvents format on the wire. This library dependency is not a protocol requirement.
+
 ## Open for feedback
 
 DASP is a working draft. Feedback on the model, recovery rules, examples, and missing use cases will help shape it.

@@ -10,14 +10,14 @@ defmodule DASP.Checkpoint do
   @doc "Create a checkpoint from a view whose host context has been authenticated."
   def from_view(view, validate_profile) do
     Wire.protect(fn ->
-      event = view |> Wire.encode!() |> Wire.decode!()
-      if event["type"] != "dasp.view.v1", do: fail(:checkpoint, "A view is required.")
+      event = Wire.to_signal!(view)
+      if event.type != "dasp.view.v1", do: fail(:checkpoint, "A view is required.")
       Client.profile!(validate_profile, event)
-      d = event["data"]
+      d = event.data
 
       %{
         "session" => Map.take(d, ["session_id", "actor_id", "profile"]),
-        "host_source" => event["source"],
+        "host_source" => event.source,
         "cursor" => d["cursor"],
         "state" => d["state"],
         "evidence" => %{}
@@ -33,17 +33,21 @@ defmodule DASP.Checkpoint do
          do: fail(:checkpoint, "Invalid applied cursor.")
 
       Enum.reduce(events, checkpoint, fn input, current ->
-        event = input |> Wire.encode!() |> Wire.decode!()
-        d = event["data"]
+        event = Wire.to_signal!(input)
+        d = event.data
 
-        if event["type"] != "dasp.update.v1" or event["source"] != current["host_source"] or
+        if event.type != "dasp.update.v1" or event.source != current["host_source"] or
              d["session_id"] != current["session"]["session_id"],
            do: fail(:checkpoint, "Expected an update from the checkpoint session and host.")
 
         Client.profile!(validate_profile, event)
         sequence = d["sequence"]
         key = Integer.to_string(sequence)
-        proof = Map.take(event, ["source", "id", "type", "data", "time", "subject", "dataschema"])
+
+        proof =
+          event
+          |> Wire.to_map!()
+          |> Map.take(["source", "id", "type", "data", "time", "subject", "dataschema"])
 
         cond do
           sequence <= current["cursor"] ->

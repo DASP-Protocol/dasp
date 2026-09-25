@@ -24,7 +24,7 @@ defmodule DASP.ClientTest do
          |> Jason.decode!()
   defp step(id), do: Enum.find(@trace["steps"], &(&1["id"] == id))["event"]
   defp session, do: step("open")["data"]
-  defp profile(_), do: true
+  defp profile(%Jido.Signal{}), do: true
 
   defp client(transport, opts \\ []) do
     {:ok, c} =
@@ -51,8 +51,10 @@ defmodule DASP.ClientTest do
   defp submit(c),
     do: Client.submit(c, session(), Map.drop(step("command")["data"], ["session_id"]))
 
-  defp reduce(state, %{"data" => %{"kind" => "application", "payload" => %{"data" => data}}}),
-    do: Map.merge(state, data)
+  defp reduce(state, %Jido.Signal{
+         data: %{"kind" => "application", "payload" => %{"data" => data}}
+       }),
+       do: Map.merge(state, data)
 
   defp reduce(state, _), do: state
 
@@ -70,7 +72,8 @@ defmodule DASP.ClientTest do
     test "valid draft event #{index}" do
       event = unquote(Macro.escape(event))
       assert {:ok, json} = Wire.encode(event)
-      assert {:ok, ^event} = Wire.decode(json)
+      assert {:ok, %Jido.Signal{} = signal} = Wire.decode(json)
+      assert {:ok, ^event} = Wire.to_map(signal)
     end
   end
 
@@ -107,7 +110,7 @@ defmodule DASP.ClientTest do
         |> String.replace(~s("amount":3), ~s("amount":) <> token)
 
       assert {:ok, event} = Wire.decode(text)
-      assert event["data"]["input"]["amount"] == 3
+      assert event.data["input"]["amount"] == 3
     end
   end
 
@@ -155,7 +158,7 @@ defmodule DASP.ClientTest do
       end)
 
     assert {:error, %DASP.Error{code: :transport}} = submit(c)
-    assert {:ok, %{"data" => %{"disposition" => "duplicate"} = data}} = submit(c)
+    assert {:ok, %Jido.Signal{data: %{"disposition" => "duplicate"} = data}} = submit(c)
     refute Map.has_key?(data, "outcome")
     [first, second] = Agent.get(state, & &1)
     assert first["data"] == second["data"]
@@ -165,10 +168,10 @@ defmodule DASP.ClientTest do
   end
 
   test "open, view, and outcome are distinct APIs" do
-    assert {:ok, %{"data" => %{"cursor" => 0}}} =
+    assert {:ok, %Jido.Signal{data: %{"cursor" => 0}}} =
              Client.open(client(fn w, _ -> reply(w, "opened") end), session())
 
-    assert {:ok, %{"data" => %{"state" => "settled"}}} =
+    assert {:ok, %Jido.Signal{data: %{"state" => "settled"}}} =
              Client.read_outcome(
                client(fn w, _ -> reply(w, "outcome") end),
                session(),
@@ -182,7 +185,8 @@ defmodule DASP.ClientTest do
         {:ok, event |> put_in(["data", "state"], %{"value" => 0}) |> Jason.encode!()}
       end)
 
-    assert {:ok, %{"data" => %{"state" => %{"value" => 0}}}} = Client.read_view(c, session())
+    assert {:ok, %Jido.Signal{data: %{"state" => %{"value" => 0}}}} =
+             Client.read_view(c, session())
   end
 
   test "timeout stops the adapter without retrying or reporting rejection" do
@@ -227,7 +231,7 @@ defmodule DASP.ClientTest do
 
     c =
       client(fn wire, _ -> reply(wire, "page-two") end,
-        validate_profile: &(&1["type"] != "dasp.update.v1")
+        validate_profile: &(&1.type != "dasp.update.v1")
       )
 
     assert {:error, %DASP.Error{code: :profile}} = Client.read_updates(c, session(), 0)
@@ -284,13 +288,13 @@ defmodule DASP.ClientTest do
       assert {:ok, page} = Client.read_updates(c, session(), start["cursor"])
 
       assert {:ok, saved} =
-               Checkpoint.apply_updates(start, page["data"]["events"], &reduce/2, &profile/1)
+               Checkpoint.apply_updates(start, page.data["events"], &reduce/2, &profile/1)
 
       assert Map.take(saved, ["cursor", "state"]) == consumer["expected"]
       restored = saved |> Jason.encode!() |> Jason.decode!()
 
       assert {:ok, ^restored} =
-               Checkpoint.apply_updates(restored, page["data"]["events"], &reduce/2, &profile/1)
+               Checkpoint.apply_updates(restored, page.data["events"], &reduce/2, &profile/1)
     end
   end
 

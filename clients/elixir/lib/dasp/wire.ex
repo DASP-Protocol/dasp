@@ -1,30 +1,50 @@
 defmodule DASP.Wire do
   @moduledoc """
-  Validate structured CloudEvents against DASP draft-01.
-  No remote schemas are loaded. Decoded keys remain strings.
-  Profile validation is a separate application responsibility.
+  Convert between DASP draft-01 JSON and Jido.Signal.
+
+  The wire version is always "1.0". Jido Signal 2.3 uses "1.0.2" internally.
+  DASP extensions remain scalar values in signal.extensions. Data keys remain
+  strings. Use this codec for DASP instead of the generic Jido serializer.
+  No remote schemas are loaded. Profile validation is separate.
   """
+  alias Jido.Signal
   import DASP.Error, only: [fail: 2]
+  @fields ~w(specversion id source type datacontenttype data subject time dataschema)a
+  @wire_fields Enum.map(@fields, &Atom.to_string/1)
   @external_resource Path.expand("../../priv/envelope.schema.json", __DIR__)
   @schema @external_resource
           |> File.read!()
           |> Jason.decode!()
           |> JSV.build!(formats: true, atoms: false)
 
-  @spec decode(binary()) :: {:ok, map()} | {:error, DASP.Error.t()}
+  @spec decode(binary()) :: {:ok, Signal.t()} | {:error, DASP.Error.t()}
   def decode(text), do: protect(fn -> decode!(text) end)
-  @spec encode(map()) :: {:ok, binary()} | {:error, DASP.Error.t()}
+  @spec encode(Signal.t() | map()) :: {:ok, binary()} | {:error, DASP.Error.t()}
   def encode(event), do: protect(fn -> encode!(event) end)
+
+  @doc "Validate an event and return a Jido.Signal without changing event identity."
+  @spec to_signal(Signal.t() | map()) :: {:ok, Signal.t()} | {:error, DASP.Error.t()}
+  def to_signal(event), do: protect(fn -> to_signal!(event) end)
+
+  @doc "Return the validated DASP wire map for a signal or event map."
+  @spec to_map(Signal.t() | map()) :: {:ok, map()} | {:error, DASP.Error.t()}
+  def to_map(event), do: protect(fn -> to_map!(event) end)
 
   @doc false
   def decode!(text) do
-    event = DASP.JSON.decode!(text)
+    event = text |> DASP.JSON.decode!() |> validate!()
+
+    if event["type"] == "dasp.update.v1" and byte_size(text) > 65_536,
+      do: fail(:invalid_event, "Update exceeds 65536 bytes.")
+
+    build_signal!(event)
+  end
+
+  defp validate!(event) do
+    DASP.JSON.encode!(event)
 
     case JSV.validate(event, @schema, cast: false) do
       {:ok, _} ->
-        if event["type"] == "dasp.update.v1" and byte_size(text) > 65_536,
-          do: fail(:invalid_event, "Update exceeds 65536 bytes.")
-
         limits!(event)
         event
 
@@ -34,10 +54,48 @@ defmodule DASP.Wire do
   end
 
   @doc false
-  def encode!(event) do
-    text = DASP.JSON.encode!(event)
-    decode!(text)
-    text
+  def encode!(event), do: event |> to_map!() |> DASP.JSON.encode!()
+
+  @doc false
+  def to_signal!(event), do: event |> to_map!() |> build_signal!()
+
+  @doc false
+  def to_map!(%Signal{} = signal) do
+    if signal.specversion not in ["1.0", "1.0.2"] or signal.jido_dispatch != nil,
+      do: fail(:invalid_event, "Unsupported signal version or local dispatch metadata.")
+
+    if not is_map(signal.extensions) or is_struct(signal.extensions) or
+         Enum.any?(@wire_fields, &Map.has_key?(signal.extensions, &1)),
+       do: fail(:invalid_event, "Signal extensions must not replace core attributes.")
+
+    core =
+      Enum.reduce(@fields, %{}, fn key, acc ->
+        case Map.fetch!(signal, key) do
+          nil -> acc
+          value -> Map.put(acc, Atom.to_string(key), value)
+        end
+      end)
+
+    core |> Map.put("specversion", "1.0") |> Map.merge(signal.extensions) |> validate!()
+  end
+
+  def to_map!(event), do: validate!(event)
+
+  defp build_signal!(event) do
+    # Keep DASP scalar extensions out of the global Jido extension registry.
+    # from_map/1 also preserves missing time instead of generating a timestamp.
+    extensions = Map.drop(event, @wire_fields)
+
+    attrs =
+      event
+      |> Map.take(@wire_fields)
+      |> Map.put("specversion", "1.0.2")
+      |> Map.put("extensions", extensions)
+
+    case Signal.from_map(attrs) do
+      {:ok, signal} -> %{signal | extensions: extensions}
+      {:error, _} -> fail(:invalid_event, "Cannot represent this event as a Jido.Signal.")
+    end
   end
 
   @doc false

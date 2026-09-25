@@ -6,6 +6,8 @@ For agent builders connecting applications, tools, and automation to durable act
 
 **Status: draft-01, a working review draft.** The core can change. Experimental Elixir and TypeScript client packages are available in this repository. No transport binding or production profile is released.
 
+The [Elixir client](clients/elixir/README.md) is built on [Jido Signal](https://github.com/agentjido/jido_signal). This is an implementation dependency; the DASP specification and TypeScript client remain independent of Jido.
+
 [Read the guide](https://dasp-protocol.github.io/dasp/guide/) · [Specification](https://dasp-protocol.github.io/dasp/specification/) · [Conformance](https://dasp-protocol.github.io/dasp/conformance/)
 
 ## What DASP defines

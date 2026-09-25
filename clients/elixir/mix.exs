@@ -13,7 +13,12 @@ defmodule DASP.Client.MixProject do
         licenses: [],
         links: %{"GitHub" => "https://github.com/DASP-Protocol/dasp"}
       ],
-      deps: [{:jason, "~> 1.4"}, {:jsv, "~> 0.25.0"}, {:decimal, "~> 3.0"}]
+      deps: [
+        {:jido_signal, "~> 2.3.0"},
+        {:jason, "~> 1.4"},
+        {:jsv, "~> 0.25.0"},
+        {:decimal, "~> 3.0"}
+      ]
     ]
   end
 

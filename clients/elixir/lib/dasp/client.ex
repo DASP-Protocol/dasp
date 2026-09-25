@@ -1,8 +1,8 @@
 defmodule DASP.Client do
   @moduledoc """
-  Transport-independent DASP draft-01 client.
+  Transport-independent DASP draft-01 client built on Jido Signal.
 
-  Each call returns a validated event or a DASP.Error. submit/3 returns
+  Each call returns a validated Jido.Signal or a DASP.Error. submit/3 returns
   an admission receipt. Use read_outcome/3 for the saved outcome.
   There are no automatic retries. Save command IDs and their data before submission.
 
@@ -93,18 +93,20 @@ defmodule DASP.Client do
         "data" => data
       }
 
+      event = Wire.to_signal!(event)
       wire = Wire.encode!(event)
       profile!(client.validate_profile, event)
       response = exchange!(client, wire) |> Wire.decode!()
 
-      if response["source"] != client.host_source or response["requestid"] != event["requestid"],
-        do: fail(:correlation, "Reply source or request ID differs from the request context.")
+      if response.source != client.host_source or
+           response.extensions["requestid"] != event.extensions["requestid"],
+         do: fail(:correlation, "Reply source or request ID differs from the request context.")
 
-      if response["type"] == "dasp.failure.v1",
-        do: fail(:remote_failure, response["data"]["error"]["message"], response["data"]["error"])
+      if response.type == "dasp.failure.v1",
+        do: fail(:remote_failure, response.data["error"]["message"], response.data["error"])
 
-      if response["type"] != "dasp.#{reply}.v1", do: fail(:correlation, "Unexpected reply type.")
-      d = response["data"]
+      if response.type != "dasp.#{reply}.v1", do: fail(:correlation, "Unexpected reply type.")
+      d = response.data
 
       if d["session_id"] != session["session_id"] or
            (Map.has_key?(data, "command_id") and d["command_id"] != data["command_id"]) or
@@ -119,7 +121,7 @@ defmodule DASP.Client do
           if update["source"] != client.host_source,
             do: fail(:correlation, "Update producer differs from the host context.")
 
-          profile!(client.validate_profile, update)
+          profile!(client.validate_profile, Wire.to_signal!(update))
         end)
       end
 
@@ -134,7 +136,7 @@ defmodule DASP.Client do
   end
 
   @doc false
-  def page!(%{"data" => d}, after_cursor, limit) do
+  def page!(%Jido.Signal{data: d}, after_cursor, limit) do
     if d["after"] != after_cursor or d["after"] > d["head"] or length(d["events"]) > limit or
          (d["after"] < d["head"] and d["events"] == []),
        do: fail(:replay, "Invalid replay page bounds.")
@@ -202,7 +204,7 @@ defmodule DASP.Client do
     end
   end
 
-  defp id, do: :crypto.strong_rand_bytes(16) |> Base.encode16(case: :lower)
+  defp id, do: Jido.Signal.ID.generate!()
   defp uri?(value) when is_binary(value), do: Regex.match?(~r/^[a-z][a-z0-9+.-]*:\S+$/i, value)
   defp uri?(_), do: false
 end

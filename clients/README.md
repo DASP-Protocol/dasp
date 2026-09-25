@@ -22,7 +22,9 @@ A receipt reports admission. It does not report completion. A timeout does not p
 
 ## Elixir
 
-See the [Elixir package guide](elixir/README.md) for installation, API calls, errors, and recovery. Messages use maps with string keys. The package does not create atoms from message fields.
+The **Elixir DASP client is built on [Jido Signal](https://github.com/agentjido/jido_signal)** and depends on `jido_signal ~> 2.3.0`. Requests, replies, and profile callbacks use `%Jido.Signal{}`. The DASP codec preserves the generic CloudEvents wire format. Payloads and saved checkpoints use string-key maps.
+
+See the [Elixir package guide](elixir/README.md) for installation, API calls, errors, and recovery. The package does not create atoms from message fields. Jido Signal is an Elixir implementation dependency; other DASP implementations do not require it.
 
 The transport callback runs in a monitored worker. A deadline stops that worker. It does not cancel admitted server work.
 

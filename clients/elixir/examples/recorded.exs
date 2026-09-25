@@ -4,13 +4,13 @@
     source: "urn:example:client:one",
     host_source: "urn:example:host:one",
     validate_profile: fn
-      %{
-        "type" => "dasp.command.v1",
-        "data" => %{"name" => "counter.add", "input" => %{"amount" => amount} = input}
+      %Jido.Signal{
+        type: "dasp.command.v1",
+        data: %{"name" => "counter.add", "input" => %{"amount" => amount} = input}
       } ->
         is_integer(amount) and map_size(input) == 1
 
-      %{"type" => "dasp.receipt.v1"} ->
+      %Jido.Signal{type: "dasp.receipt.v1"} ->
         true
 
       _ ->
@@ -25,10 +25,10 @@
         "source" => "urn:example:host:one",
         "type" => "dasp.receipt.v1",
         "datacontenttype" => "application/json",
-        "requestid" => request["requestid"],
+        "requestid" => request.extensions["requestid"],
         "data" => %{
-          "session_id" => request["data"]["session_id"],
-          "command_id" => request["data"]["command_id"],
+          "session_id" => request.data["session_id"],
+          "command_id" => request.data["command_id"],
           "disposition" => "accepted",
           "admission_sequence" => 1,
           "error" => nil
@@ -43,7 +43,7 @@ session = %{
   "profile" => %{"id" => "urn:example:dasp:counter", "version" => "1"}
 }
 
-{:ok, %{"data" => %{"disposition" => "accepted"}}} =
+{:ok, %Jido.Signal{data: %{"disposition" => "accepted"}}} =
   DASP.Client.submit(client, session, %{
     "command_id" => "command-add-1",
     "name" => "counter.add",
