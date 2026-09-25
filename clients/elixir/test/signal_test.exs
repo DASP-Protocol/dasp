@@ -110,7 +110,10 @@ defmodule DASP.SignalTest do
                 "disposition" => "accepted",
                 "admission_sequence" => 1,
                 "error" => nil
-              }, source: "urn:host:one", extensions: %{"requestid" => request["requestid"]})
+              },
+              source: "urn:host:one",
+              extensions: %{"requestid" => request["requestid"]}
+            )
 
           Wire.encode(signal)
         end
