@@ -1,0 +1,17 @@
+# Local upstream reference checkout
+/reference/agent-host-protocol/
+.DS_Store
+# Client build output
+**/node_modules/
+**/dist/
+**/_build/
+**/deps/
+
+# Documentation site output and generated source pages
+/website/.vitepress/cache/
+/website/protocol/
+/website/clients/
+/website/project/
+/website/conformance/
+/website/source/
+**/__pycache__/

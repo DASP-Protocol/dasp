@@ -1,0 +1,74 @@
+{
+  "algorithm": "seigyo-sha256-file-index-v1",
+  "binding": "phoenix-channel-websocket",
+  "digest": "772c344d263f7cf35ba49c01040832192e75324001e75ad5409f57ae78aacb56",
+  "files": [
+    {
+      "bytes": 23355,
+      "path": "cases.json",
+      "sha256": "453b73e30cdee0c1f010433f48060df87e5f7124a2ebc97b0ebe1406dd81326d"
+    },
+    {
+      "bytes": 4341,
+      "path": "docs/adr/0019-client-websocket-wire.md",
+      "sha256": "3abfdfe97aaf16e5b45381e59f544a2cd27a86fd91b78c91be2c678f4bcd04f4"
+    },
+    {
+      "bytes": 10301,
+      "path": "docs/seigyo/coding-v1-baseline.md",
+      "sha256": "00ef47d22375ab23171f9ae0862183e17cfdea827081ef4ee768b48d66c2828a"
+    },
+    {
+      "bytes": 18006,
+      "path": "docs/seigyo/conformance.md",
+      "sha256": "7438639143c1f85cb28c368ade64d6a4cc0bb8a5f6e4d721e95d9dd97369ada9"
+    },
+    {
+      "bytes": 12201,
+      "path": "docs/seigyo/delivery.md",
+      "sha256": "bc1704bc9b0e252cd9cad73adf56bf78d3039aa7ffca20e039b8bcaf3c4345bb"
+    },
+    {
+      "bytes": 15235,
+      "path": "docs/seigyo/model.md",
+      "sha256": "644bcb4078c525639344210ab312024a86c37f2a8d4808759ff77a3a2c4d839f"
+    },
+    {
+      "bytes": 4683,
+      "path": "docs/seigyo/release-policy.md",
+      "sha256": "6b5071b6ad601d3a4922975569201eec76e421d7a489079b78816b2f743ff72b"
+    },
+    {
+      "bytes": 43668,
+      "path": "docs/seigyo/signals.md",
+      "sha256": "8b0044c159d0181eff19311e2025d65703f60b81dc7486516a049579b684e167"
+    },
+    {
+      "bytes": 7715,
+      "path": "docs/seigyo/wire.md",
+      "sha256": "722eb357da421a9e87deb7e8ec8352d6b42a783d498aa5a52839da38b5fcbb45"
+    },
+    {
+      "bytes": 2230,
+      "path": "frames.json",
+      "sha256": "efe482a7b37d4d05da5781e4750e051664000d885e45280dbb9143d4e140dc6b"
+    },
+    {
+      "bytes": 26070,
+      "path": "operations.json",
+      "sha256": "0f5af55a007cfa1088b5af9aab5e4172e79a061b9d888418783c6b056c50138c"
+    },
+    {
+      "bytes": 192794,
+      "path": "schemas.json",
+      "sha256": "b57a089575938035a82aa5b3af97bd90771371260b277849181ce527d87057d7"
+    },
+    {
+      "bytes": 11307,
+      "path": "vectors.json",
+      "sha256": "595166ed895a0942cde2dd454ff1277b5bb2421cf85ef02536ef753e5fa5408a"
+    }
+  ],
+  "profile": "coding",
+  "protocol": 1
+}

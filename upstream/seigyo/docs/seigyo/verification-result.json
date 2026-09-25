@@ -1,0 +1,19 @@
+{
+  "binding": "phoenix-channel-websocket",
+  "contract_digest": "772c344d263f7cf35ba49c01040832192e75324001e75ad5409f57ae78aacb56",
+  "failures": [],
+  "implementation_revision": "8bc32eafd4ea91f199c0fe24a74712ea4016bfb5+working-tree",
+  "passes": [
+    "initialize",
+    "open",
+    "submit",
+    "reconnect",
+    "duplicate",
+    "replay",
+    "result",
+    "immutable_result"
+  ],
+  "profile": "coding",
+  "scope": "second-language journey",
+  "skips": []
+}

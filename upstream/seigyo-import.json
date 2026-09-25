@@ -1,0 +1,921 @@
+{
+  "source": "https://github.com/mikehostetler/jido_keel.git",
+  "local_source": "/Users/mhostetler/Source/Jido/proj_jido_core/jido_code",
+  "revision": "ce19eaad40002f0c80e4d71a4c89fea281c7959e",
+  "branch": "main",
+  "local_commits_ahead_of_origin": 2,
+  "import_type": "Seigyo protocol subset; original relative paths and file bytes preserved",
+  "license_note": "No tracked LICENSE or NOTICE file was found in this source revision. Original source notices are preserved; no new license is assigned.",
+  "files": [
+    {
+      "path": "apps/jido_code_acceptance/scripts/seigyo_socket.py",
+      "bytes": 5983,
+      "sha256": "fa24423ed7c164e9da8710ced85b2c004e31f97fa906bd3fcbadbd4a69e81555"
+    },
+    {
+      "path": "apps/jido_code_acceptance/scripts/seigyo_v1.py",
+      "bytes": 11818,
+      "sha256": "648b360cdeb60ec6628bdd193eea7121ac4ca4dadbae7aa55576ebdd864961d4"
+    },
+    {
+      "path": "apps/jido_code_acceptance/scripts/test_seigyo_socket.py",
+      "bytes": 2240,
+      "sha256": "3e094cec18bda3d18768ace08043d4f6bdf67fdf81ae1759da658e390c2bad30"
+    },
+    {
+      "path": "apps/jido_code_acceptance/scripts/test_seigyo_v1.py",
+      "bytes": 10048,
+      "sha256": "7493c26bce14b885eb0f9751d99c4e006f96c7275c8f19551fad4fccb493c6ed"
+    },
+    {
+      "path": "apps/jido_code_acceptance/scripts/verify_contract.py",
+      "bytes": 2543,
+      "sha256": "243a2d337afa89d1deac5808b8c15277c347f0b25ae95fa61465a8b20b8bb980"
+    },
+    {
+      "path": "apps/jido_code_acceptance/scripts/verify_endpoint.py",
+      "bytes": 8851,
+      "sha256": "35fc6a35db1dfa12347b5f854587ba8c5b8c6e65db10a1507494e1f199f677da"
+    },
+    {
+      "path": "apps/jido_seigyo/.formatter.exs",
+      "bytes": 97,
+      "sha256": "a46ecd2cb12fd54c0cf0928c72fb10bef329b3f72b49df9bef621c3370734bc5"
+    },
+    {
+      "path": "apps/jido_seigyo/.gitignore",
+      "bytes": 553,
+      "sha256": "baad8e4260ad913f6b0310e3fc172aedcd301dc5cd6f68fda97b3cf9892120e5"
+    },
+    {
+      "path": "apps/jido_seigyo/README.md",
+      "bytes": 21302,
+      "sha256": "a9e4c20995a4806e2388d9e90a35328dd5a2bab2c287eea311929d9a52b8efa6"
+    },
+    {
+      "path": "apps/jido_seigyo/examples/standalone/README.md",
+      "bytes": 1334,
+      "sha256": "8f16e6117bbb9691cfeb4c7231f19fd7297a28c206e2c1785fddfd09246bab4a"
+    },
+    {
+      "path": "apps/jido_seigyo/examples/standalone/client.exs",
+      "bytes": 1847,
+      "sha256": "3e5bf032ae2ad420acb4bec862a61d62553479f5d34d3f883be2b87a9f13791b"
+    },
+    {
+      "path": "apps/jido_seigyo/examples/standalone/mix.exs",
+      "bytes": 411,
+      "sha256": "ef7fcd2b8f463c315a9284230635dcd9a7da82089d984ef1c73b3e2fa025b3d0"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo.ex",
+      "bytes": 3739,
+      "sha256": "be9f31463ec1ed421210bf336456e32e6f254d9c0e687576163e59893c7ff8fb"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/attachment.ex",
+      "bytes": 1464,
+      "sha256": "1068d8dec9ca73da8a0e09d614301e751249b4548eff639044d64e6e179a2304"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/attachment_begin.ex",
+      "bytes": 1056,
+      "sha256": "f85b4776bf9c786054d26d86ca80824442bb42ee872c941ee5f148621c052016"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/attachment_chunk.ex",
+      "bytes": 704,
+      "sha256": "9882a3ad9b074b1d1705adcbac847ac8c8b0e86047c0bb93617d0620df8c5980"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/attachment_commit.ex",
+      "bytes": 468,
+      "sha256": "0d70c1ef89e7e14d07a18407d6691fc1873ed50554c898295372cb21749156aa"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/bundle.ex",
+      "bytes": 2224,
+      "sha256": "cb19c5e97ded8ceb72ef59f5edfc9d268a414360184a073c8647a644aaa8198f"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/catalog.ex",
+      "bytes": 10767,
+      "sha256": "c508bde9e84225877e0e4baf791e87ca5e99a00871868347b2e7fa16ecc4476b"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client.ex",
+      "bytes": 63977,
+      "sha256": "7963f40797e29cb38b63049755fb813059fd75c59535c010dc7b603688c70caf"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/active_command.ex",
+      "bytes": 962,
+      "sha256": "7ed5507fd767cfa6f89724acf1bbe4cd3a68a6bab3651fe679046a1847d5ae46"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/attachment.ex",
+      "bytes": 1653,
+      "sha256": "a8f2988e347f8753ac5d355d4d6c777cc22b5601209bf5dfa1f208e1802acb8f"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/capabilities.ex",
+      "bytes": 3776,
+      "sha256": "50c336540f725e992bf6b49fbe2c5ca7827986cd4b72ff753d57a98a6e9cf84a"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/command_outcome.ex",
+      "bytes": 1050,
+      "sha256": "36c0f2045b614eb180d985b49eda849b03b0130882d3cf3258ab64a6b5815e5a"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/connection.ex",
+      "bytes": 3070,
+      "sha256": "38da4a34551839985365b8df9bd368a3959070a008a6a36a23d8ba148d72424e"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/error.ex",
+      "bytes": 577,
+      "sha256": "d2b5b43be9bd650aaee6fd715173072b9fffe436720d288632ebdb6958fe175c"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/execution_catalog.ex",
+      "bytes": 2970,
+      "sha256": "fd4e2ef88e4131ee90b6abc2f6355ca6286f5c4a4372a79a8bcabfdf0043c09a"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/history_entry.ex",
+      "bytes": 1097,
+      "sha256": "29d617660e7f7e26b84885b0b487a6d29096bd89951083ae89a04b07038712eb"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/history_page.ex",
+      "bytes": 1987,
+      "sha256": "ecaf1324d446115eec3ea981caffcb052fcafbbf00f2d03146d1e95216c391bc"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/message.ex",
+      "bytes": 918,
+      "sha256": "8ce1967fd7ee17d51337f43eee894046a97c58ec051d6c4999283e1ea12ead00"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/progress.ex",
+      "bytes": 2035,
+      "sha256": "6dd44763deca53a865826871ea3c33695e288c4be9368c4f886d915f4019c338"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/receipt.ex",
+      "bytes": 1748,
+      "sha256": "c95be7992c6f3339c8f75a63e851428ce121d7893140bea2e13c2d7918458764"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/receiver_registry.ex",
+      "bytes": 2203,
+      "sha256": "4e065926b85e7b40e7482a517e2f6d760ba0aa56ca022f428fc32b1f655143ff"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/result.ex",
+      "bytes": 5059,
+      "sha256": "89b0189046959b15777683c6b1203b67896a30743447eae67c357a13753361e2"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/resync_required.ex",
+      "bytes": 770,
+      "sha256": "6aacf789b1978d477bb9bbedf9d01efbcea73f474b65bc5e870e764955988d53"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/session.ex",
+      "bytes": 1149,
+      "sha256": "0efd0c44ba1a1152bfc268bf796fe35c446c7f3a82f805801cd46cca8a03ef4a"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/session_config.ex",
+      "bytes": 7389,
+      "sha256": "e1debe4d581be509536a92f5484fbae739558b1a99257ff94990e877f020fd00"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/session_configuration.ex",
+      "bytes": 2760,
+      "sha256": "642658e756148a94dc6c88adb3b3f35ce3e32333e57e347a2fdd75901dbc953d"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/session_configurations_page.ex",
+      "bytes": 1796,
+      "sha256": "6dc0b85257b297afe89bac526140360fc55ef95c7fc7e59905fc199a977e8d09"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/session_forked.ex",
+      "bytes": 1846,
+      "sha256": "36683e849b5b518a504ec79ee328e9f0a227dd554c7508331025057ae64f3850"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/session_member.ex",
+      "bytes": 4398,
+      "sha256": "523c097c7cba20723488ea02bebaca7b7e87fd947f9d2a78046a9cf84ee4beeb"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/tool.ex",
+      "bytes": 1108,
+      "sha256": "e7bfd94d3d8000ed5abdd5e9de0733cd6fdadf15c4e9bab67d9b4608dca6253a"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/trace.ex",
+      "bytes": 2573,
+      "sha256": "3d4adc7d801190ce8bf18b3da1549c74da3fede7fd898e7e006639cf464d35c1"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/turn_controlled.ex",
+      "bytes": 1162,
+      "sha256": "dabcc08c3d25a8d96ff24039116aca6ef5ae9d9f759c7d41ca2e92efb870c483"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/turn_receipt.ex",
+      "bytes": 1434,
+      "sha256": "0c51ae6d4e41bbcdcdd9b01b5e53f8c5fbc902c573ab84f9ddf92157778be59c"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/update.ex",
+      "bytes": 4415,
+      "sha256": "3ddcfd38c7bde65d84b0d8ce1b6841414543158451b21c9fb90d91813ffb1fb5"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/updates_page.ex",
+      "bytes": 2244,
+      "sha256": "893b523f385473773efa4127258dd8a0a765c1320c0ce378f07727d380d420c4"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/value.ex",
+      "bytes": 1382,
+      "sha256": "373946fcd36a51fb0b02460f5a5abbef1d96d224ffd97e06af4979344b2d38e0"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/view.ex",
+      "bytes": 5061,
+      "sha256": "ee5b7fda7b785bc8f08afec6c933caae29b8f7bccc0dc157cdfe9dc40753947c"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/wire.ex",
+      "bytes": 3920,
+      "sha256": "fbcaa68164cf915b7c7ad4c607e9377e902e45a0770ee68d96c363db46f318b8"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/workspace.ex",
+      "bytes": 1154,
+      "sha256": "ac7e6cc796443bc3b83d4a9f013e8cc76a811a454b675b0d0c57b3dbeec309f5"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/workspace_change.ex",
+      "bytes": 900,
+      "sha256": "18c677e271450d9ae3a9bef1ae76f0c902e190386e7ca6357d17c45a9d037b74"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/workspace_changes.ex",
+      "bytes": 1873,
+      "sha256": "99b2221c572f22f8b871b089859846967a4081d3f673866096ec02696a97b5cc"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/workspace_configured.ex",
+      "bytes": 1183,
+      "sha256": "c8159b5071a03e01529d7787b06e9e97bdcecd7170dee8cdedfd92f8d81a0aeb"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/workspace_summary.ex",
+      "bytes": 1069,
+      "sha256": "23505aab40e08c6da126dba297f2fae262f08381bfbc7f77088f50961b111955"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/client/workspaces.ex",
+      "bytes": 1447,
+      "sha256": "e1aac11b598b074c48d0ee3e141ac5f747329fc0b4ecf464a7b343b89823266e"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/command.ex",
+      "bytes": 1240,
+      "sha256": "556ccc50e42bd0c5d19d17bd520583199887fbb3a7e6a9d2e6cddaf29a0d1fe0"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/command_attribution.ex",
+      "bytes": 942,
+      "sha256": "f3ebe45a6693aadf3095e9e85a80473a8c036986ab681549287f51c6a7e94df1"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/context_compacted.ex",
+      "bytes": 1202,
+      "sha256": "f70a06c08ee49a799544b92c3d5e19ebe180189f7dc0399c924409a5cdc95c18"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/contract.ex",
+      "bytes": 16308,
+      "sha256": "20dfa5e9bdb5c69cf4f26cb8c76984df4bef9022bbbef1dc79e979be16570389"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/digest.ex",
+      "bytes": 947,
+      "sha256": "2fdece19ebcd23ce37bf4c83bf901d9225e619050800521c59fd1f4abc4d5b45"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/error.ex",
+      "bytes": 2066,
+      "sha256": "86de493a1c138bb979b8701dae62a97d62366ad45515c8a7a89e8102984bbf2e"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/execution_catalog.ex",
+      "bytes": 2773,
+      "sha256": "ba7c08710fffc9c6501de401be7df7d0b3a15232359da17f6a5dd48238b2b2df"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/failure.ex",
+      "bytes": 241,
+      "sha256": "5482489913744265225e8cf5ba6a55dde4cf0e62126f798dedfb1d42eb0561b6"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/history_entry.ex",
+      "bytes": 763,
+      "sha256": "6f473221804e329c801fee007628d906d89adc6a39a106e1abac51c49037d412"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/history_page.ex",
+      "bytes": 819,
+      "sha256": "b87f9b50e281f55098961bc4abd5fd7ee9c98be6008f47fc9649f5b1865870cf"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/id.ex",
+      "bytes": 1563,
+      "sha256": "a5c150df5e0d79ed9dab2f2be3e367ee36f43fbe9def062de347029f7c353a25"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/initialization.ex",
+      "bytes": 14645,
+      "sha256": "1e2394d8baf42e7508c5ff1366dca0346a68f3d12e713d900ed9ef6f1c4d41e6"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/member_add.ex",
+      "bytes": 854,
+      "sha256": "5f458021ac356bdd8cbcd5cf2d80ca91430a4115860f5554ef3b3c5037fc5680"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/member_changed.ex",
+      "bytes": 1239,
+      "sha256": "8819733a45bdcdb5c3e3e8bb5bc3590efdd331c38684736fee0c5620744f165d"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/member_remove.ex",
+      "bytes": 829,
+      "sha256": "15b43b8d53d1b489c746f27efe5cd19aa837ec523f550a23a47572e734765902"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/member_role_change.ex",
+      "bytes": 892,
+      "sha256": "0426015262a98b7dd8a71eaf45cd80e5e588b6f16a8dd51021ea9b3f75471857"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/membership_update.ex",
+      "bytes": 2120,
+      "sha256": "cf1401d0c0cab471510fe23214416c28f72f25008cd0de6fb9ebed88d62ce503"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/membership_updates_page.ex",
+      "bytes": 1040,
+      "sha256": "14d965e1624f2805511979a26954d7bcf01cc4e4e9a170537615d0629063c1b7"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/progress.ex",
+      "bytes": 1310,
+      "sha256": "a565b93d795c5a06c4ca1acfd1f2bfe999d848eec94f56ff4538c02ae31a7576"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/receipt.ex",
+      "bytes": 1534,
+      "sha256": "9df9a2bdec0d724cc5359130617fcfbff645d4496b1218f091601766a6153436"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/release.ex",
+      "bytes": 10920,
+      "sha256": "387eada9581eecdc624d51bdc6d7619dc33c4e9c13d94befc1bee4534b1f79d6"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/replay.ex",
+      "bytes": 3057,
+      "sha256": "124551572726f1d83e06206e08784feefef64c2c6be607ca1fd3277d314522c1"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/result.ex",
+      "bytes": 5314,
+      "sha256": "0c28cb350f5093079ae34a232a55c8bf3b5b175359d9240a621acba4b926a12d"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/resync_required.ex",
+      "bytes": 455,
+      "sha256": "5d13316104225523d7c6a66a9b6266d19c647013d07c83e9877d1d862561e810"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/schema.ex",
+      "bytes": 2753,
+      "sha256": "29a18dc2c001d6aa56c18f5cf2146d83f98c97543cceeb038f9ecd490b9d44b2"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_config.ex",
+      "bytes": 6218,
+      "sha256": "f562e7dd684d868fffa38da5ca5d674907d86e615c1169b266fd6f38a5b80181"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_configuration.ex",
+      "bytes": 677,
+      "sha256": "a1d9ac7db1baf68463a7ac8951ae213f384ce6c7c87fb87bd58fa22b55bb37cc"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_configurations_page.ex",
+      "bytes": 921,
+      "sha256": "3db12689cbbdd7cb3e720549023aeb1a66c7ce415018343ef36b39a9edd90f88"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_configure.ex",
+      "bytes": 829,
+      "sha256": "8675fb3009159c1e4ad0eeb1447d0aa8cb93f15a1ae3412fc107961134a7ad56"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_configured.ex",
+      "bytes": 1124,
+      "sha256": "6e52d91f5c8c4bbe8be970cf894a66217a92a70c2273163f7c9c80a9a1eb6db6"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_fork.ex",
+      "bytes": 1148,
+      "sha256": "d666c903c2b64a93e26103acbe6a4cad1ef23bea78171bda17468c517f136280"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_forked.ex",
+      "bytes": 1386,
+      "sha256": "7bf7576522079f0adba306c1afaa856ce5062c4da10023c4447e6b9f4add7460"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_member.ex",
+      "bytes": 1006,
+      "sha256": "b713b03b976b67a378848b02ce1706f641ca8897c2441e30c6f360102d459e5b"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_members.ex",
+      "bytes": 731,
+      "sha256": "cf2304a9eac8537734dc110915b729462ce616f2dcaa880ad3bd7590f2ac319d"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_open.ex",
+      "bytes": 595,
+      "sha256": "420d11e22988a909fd7769ca70fd6e138b0092684daf7328ddde8c1ab429ba0c"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/session_opened.ex",
+      "bytes": 655,
+      "sha256": "04c8dff2213d753b490372dc8ae23969769a8344beab614889424673e4575c3e"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/tool.ex",
+      "bytes": 736,
+      "sha256": "2a13df6e6a963e5d66cbaa4ee12c4bc1c6b918003452076d721803b17fb7946f"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/trace.ex",
+      "bytes": 2428,
+      "sha256": "02853f0b9160c73b5b291bb6cea123d4579c6f5d1dfc5bf42e98f729ffa3dfcf"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/turn_cancel.ex",
+      "bytes": 795,
+      "sha256": "a6d0210b83b01e7d68e44d36563916d687c037e9dc3b10feec8ef9dc7222d5ea"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/turn_controlled.ex",
+      "bytes": 1221,
+      "sha256": "ec969225bad2aa7e562abe1764738347e2e3cbb53ad3bb9166ca66621206601e"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/turn_receipt.ex",
+      "bytes": 1639,
+      "sha256": "b4e50c4185e7ba9c64262cc653cfee911c4a1f7687c55f20f9f1e8af2a86787d"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/turn_steer.ex",
+      "bytes": 915,
+      "sha256": "3cca12abb9687813da0b048926460b9b74a9322a57d77b3d7cb80fd1bd4cc405"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/turn_submit.ex",
+      "bytes": 1042,
+      "sha256": "b7791fbb860848675a07e8550c5c119a8822d8ce839a3faad05476fb50036223"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/update.ex",
+      "bytes": 7133,
+      "sha256": "a5b17f20d9ccc075f4bccdbabef1ca7c01a342734d28a1007f0eae7945902ac1"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/updates_page.ex",
+      "bytes": 994,
+      "sha256": "de4cb5c6aee992a2ca950a399063b2d6e3e9b72803847b4bd2735a2d94ada57a"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/value.ex",
+      "bytes": 2539,
+      "sha256": "8f1f4617a5fd407c1e5e64ba75b3d6567e351e1b1ee72a5b0e7d840cd50e17c6"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/view.ex",
+      "bytes": 5554,
+      "sha256": "9f92e7112cddde876c089a85d5566dec64cf9a00a6c5da52113bf8cae13d3c04"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/workspace.ex",
+      "bytes": 1132,
+      "sha256": "8749c29b544d1d027b091ff2dc7fc4950131c5f97fa5c3e098e636ea3b0e04c6"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/workspace_change.ex",
+      "bytes": 510,
+      "sha256": "c58050dfe881be2c4f0f496f0f5aa655c13f3ca70406ae51a2784aa048ca9919"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/workspace_changes.ex",
+      "bytes": 908,
+      "sha256": "29342dc11e69c0db5b16f4766087f77aa3dfcb743f9b96fc6ae4f57c44826874"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/workspace_configure.ex",
+      "bytes": 1135,
+      "sha256": "b09650feb75d4b14e5f8535b6eb498717bbb3e5ee686d4540e20ba84d65aa334"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/workspace_configured.ex",
+      "bytes": 604,
+      "sha256": "f0d05584cca284f8a3595143ea3a714e4b2674329793817739517df0e4ddc4f3"
+    },
+    {
+      "path": "apps/jido_seigyo/lib/jido_seigyo/workspaces.ex",
+      "bytes": 484,
+      "sha256": "44440f3a9aa229a2da3b13257d3f7df924e5b0b9e9c1054984633a4193b6cc1b"
+    },
+    {
+      "path": "apps/jido_seigyo/mix.exs",
+      "bytes": 996,
+      "sha256": "fe87b1607d6b8a856670a0a521909ee61f6c709b2b4210420a6af680b93215e3"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/cases.json",
+      "bytes": 23355,
+      "sha256": "453b73e30cdee0c1f010433f48060df87e5f7124a2ebc97b0ebe1406dd81326d"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/contract.json",
+      "bytes": 2263,
+      "sha256": "fc3e7a6151fd3738bd5501f57da6ce260661b9055161c2801954d1099e4e74c7"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/docs/adr/0019-client-websocket-wire.md",
+      "bytes": 4341,
+      "sha256": "3abfdfe97aaf16e5b45381e59f544a2cd27a86fd91b78c91be2c678f4bcd04f4"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/docs/seigyo/coding-v1-baseline.md",
+      "bytes": 10301,
+      "sha256": "00ef47d22375ab23171f9ae0862183e17cfdea827081ef4ee768b48d66c2828a"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/docs/seigyo/conformance.md",
+      "bytes": 18006,
+      "sha256": "7438639143c1f85cb28c368ade64d6a4cc0bb8a5f6e4d721e95d9dd97369ada9"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/docs/seigyo/delivery.md",
+      "bytes": 12201,
+      "sha256": "bc1704bc9b0e252cd9cad73adf56bf78d3039aa7ffca20e039b8bcaf3c4345bb"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/docs/seigyo/model.md",
+      "bytes": 15235,
+      "sha256": "644bcb4078c525639344210ab312024a86c37f2a8d4808759ff77a3a2c4d839f"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/docs/seigyo/release-policy.md",
+      "bytes": 4683,
+      "sha256": "6b5071b6ad601d3a4922975569201eec76e421d7a489079b78816b2f743ff72b"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/docs/seigyo/signals.md",
+      "bytes": 43668,
+      "sha256": "8b0044c159d0181eff19311e2025d65703f60b81dc7486516a049579b684e167"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/docs/seigyo/wire.md",
+      "bytes": 7715,
+      "sha256": "722eb357da421a9e87deb7e8ec8352d6b42a783d498aa5a52839da38b5fcbb45"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/frames.json",
+      "bytes": 2230,
+      "sha256": "efe482a7b37d4d05da5781e4750e051664000d885e45280dbb9143d4e140dc6b"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/operations.json",
+      "bytes": 26070,
+      "sha256": "0f5af55a007cfa1088b5af9aab5e4172e79a061b9d888418783c6b056c50138c"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/provenance.json",
+      "bytes": 68,
+      "sha256": "36e61b426bc452d62f7a09a94f46b341b1696cba1c99bc6e41fe67f369d4b77d"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/schemas.json",
+      "bytes": 192794,
+      "sha256": "b57a089575938035a82aa5b3af97bd90771371260b277849181ce527d87057d7"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/coding-v1/vectors.json",
+      "bytes": 11307,
+      "sha256": "595166ed895a0942cde2dd454ff1277b5bb2421cf85ef02536ef753e5fa5408a"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/initialization-v1/schemas.json",
+      "bytes": 8365,
+      "sha256": "d88dc4a296c9aa5eaac6842d82c293171e96286c054b08e21e4cc9d555f52845"
+    },
+    {
+      "path": "apps/jido_seigyo/priv/seigyo/replay-v1/vectors.json",
+      "bytes": 8445,
+      "sha256": "4e6a34761ed3a131cecb9e43bd13a2e51ff4aa3eb525eb2c8dcb9a619b3d67bd"
+    },
+    {
+      "path": "apps/jido_seigyo/scripts/export_contract.exs",
+      "bytes": 814,
+      "sha256": "fe3e2c6087c80eabffb0a10fa650f319c48514cac814e1f7e495fb4ba5c207f6"
+    },
+    {
+      "path": "apps/jido_seigyo/test/bundle_test.exs",
+      "bytes": 2251,
+      "sha256": "14d7521537eb91bffb22b1a6ed2ecec1e62d81936f88e1364bf4be8bdd4e08de"
+    },
+    {
+      "path": "apps/jido_seigyo/test/catalog_test.exs",
+      "bytes": 2045,
+      "sha256": "5e28ea5aa133d68e65d087409331a511db8fb569f6899e7c0d5f9605632d3fde"
+    },
+    {
+      "path": "apps/jido_seigyo/test/client_tests/canonical_value_test.exs",
+      "bytes": 1681,
+      "sha256": "a4db3ecf947f217fba3c5ed1c6f7c51df51c4e61de283070c38773a13daeea3d"
+    },
+    {
+      "path": "apps/jido_seigyo/test/client_tests/capabilities_test.exs",
+      "bytes": 4535,
+      "sha256": "60730e2616a6142f32db59cce177924124b6b5260cf8519ae8e319f361da9646"
+    },
+    {
+      "path": "apps/jido_seigyo/test/client_tests/client_test.exs",
+      "bytes": 504,
+      "sha256": "89ddeef8d04116d67f9470aa2306b9f0f4dafb58802bc74b8b00a04cbb064170"
+    },
+    {
+      "path": "apps/jido_seigyo/test/client_tests/connection_test.exs",
+      "bytes": 914,
+      "sha256": "f3ff3d39af838030e5b156f88552faa8a3e0574e5e9dfd4ebe45984bc6614dd0"
+    },
+    {
+      "path": "apps/jido_seigyo/test/client_tests/receiver_registry_test.exs",
+      "bytes": 1575,
+      "sha256": "d1d8b8c77d1b51e28c8d831ec58a74e08898ea51173a89fa5a30bf013ed07764"
+    },
+    {
+      "path": "apps/jido_seigyo/test/client_tests/value_test.exs",
+      "bytes": 29586,
+      "sha256": "46fb922b79dc206ee322ffdef6f54cf169233aad66becee4111c546e593ffae6"
+    },
+    {
+      "path": "apps/jido_seigyo/test/client_tests/wire_test.exs",
+      "bytes": 3768,
+      "sha256": "0f1b7e2fa64b7a338e6c629890d70de7b58cb3f25491f6b3a8a6edea61f32f09"
+    },
+    {
+      "path": "apps/jido_seigyo/test/contract_test.exs",
+      "bytes": 32396,
+      "sha256": "0926fe5091e7650ce60d46ecfe3b97fa2b48c8647199a40f4f5bdbf1357b4387"
+    },
+    {
+      "path": "apps/jido_seigyo/test/initialization_test.exs",
+      "bytes": 7375,
+      "sha256": "496454d7d0fee6b18ce586f7d21431b8c996ed8fdedc18be09f14cd0dc0becf2"
+    },
+    {
+      "path": "apps/jido_seigyo/test/membership_protocol_test.exs",
+      "bytes": 8939,
+      "sha256": "5e526d8b8a2089657f9e13b08bf256c5a7309a7286e3f126aa6a389c618784ed"
+    },
+    {
+      "path": "apps/jido_seigyo/test/message_role_test.exs",
+      "bytes": 1632,
+      "sha256": "fd2094c1dc36a2139d0cba0ecc831da5f1e5f12a634d2204d9d74d388560bd24"
+    },
+    {
+      "path": "apps/jido_seigyo/test/release_test.exs",
+      "bytes": 3173,
+      "sha256": "957e79bc45936f3e91ff114c280da902286d408810ac7cadca1a61a6da8d9d76"
+    },
+    {
+      "path": "apps/jido_seigyo/test/replay_test.exs",
+      "bytes": 5753,
+      "sha256": "bb41f6c46763546f27980de1b8041852dde355708eedc29ab288d216564a3f9c"
+    },
+    {
+      "path": "apps/jido_seigyo/test/schema_test.exs",
+      "bytes": 2517,
+      "sha256": "be9de910ea0c68d86e16328d998d08c5aa78081ead5e84a9d26ad412a4465e96"
+    },
+    {
+      "path": "apps/jido_seigyo/test/seigyo_test.exs",
+      "bytes": 3846,
+      "sha256": "02d4882296f3e630175a296ecfb4049343239798b28a3850f084cebb58bdbed0"
+    },
+    {
+      "path": "apps/jido_seigyo/test/session_protocol_test.exs",
+      "bytes": 24366,
+      "sha256": "129c31430cc654b95b8d064b67e5e29f2814d9fd372c40445d87aee623df259e"
+    },
+    {
+      "path": "apps/jido_seigyo/test/test_helper.exs",
+      "bytes": 15,
+      "sha256": "b086ec47f0c6c7aaeb4cffca5ae5243dd05e0dc96ab761ced93325d5315f4b12"
+    },
+    {
+      "path": "apps/jido_seigyo/test/workspace_protocol_test.exs",
+      "bytes": 3629,
+      "sha256": "255f2edc23a6942f4377851da3da98221f9e94bed7026c5ccc726b1113557b64"
+    },
+    {
+      "path": "docs/adr/0004-common-client-contract.md",
+      "bytes": 1307,
+      "sha256": "c5910b00ae14f0ab7fdc1c1f61bc612f3178bc0ab2daaa0c52678c6af6accfb6"
+    },
+    {
+      "path": "docs/adr/0009-phoenix-client-transport.md",
+      "bytes": 2249,
+      "sha256": "beca402e6df6c6dbb0932206d473f4be552e8ff8f6c2e76c4d05d5840c3f265f"
+    },
+    {
+      "path": "docs/adr/0017-seigyo-protocol-and-live-progress.md",
+      "bytes": 3351,
+      "sha256": "e9b7ab04d0c31cac8aea71ecf6db8c512704ac279ffd26d1532f6f88d9edd59c"
+    },
+    {
+      "path": "docs/adr/0019-client-websocket-wire.md",
+      "bytes": 4341,
+      "sha256": "3abfdfe97aaf16e5b45381e59f544a2cd27a86fd91b78c91be2c678f4bcd04f4"
+    },
+    {
+      "path": "docs/adr/0020-shared-websocket-client.md",
+      "bytes": 3687,
+      "sha256": "1035dbd564003c1ffdeb25753963659d7bb7eb71ae3489af4e763398598f9b90"
+    },
+    {
+      "path": "docs/adr/0021-seigyo-protocol-name.md",
+      "bytes": 2047,
+      "sha256": "47e96d951c10bad03574562e65b27b762bae9d5fd0f4611ebd0722e104301730"
+    },
+    {
+      "path": "docs/adr/0023-seigyo-session-membership.md",
+      "bytes": 3378,
+      "sha256": "5ac899fccafa249053fc9ef40a058b622bdf253779f374bb4cda400a0d910abd"
+    },
+    {
+      "path": "docs/seigyo/README.md",
+      "bytes": 10448,
+      "sha256": "2b80b1073e11cb803e3c425f70f15e77dc63edf8ac752e220ed08bfa37145223"
+    },
+    {
+      "path": "docs/seigyo/client-design.md",
+      "bytes": 2202,
+      "sha256": "7df9e68e94b57daf916143048e2ade59e1caf6eefda02957194af24efbffc640"
+    },
+    {
+      "path": "docs/seigyo/coding-v1-baseline.md",
+      "bytes": 10301,
+      "sha256": "00ef47d22375ab23171f9ae0862183e17cfdea827081ef4ee768b48d66c2828a"
+    },
+    {
+      "path": "docs/seigyo/collaboration.md",
+      "bytes": 7498,
+      "sha256": "a4c78ed3548af224e239dedbcf83ae69b68b8a8270689535088520bdbd4192bc"
+    },
+    {
+      "path": "docs/seigyo/conformance.md",
+      "bytes": 27000,
+      "sha256": "34ece7c09ad190bb33948b28af8134a6b23b88b6aa24d3a46bb48cec49f20f4f"
+    },
+    {
+      "path": "docs/seigyo/definitions.md",
+      "bytes": 1627,
+      "sha256": "aa69117c3e1ca772305db0a6b957ce06be45d0c1fa5659db59bd5af2abbc8a78"
+    },
+    {
+      "path": "docs/seigyo/delivery.md",
+      "bytes": 12605,
+      "sha256": "60a908d70440123e424dcff06a87f0d220699fa83a33a06532203106a60e9e9e"
+    },
+    {
+      "path": "docs/seigyo/implementation.md",
+      "bytes": 12273,
+      "sha256": "5f94f12e6aae6f574a667b57a4fbe133ec8c303994509addb2b8226e149c7286"
+    },
+    {
+      "path": "docs/seigyo/initialization-decision.md",
+      "bytes": 3292,
+      "sha256": "d4fa27293ed16512ae9e002dbe74449670d99f75071e79c3d3f3d8869a591f28"
+    },
+    {
+      "path": "docs/seigyo/initialization.md",
+      "bytes": 8492,
+      "sha256": "71657cdc8aa231f0499a8e9847dbd9f2604b867003b7eccf0ffe85f2221a45e6"
+    },
+    {
+      "path": "docs/seigyo/messages.md",
+      "bytes": 6003,
+      "sha256": "cf61aad5cb982706c55a5b2d08d14b4cf6e711937cf5c5e43b7b4dd2a0473edc"
+    },
+    {
+      "path": "docs/seigyo/model.md",
+      "bytes": 15235,
+      "sha256": "644bcb4078c525639344210ab312024a86c37f2a8d4808759ff77a3a2c4d839f"
+    },
+    {
+      "path": "docs/seigyo/outputs.md",
+      "bytes": 8435,
+      "sha256": "0648a13c7f957f127413ec97127701ef1be4dd112b52e4191b9a4dff939417f7"
+    },
+    {
+      "path": "docs/seigyo/processing.md",
+      "bytes": 10481,
+      "sha256": "3aad109f4d1f74e35d26b748b6eb58a884a41565fe4a82ef7b147a400b516770"
+    },
+    {
+      "path": "docs/seigyo/release-policy.md",
+      "bytes": 4683,
+      "sha256": "6b5071b6ad601d3a4922975569201eec76e421d7a489079b78816b2f743ff72b"
+    },
+    {
+      "path": "docs/seigyo/replay.md",
+      "bytes": 8483,
+      "sha256": "dc05fd2c3f5fe4a820eb0fe6637ba779233aa73c390e26b51f5582b0ef5653d7"
+    },
+    {
+      "path": "docs/seigyo/session-lifetime.md",
+      "bytes": 9395,
+      "sha256": "77fde8a51058215143cbbf95005b91409db440de0cf10336a0902640d4d45d27"
+    },
+    {
+      "path": "docs/seigyo/signals.md",
+      "bytes": 43668,
+      "sha256": "8b0044c159d0181eff19311e2025d65703f60b81dc7486516a049579b684e167"
+    },
+    {
+      "path": "docs/seigyo/topology.md",
+      "bytes": 11439,
+      "sha256": "e46be422df2303e26d5b56848c324cece25fd2cf4861b8360699b0a0ef8c024c"
+    },
+    {
+      "path": "docs/seigyo/verification-matrix.json",
+      "bytes": 27576,
+      "sha256": "f2d5f77ebf457285df775d0e98873770b06b9603c441ed18b8258585d5678199"
+    },
+    {
+      "path": "docs/seigyo/verification-result.json",
+      "bytes": 462,
+      "sha256": "04e7b169af3726ae4ca2fab4605c67482b8f2b74dd6fdb47e5898a654b05b391"
+    },
+    {
+      "path": "docs/seigyo/verification.md",
+      "bytes": 9535,
+      "sha256": "0c878f84d92e255a5c87a2d44c148d2d2811b64dba314c89eb75431f19c9e3cb"
+    },
+    {
+      "path": "docs/seigyo/wire.md",
+      "bytes": 7715,
+      "sha256": "722eb357da421a9e87deb7e8ec8352d6b42a783d498aa5a52839da38b5fcbb45"
+    },
+    {
+      "path": "docs/seigyo/work.md",
+      "bytes": 8711,
+      "sha256": "f84dcfe2680013683b1151205e758276abdb2dc7d076c10939f637844ca86d49"
+    }
+  ],
+  "scope": {
+    "included": [
+      "Seigyo protocol documents and related decisions",
+      "jido_seigyo schemas, fixtures, Elixir client, and package tests",
+      "independent protocol verification scripts and their portable tests"
+    ],
+    "excluded": [
+      "Jido Code server and runtime",
+      "storage implementations and database schemas",
+      "web, terminal, and native user interfaces",
+      "evaluation applications",
+      "server-dependent acceptance application and scenarios",
+      "umbrella build and deployment configuration"
+    ]
+  }
+}

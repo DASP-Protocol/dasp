@@ -1,0 +1,125 @@
+{
+  "controls": {
+    "watch_progress": [
+      "1",
+      "$ref",
+      "client:v1",
+      "watch_progress",
+      {
+        "request_ref": "$request-ref",
+        "session_id": "$session-id"
+      }
+    ],
+    "watch_updates": [
+      "1",
+      "$ref",
+      "client:v1",
+      "watch_updates",
+      {
+        "after_sequence": "$last-applied-sequence",
+        "request_ref": "$request-ref",
+        "session_id": "$session-id"
+      }
+    ]
+  },
+  "frame_shape": [
+    "join_ref",
+    "ref",
+    "topic",
+    "event",
+    "payload"
+  ],
+  "invalid_session": {
+    "reply": [
+      "1",
+      "2",
+      "client:v1",
+      "phx_reply",
+      {
+        "response": {
+          "failure": {
+            "data": {
+              "code": "invalid_id",
+              "field": "session_id",
+              "version": 1
+            },
+            "id": "$dynamic-signal-id",
+            "source": "/jido/code/server",
+            "specversion": "1.0",
+            "type": "jido.client.v1.failure"
+          },
+          "request_ref": "fixture-invalid-session"
+        },
+        "status": "error"
+      }
+    ],
+    "request": [
+      "1",
+      "2",
+      "client:v1",
+      "call",
+      {
+        "args": {
+          "session_id": "bad-session"
+        },
+        "op": "view",
+        "request_ref": "fixture-invalid-session"
+      }
+    ]
+  },
+  "join": {
+    "reply": [
+      "1",
+      "1",
+      "client:v1",
+      "phx_reply",
+      {
+        "response": {
+          "$capabilities": "manifest.capabilities"
+        },
+        "status": "ok"
+      }
+    ],
+    "request": [
+      "1",
+      "1",
+      "client:v1",
+      "phx_join",
+      {
+        "profile": "coding",
+        "version": 1
+      }
+    ]
+  },
+  "profile": "coding",
+  "pushes": {
+    "progress": [
+      null,
+      null,
+      "client:v1",
+      "progress",
+      {
+        "$signal": "jido.client.v1.progress"
+      }
+    ],
+    "resync_required": [
+      null,
+      null,
+      "client:v1",
+      "resync_required",
+      {
+        "$signal": "jido.client.v1.resync.required"
+      }
+    ],
+    "update": [
+      null,
+      null,
+      "client:v1",
+      "update",
+      {
+        "$signal": "jido.client.v1.update"
+      }
+    ]
+  },
+  "version": 1
+}

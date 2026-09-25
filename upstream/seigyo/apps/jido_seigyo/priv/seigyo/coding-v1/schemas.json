@@ -1,0 +1,6231 @@
+{
+  "dialect": "https://json-schema.org/draft/2020-12/schema",
+  "profile": "coding",
+  "signals": {
+    "jido.client.v1.updates.page": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "after_sequence": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "next_cursor": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                ]
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "updates": {
+                "items": {
+                  "discriminator": {
+                    "propertyName": "event_type"
+                  },
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "event_type": {
+                          "const": "command_accepted"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "submit_text"
+                            },
+                            "state": {
+                              "enum": [
+                                "active",
+                                "queued"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "state"
+                          ],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "event_type": {
+                          "const": "command_completed"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "result_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "result_id"
+                          ],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "event_type": {
+                          "const": "turn_started"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {},
+                          "required": [],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "event_type": {
+                          "const": "turn_steered"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "mutation_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "mutation_id"
+                          ],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "event_type": {
+                          "const": "turn_cancel_requested"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "mutation_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "mutation_id"
+                          ],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "event_type": {
+                          "const": "command_cancelled"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "mutation_id": {
+                              "anyOf": [
+                                {
+                                  "type": "null"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "result_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "mutation_id",
+                            "result_id"
+                          ],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "event_type": {
+                          "const": "command_failed"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "reason": {
+                              "enum": [
+                                "execution_failed",
+                                "dispatch_unavailable",
+                                "admission_rejected"
+                              ],
+                              "type": "string"
+                            },
+                            "result_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "reason",
+                            "result_id"
+                          ],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "event_type": {
+                          "const": "command_uncertain"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "reason": {
+                              "enum": [
+                                "agent_state_unknown",
+                                "server_restarted"
+                              ],
+                              "type": "string"
+                            },
+                            "result_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "reason",
+                            "result_id"
+                          ],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "const": null
+                        },
+                        "event_type": {
+                          "const": "session_configured"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "config_revision": {
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            "disposition": {
+                              "enum": [
+                                "applied",
+                                "pending"
+                              ],
+                              "type": "string"
+                            },
+                            "effective_from": {
+                              "enum": [
+                                "current",
+                                "next_command"
+                              ],
+                              "type": "string"
+                            },
+                            "mutation_id": {
+                              "type": "string"
+                            },
+                            "previous_revision": {
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "config_revision",
+                            "disposition",
+                            "effective_from",
+                            "mutation_id",
+                            "previous_revision"
+                          ],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "const": null
+                        },
+                        "event_type": {
+                          "const": "context_compacted"
+                        },
+                        "kind": {
+                          "const": "event"
+                        },
+                        "payload": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "config_revision": {
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "context_revision": {
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            "estimated_tokens_after": {
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "estimated_tokens_before": {
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "preserved_turns": {
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "previous_context_revision": {
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "reason": {
+                              "enum": [
+                                "threshold",
+                                "model_change",
+                                "client_request",
+                                "recovery"
+                              ],
+                              "type": "string"
+                            },
+                            "source_from_sequence": {
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            "source_to_sequence": {
+                              "minimum": 1,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "config_revision",
+                            "context_revision",
+                            "estimated_tokens_after",
+                            "estimated_tokens_before",
+                            "preserved_turns",
+                            "previous_context_revision",
+                            "reason",
+                            "source_from_sequence",
+                            "source_to_sequence"
+                          ],
+                          "type": "object"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "session_id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "event_type",
+                        "kind",
+                        "payload",
+                        "sequence",
+                        "session_id",
+                        "version"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "maxItems": 100,
+                "type": "array"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "after_sequence",
+              "next_cursor",
+              "session_id",
+              "updates",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.updates.page"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.execution.catalog": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "sandbox_profiles": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "fault_boundary": {
+                      "enum": [
+                        "beam_process",
+                        "os_process",
+                        "container",
+                        "vm"
+                      ],
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "isolation": {
+                      "enum": [
+                        "trusted_local",
+                        "container",
+                        "vm",
+                        "remote"
+                      ],
+                      "type": "string"
+                    },
+                    "name": {
+                      "maxLength": 128,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "network": {
+                      "enum": [
+                        "denied",
+                        "restricted",
+                        "allowed"
+                      ],
+                      "type": "string"
+                    },
+                    "security_boundary": {
+                      "enum": [
+                        "none",
+                        "container",
+                        "vm"
+                      ],
+                      "type": "string"
+                    },
+                    "target_id": {
+                      "type": "string"
+                    },
+                    "workspace_binding": {
+                      "enum": [
+                        "borrowed",
+                        "managed_copy"
+                      ],
+                      "type": "string"
+                    },
+                    "workspace_runtime_root": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "fault_boundary",
+                    "id",
+                    "isolation",
+                    "name",
+                    "network",
+                    "security_boundary",
+                    "target_id",
+                    "workspace_binding",
+                    "workspace_runtime_root"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 128,
+                "type": "array"
+              },
+              "targets": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "isolation": {
+                      "items": {
+                        "enum": [
+                          "trusted_local",
+                          "container",
+                          "vm",
+                          "remote"
+                        ],
+                        "type": "string"
+                      },
+                      "maxItems": 8,
+                      "minItems": 1,
+                      "type": "array",
+                      "uniqueItems": true
+                    },
+                    "name": {
+                      "maxLength": 128,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "network": {
+                      "items": {
+                        "enum": [
+                          "denied",
+                          "restricted",
+                          "allowed"
+                        ],
+                        "type": "string"
+                      },
+                      "maxItems": 8,
+                      "minItems": 1,
+                      "type": "array",
+                      "uniqueItems": true
+                    },
+                    "sandbox_profiles": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "maxItems": 32,
+                      "type": "array",
+                      "uniqueItems": true
+                    },
+                    "security_boundary": {
+                      "enum": [
+                        "none",
+                        "container",
+                        "vm"
+                      ],
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "ready",
+                        "draining",
+                        "unavailable"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "isolation",
+                    "name",
+                    "network",
+                    "sandbox_profiles",
+                    "security_boundary",
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 64,
+                "type": "array"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "sandbox_profiles",
+              "targets",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.execution.catalog"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.update": {
+      "role": "push",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "discriminator": {
+              "propertyName": "event_type"
+            },
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "event_type": {
+                    "const": "command_accepted"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "submit_text"
+                      },
+                      "state": {
+                        "enum": [
+                          "active",
+                          "queued"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "state"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "event_type": {
+                    "const": "command_completed"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "result_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "result_id"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "event_type": {
+                    "const": "turn_started"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "required": [],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "event_type": {
+                    "const": "turn_steered"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "mutation_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "mutation_id"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "event_type": {
+                    "const": "turn_cancel_requested"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "mutation_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "mutation_id"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "event_type": {
+                    "const": "command_cancelled"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "mutation_id": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "result_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "mutation_id",
+                      "result_id"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "event_type": {
+                    "const": "command_failed"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "reason": {
+                        "enum": [
+                          "execution_failed",
+                          "dispatch_unavailable",
+                          "admission_rejected"
+                        ],
+                        "type": "string"
+                      },
+                      "result_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "reason",
+                      "result_id"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "event_type": {
+                    "const": "command_uncertain"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "reason": {
+                        "enum": [
+                          "agent_state_unknown",
+                          "server_restarted"
+                        ],
+                        "type": "string"
+                      },
+                      "result_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "reason",
+                      "result_id"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "const": null
+                  },
+                  "event_type": {
+                    "const": "session_configured"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "config_revision": {
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "disposition": {
+                        "enum": [
+                          "applied",
+                          "pending"
+                        ],
+                        "type": "string"
+                      },
+                      "effective_from": {
+                        "enum": [
+                          "current",
+                          "next_command"
+                        ],
+                        "type": "string"
+                      },
+                      "mutation_id": {
+                        "type": "string"
+                      },
+                      "previous_revision": {
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "config_revision",
+                      "disposition",
+                      "effective_from",
+                      "mutation_id",
+                      "previous_revision"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "const": null
+                  },
+                  "event_type": {
+                    "const": "context_compacted"
+                  },
+                  "kind": {
+                    "const": "event"
+                  },
+                  "payload": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "config_revision": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "context_revision": {
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "estimated_tokens_after": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "estimated_tokens_before": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "preserved_turns": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "previous_context_revision": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "reason": {
+                        "enum": [
+                          "threshold",
+                          "model_change",
+                          "client_request",
+                          "recovery"
+                        ],
+                        "type": "string"
+                      },
+                      "source_from_sequence": {
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "source_to_sequence": {
+                        "minimum": 1,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "config_revision",
+                      "context_revision",
+                      "estimated_tokens_after",
+                      "estimated_tokens_before",
+                      "preserved_turns",
+                      "previous_context_revision",
+                      "reason",
+                      "source_from_sequence",
+                      "source_to_sequence"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "event_type",
+                  "kind",
+                  "payload",
+                  "sequence",
+                  "session_id",
+                  "version"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.update"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.receipt": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "discriminator": {
+              "propertyName": "disposition"
+            },
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "disposition": {
+                    "const": "accepted"
+                  },
+                  "error": {
+                    "const": null
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "session_revision": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "disposition",
+                  "error",
+                  "sequence",
+                  "session_id",
+                  "session_revision",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "disposition": {
+                    "const": "duplicate"
+                  },
+                  "error": {
+                    "const": null
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "session_revision": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "disposition",
+                  "error",
+                  "sequence",
+                  "session_id",
+                  "session_revision",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "disposition": {
+                    "const": "rejected"
+                  },
+                  "error": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "code": {
+                        "enum": [
+                          "invalid_field",
+                          "invalid_id",
+                          "unsupported_version",
+                          "too_large",
+                          "conflict",
+                          "not_found",
+                          "gap",
+                          "unavailable"
+                        ],
+                        "type": "string"
+                      },
+                      "field": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "version": {
+                        "const": 1
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "field",
+                      "version"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "const": null
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "session_revision": {
+                    "const": null
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "disposition",
+                  "error",
+                  "sequence",
+                  "session_id",
+                  "session_revision",
+                  "version"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.receipt"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.workspace.configure": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "expected_version": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                ]
+              },
+              "file_path": {
+                "type": "string"
+              },
+              "mutation_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "runtime_path": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              },
+              "workspace_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "expected_version",
+              "file_path",
+              "mutation_id",
+              "name",
+              "runtime_path",
+              "version",
+              "workspace_id"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.workspace.configure"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.turn.cancel": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "mutation_id": {
+                "type": "string"
+              },
+              "reason": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "target_command_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "mutation_id",
+              "reason",
+              "session_id",
+              "target_command_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.turn.cancel"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.command": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "input": {
+                "additionalProperties": false,
+                "properties": {
+                  "attachment_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 32,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text"
+                ],
+                "type": "object"
+              },
+              "kind": {
+                "const": "submit_text"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "id",
+              "input",
+              "kind",
+              "session_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.command"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.view": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "agent_revision": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                ]
+              },
+              "content": {
+                "additionalProperties": false,
+                "properties": {
+                  "active_command": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "command_id": {
+                            "type": "string"
+                          },
+                          "state": {
+                            "enum": [
+                              "accepted",
+                              "dispatched"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "command_id",
+                          "state"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "execution": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "isolation": {
+                        "enum": [
+                          "trusted_local",
+                          "container",
+                          "vm",
+                          "remote"
+                        ],
+                        "type": "string"
+                      },
+                      "network": {
+                        "enum": [
+                          "denied",
+                          "restricted",
+                          "allowed"
+                        ],
+                        "type": "string"
+                      },
+                      "sandbox_id": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "sandbox_profile": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "status": {
+                        "enum": [
+                          "ready",
+                          "unavailable"
+                        ],
+                        "type": "string"
+                      },
+                      "target_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "isolation",
+                      "network",
+                      "sandbox_id",
+                      "sandbox_profile",
+                      "status",
+                      "target_id"
+                    ],
+                    "type": "object"
+                  },
+                  "last_result": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "maxLength": 1000,
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "last_result_command_id": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "messages": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "enum": [
+                            "user",
+                            "assistant"
+                          ],
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "role",
+                        "text"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 30,
+                    "type": "array"
+                  },
+                  "messages_truncated": {
+                    "type": "boolean"
+                  },
+                  "recent_outcomes": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "command_id": {
+                          "type": "string"
+                        },
+                        "sequence": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "state": {
+                          "enum": [
+                            "completed",
+                            "failed",
+                            "cancelled",
+                            "uncertain"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "command_id",
+                        "sequence",
+                        "state"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 10,
+                    "type": "array"
+                  },
+                  "workspace": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "mode": {
+                        "enum": [
+                          "shared",
+                          "exclusive",
+                          "isolated",
+                          "unknown"
+                        ],
+                        "type": "string"
+                      },
+                      "name": {
+                        "maxLength": 256,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "ownership": {
+                        "enum": [
+                          "borrowed",
+                          "managed",
+                          "unknown"
+                        ],
+                        "type": "string"
+                      },
+                      "status": {
+                        "enum": [
+                          "ready",
+                          "unavailable"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "mode",
+                      "name",
+                      "ownership",
+                      "status"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "active_command",
+                  "execution",
+                  "last_result",
+                  "last_result_command_id",
+                  "messages",
+                  "messages_truncated",
+                  "recent_outcomes",
+                  "workspace"
+                ],
+                "type": "object"
+              },
+              "event_cursor": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "lifecycle": {
+                "enum": [
+                  "open",
+                  "closing",
+                  "closed"
+                ],
+                "type": "string"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "session_revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "agent_revision",
+              "content",
+              "event_cursor",
+              "lifecycle",
+              "session_id",
+              "session_revision",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.view"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.resync.required": {
+      "role": "push",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "session_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.resync.required"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.turn.submit": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "attachment_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 32,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "command_id": {
+                "type": "string"
+              },
+              "delivery": {
+                "enum": [
+                  "enqueue",
+                  "reject_if_busy"
+                ],
+                "type": "string"
+              },
+              "expected_config_revision": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                ]
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "attachment_ids",
+              "command_id",
+              "delivery",
+              "expected_config_revision",
+              "session_id",
+              "text",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.turn.submit"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.turn.controlled": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "discriminator": {
+              "propertyName": "disposition"
+            },
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "enum": [
+                      "steer",
+                      "cancel"
+                    ],
+                    "type": "string"
+                  },
+                  "disposition": {
+                    "const": "applied"
+                  },
+                  "mutation_id": {
+                    "type": "string"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "target_command_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "action",
+                  "disposition",
+                  "mutation_id",
+                  "sequence",
+                  "session_id",
+                  "target_command_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "enum": [
+                      "steer",
+                      "cancel"
+                    ],
+                    "type": "string"
+                  },
+                  "disposition": {
+                    "const": "duplicate"
+                  },
+                  "mutation_id": {
+                    "type": "string"
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "target_command_id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "action",
+                  "disposition",
+                  "mutation_id",
+                  "sequence",
+                  "session_id",
+                  "target_command_id",
+                  "version"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.turn.controlled"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.attachment.begin": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "attachment_id": {
+                "type": "string"
+              },
+              "media_type": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "purpose": {
+                "enum": [
+                  "context",
+                  "image",
+                  "patch",
+                  "workspace_import"
+                ],
+                "type": "string"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string"
+              },
+              "size": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "attachment_id",
+              "media_type",
+              "name",
+              "purpose",
+              "session_id",
+              "sha256",
+              "size",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.attachment.begin"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.failure": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "invalid_field",
+                  "invalid_id",
+                  "unsupported_version",
+                  "too_large",
+                  "conflict",
+                  "not_found",
+                  "gap",
+                  "unavailable"
+                ],
+                "type": "string"
+              },
+              "field": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "code",
+              "field",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.failure"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.session.configure": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "apply": {
+                "enum": [
+                  "when_idle",
+                  "next_command"
+                ],
+                "type": "string"
+              },
+              "expected_revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "mutation_id": {
+                "type": "string"
+              },
+              "patch": {
+                "additionalProperties": false,
+                "properties": {
+                  "context": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "compaction_policy": {
+                        "enum": [
+                          "none",
+                          "summarize"
+                        ],
+                        "type": "string"
+                      },
+                      "mode": {
+                        "enum": [
+                          "managed",
+                          "full",
+                          "rolling"
+                        ],
+                        "type": "string"
+                      },
+                      "preserve_recent_turns": {
+                        "maximum": 1000,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "target_tokens": {
+                        "minimum": 1024,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "compaction_policy",
+                      "mode",
+                      "preserve_recent_turns",
+                      "target_tokens"
+                    ],
+                    "type": "object"
+                  },
+                  "execution": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "isolation": {
+                        "enum": [
+                          "trusted_local",
+                          "container",
+                          "vm",
+                          "remote"
+                        ],
+                        "type": "string"
+                      },
+                      "network": {
+                        "enum": [
+                          "denied",
+                          "restricted",
+                          "allowed"
+                        ],
+                        "type": "string"
+                      },
+                      "sandbox": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "profile": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "profile"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "target_id": {
+                        "type": "string"
+                      },
+                      "workspace_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "isolation",
+                      "network",
+                      "sandbox",
+                      "target_id",
+                      "workspace_id"
+                    ],
+                    "type": "object"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "reasoning_level": {
+                        "enum": [
+                          "none",
+                          "minimal",
+                          "low",
+                          "medium",
+                          "high",
+                          "xhigh",
+                          "max",
+                          "ultra"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "reasoning_level"
+                    ],
+                    "type": "object"
+                  },
+                  "plugins": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "capabilities": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 64,
+                          "type": "array",
+                          "uniqueItems": true
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "capabilities",
+                        "id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 64,
+                    "type": "array"
+                  },
+                  "skills": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "digest": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "digest",
+                        "id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 64,
+                    "type": "array"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "apply",
+              "expected_revision",
+              "mutation_id",
+              "patch",
+              "session_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.session.configure"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.progress": {
+      "role": "push",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "iteration": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "phase": {
+                "enum": [
+                  "working",
+                  "thinking",
+                  "writing",
+                  "using_tools",
+                  "finishing"
+                ],
+                "type": "string"
+              },
+              "sequence": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "thinking": {
+                "type": "string"
+              },
+              "thinking_truncated": {
+                "type": "boolean"
+              },
+              "tools": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "duration_ms": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      ]
+                    },
+                    "id": {
+                      "maxLength": 128,
+                      "type": "string"
+                    },
+                    "name": {
+                      "maxLength": 128,
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "running",
+                        "ok",
+                        "error",
+                        "completed",
+                        "unknown"
+                      ],
+                      "type": "string"
+                    },
+                    "summary": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "maxLength": 200,
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "truncated": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "duration_ms",
+                    "id",
+                    "name",
+                    "status",
+                    "summary",
+                    "truncated"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 24,
+                "type": "array"
+              },
+              "tools_truncated": {
+                "type": "boolean"
+              },
+              "truncated": {
+                "type": "boolean"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "command_id",
+              "iteration",
+              "phase",
+              "sequence",
+              "session_id",
+              "text",
+              "thinking",
+              "thinking_truncated",
+              "tools",
+              "tools_truncated",
+              "truncated",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.progress"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.session.open": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              },
+              "workspace_id": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "session_id",
+              "version",
+              "workspace_id"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.session.open"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.attachment.chunk": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "attachment_id": {
+                "type": "string"
+              },
+              "data": {
+                "type": "string"
+              },
+              "index": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "attachment_id",
+              "data",
+              "index",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.attachment.chunk"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.history.page": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "entries": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "command_id": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "enum": [
+                        "user",
+                        "assistant"
+                      ],
+                      "type": "string"
+                    },
+                    "sequence": {
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "truncated": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "command_id",
+                    "role",
+                    "sequence",
+                    "text",
+                    "truncated"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "type": "array"
+              },
+              "next_cursor": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                ]
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "entries",
+              "next_cursor",
+              "session_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.history.page"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.session.configurations.page": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "after_revision": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                ]
+              },
+              "configurations": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "context": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "compaction_policy": {
+                          "enum": [
+                            "none",
+                            "summarize"
+                          ],
+                          "type": "string"
+                        },
+                        "mode": {
+                          "enum": [
+                            "managed",
+                            "full",
+                            "rolling"
+                          ],
+                          "type": "string"
+                        },
+                        "preserve_recent_turns": {
+                          "maximum": 1000,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "target_tokens": {
+                          "minimum": 1024,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "compaction_policy",
+                        "mode",
+                        "preserve_recent_turns",
+                        "target_tokens"
+                      ],
+                      "type": "object"
+                    },
+                    "digest": {
+                      "type": "string"
+                    },
+                    "execution": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "isolation": {
+                          "enum": [
+                            "trusted_local",
+                            "container",
+                            "vm",
+                            "remote"
+                          ],
+                          "type": "string"
+                        },
+                        "network": {
+                          "enum": [
+                            "denied",
+                            "restricted",
+                            "allowed"
+                          ],
+                          "type": "string"
+                        },
+                        "sandbox": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "profile": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "profile"
+                              ],
+                              "type": "object"
+                            }
+                          ]
+                        },
+                        "target_id": {
+                          "type": "string"
+                        },
+                        "workspace_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "isolation",
+                        "network",
+                        "sandbox",
+                        "target_id",
+                        "workspace_id"
+                      ],
+                      "type": "object"
+                    },
+                    "instructions": {
+                      "type": "string"
+                    },
+                    "model": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "reasoning_level": {
+                          "enum": [
+                            "none",
+                            "minimal",
+                            "low",
+                            "medium",
+                            "high",
+                            "xhigh",
+                            "max",
+                            "ultra"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "reasoning_level"
+                      ],
+                      "type": "object"
+                    },
+                    "plugins": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "capabilities": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "maxItems": 64,
+                            "type": "array",
+                            "uniqueItems": true
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "anyOf": [
+                              {
+                                "type": "null"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "capabilities",
+                          "id",
+                          "version"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 64,
+                      "type": "array"
+                    },
+                    "profile": {
+                      "const": "coding"
+                    },
+                    "revision": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "skills": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "digest": {
+                            "anyOf": [
+                              {
+                                "type": "null"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "anyOf": [
+                              {
+                                "type": "null"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "digest",
+                          "id",
+                          "version"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 64,
+                      "type": "array"
+                    },
+                    "state": {
+                      "enum": [
+                        "effective",
+                        "pending"
+                      ],
+                      "type": "string"
+                    },
+                    "tool_profile": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "digest": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "digest",
+                        "id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    "version": {
+                      "const": 1
+                    }
+                  },
+                  "required": [
+                    "context",
+                    "digest",
+                    "execution",
+                    "instructions",
+                    "model",
+                    "plugins",
+                    "profile",
+                    "revision",
+                    "skills",
+                    "state",
+                    "tool_profile",
+                    "version"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "type": "array"
+              },
+              "next_cursor": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                ]
+              },
+              "oldest_revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "after_revision",
+              "configurations",
+              "next_cursor",
+              "oldest_revision",
+              "session_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.session.configurations.page"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.trace": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "config_digest": {
+                "type": "string"
+              },
+              "config_revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "duration_ms": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                ]
+              },
+              "failure_reason": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "maxLength": 100,
+                    "type": "string"
+                  }
+                ]
+              },
+              "input_tokens": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "model_calls": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "model_id": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "output_tokens": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "accepted",
+                  "dispatched",
+                  "completed",
+                  "failed",
+                  "cancelled",
+                  "uncertain"
+                ],
+                "type": "string"
+              },
+              "thinking": {
+                "type": "string"
+              },
+              "thinking_truncated": {
+                "type": "boolean"
+              },
+              "tool_profile": {
+                "additionalProperties": false,
+                "properties": {
+                  "digest": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "digest",
+                  "id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              "tools": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "duration_ms": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      ]
+                    },
+                    "id": {
+                      "maxLength": 128,
+                      "type": "string"
+                    },
+                    "name": {
+                      "maxLength": 128,
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "running",
+                        "ok",
+                        "error",
+                        "completed",
+                        "unknown"
+                      ],
+                      "type": "string"
+                    },
+                    "summary": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "maxLength": 200,
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "truncated": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "duration_ms",
+                    "id",
+                    "name",
+                    "status",
+                    "summary",
+                    "truncated"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "type": "array"
+              },
+              "truncated": {
+                "type": "boolean"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "command_id",
+              "config_digest",
+              "config_revision",
+              "duration_ms",
+              "failure_reason",
+              "input_tokens",
+              "model_calls",
+              "model_id",
+              "output_tokens",
+              "session_id",
+              "status",
+              "thinking",
+              "thinking_truncated",
+              "tool_profile",
+              "tools",
+              "truncated",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.trace"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.workspaces": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "version": {
+                "const": 1
+              },
+              "workspaces": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "file_path": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "mode": {
+                      "enum": [
+                        "shared",
+                        "isolated"
+                      ],
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "ownership": {
+                      "enum": [
+                        "borrowed",
+                        "managed"
+                      ],
+                      "type": "string"
+                    },
+                    "runtime_path": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "ready",
+                        "unavailable"
+                      ],
+                      "type": "string"
+                    },
+                    "version": {
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "file_path",
+                    "id",
+                    "mode",
+                    "name",
+                    "ownership",
+                    "runtime_path",
+                    "status",
+                    "version"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 256,
+                "type": "array"
+              }
+            },
+            "required": [
+              "version",
+              "workspaces"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.workspaces"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.attachment": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "attachment_id": {
+                "type": "string"
+              },
+              "error": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "code": {
+                        "enum": [
+                          "invalid_field",
+                          "invalid_id",
+                          "unsupported_version",
+                          "too_large",
+                          "conflict",
+                          "not_found",
+                          "gap",
+                          "unavailable"
+                        ],
+                        "type": "string"
+                      },
+                      "field": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "version": {
+                        "const": 1
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "field",
+                      "version"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "media_type": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "next_chunk_index": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string"
+              },
+              "size": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "state": {
+                "enum": [
+                  "uploading",
+                  "ready",
+                  "rejected"
+                ],
+                "type": "string"
+              },
+              "uploaded_bytes": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "attachment_id",
+              "error",
+              "media_type",
+              "name",
+              "next_chunk_index",
+              "session_id",
+              "sha256",
+              "size",
+              "state",
+              "uploaded_bytes",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.attachment"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.workspace.changes": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "base_revision": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                ]
+              },
+              "clean": {
+                "type": "boolean"
+              },
+              "files": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "added",
+                        "modified",
+                        "deleted",
+                        "renamed",
+                        "copied",
+                        "untracked",
+                        "conflicted"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 500,
+                "type": "array"
+              },
+              "patch": {
+                "type": "string"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "truncated": {
+                "type": "boolean"
+              },
+              "version": {
+                "const": 1
+              },
+              "workspace_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "base_revision",
+              "clean",
+              "files",
+              "patch",
+              "session_id",
+              "truncated",
+              "version",
+              "workspace_id"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.workspace.changes"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.result": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "blocks": {
+                "items": {
+                  "discriminator": {
+                    "propertyName": "type"
+                  },
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "text": {
+                          "type": "string"
+                        },
+                        "truncated": {
+                          "type": "boolean"
+                        },
+                        "type": {
+                          "const": "markdown"
+                        }
+                      },
+                      "required": [
+                        "text",
+                        "truncated",
+                        "type"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "attachment_id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "const": "attachment"
+                        }
+                      },
+                      "required": [
+                        "attachment_id",
+                        "type"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact_id": {
+                          "type": "string"
+                        },
+                        "media_type": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "const": "artifact"
+                        }
+                      },
+                      "required": [
+                        "artifact_id",
+                        "media_type",
+                        "name",
+                        "type"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "type": {
+                          "const": "workspace_changes"
+                        },
+                        "workspace_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "workspace_id"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "const": "citation"
+                        },
+                        "uri": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "type",
+                        "uri"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "maxItems": 50,
+                "type": "array"
+              },
+              "command_id": {
+                "type": "string"
+              },
+              "completion": {
+                "const": "execution"
+              },
+              "config_digest": {
+                "type": "string"
+              },
+              "config_revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "context_revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "error": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "code": {
+                        "enum": [
+                          "invalid_field",
+                          "invalid_id",
+                          "unsupported_version",
+                          "too_large",
+                          "conflict",
+                          "not_found",
+                          "gap",
+                          "unavailable"
+                        ],
+                        "type": "string"
+                      },
+                      "field": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "version": {
+                        "const": 1
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "field",
+                      "version"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "model_id": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "reasoning": {
+                "additionalProperties": false,
+                "properties": {
+                  "summary": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "truncated": {
+                    "type": "boolean"
+                  },
+                  "visibility": {
+                    "enum": [
+                      "hidden",
+                      "summary"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "summary",
+                  "truncated",
+                  "visibility"
+                ],
+                "type": "object"
+              },
+              "result_id": {
+                "type": "string"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "completed",
+                  "failed",
+                  "cancelled",
+                  "uncertain"
+                ],
+                "type": "string"
+              },
+              "tool_profile": {
+                "additionalProperties": false,
+                "properties": {
+                  "digest": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "digest",
+                  "id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              "usage": {
+                "additionalProperties": false,
+                "properties": {
+                  "cache_read_tokens": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    ]
+                  },
+                  "cache_write_tokens": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    ]
+                  },
+                  "delegated_runs": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "input_tokens": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    ]
+                  },
+                  "measurement": {
+                    "enum": [
+                      "reported",
+                      "estimated",
+                      "mixed",
+                      "unavailable"
+                    ],
+                    "type": "string"
+                  },
+                  "model_calls": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "output_tokens": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    ]
+                  },
+                  "reasoning_tokens": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "cache_read_tokens",
+                  "cache_write_tokens",
+                  "delegated_runs",
+                  "input_tokens",
+                  "measurement",
+                  "model_calls",
+                  "output_tokens",
+                  "reasoning_tokens"
+                ],
+                "type": "object"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "blocks",
+              "command_id",
+              "completion",
+              "config_digest",
+              "config_revision",
+              "context_revision",
+              "error",
+              "model_id",
+              "reasoning",
+              "result_id",
+              "session_id",
+              "status",
+              "tool_profile",
+              "usage",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.result"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.session.configuration": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "effective": {
+                "additionalProperties": false,
+                "properties": {
+                  "context": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "compaction_policy": {
+                        "enum": [
+                          "none",
+                          "summarize"
+                        ],
+                        "type": "string"
+                      },
+                      "mode": {
+                        "enum": [
+                          "managed",
+                          "full",
+                          "rolling"
+                        ],
+                        "type": "string"
+                      },
+                      "preserve_recent_turns": {
+                        "maximum": 1000,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "target_tokens": {
+                        "minimum": 1024,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "compaction_policy",
+                      "mode",
+                      "preserve_recent_turns",
+                      "target_tokens"
+                    ],
+                    "type": "object"
+                  },
+                  "digest": {
+                    "type": "string"
+                  },
+                  "execution": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "isolation": {
+                        "enum": [
+                          "trusted_local",
+                          "container",
+                          "vm",
+                          "remote"
+                        ],
+                        "type": "string"
+                      },
+                      "network": {
+                        "enum": [
+                          "denied",
+                          "restricted",
+                          "allowed"
+                        ],
+                        "type": "string"
+                      },
+                      "sandbox": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "profile": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "profile"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "target_id": {
+                        "type": "string"
+                      },
+                      "workspace_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "isolation",
+                      "network",
+                      "sandbox",
+                      "target_id",
+                      "workspace_id"
+                    ],
+                    "type": "object"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "reasoning_level": {
+                        "enum": [
+                          "none",
+                          "minimal",
+                          "low",
+                          "medium",
+                          "high",
+                          "xhigh",
+                          "max",
+                          "ultra"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "reasoning_level"
+                    ],
+                    "type": "object"
+                  },
+                  "plugins": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "capabilities": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 64,
+                          "type": "array",
+                          "uniqueItems": true
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "capabilities",
+                        "id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 64,
+                    "type": "array"
+                  },
+                  "profile": {
+                    "const": "coding"
+                  },
+                  "revision": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "skills": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "digest": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "digest",
+                        "id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 64,
+                    "type": "array"
+                  },
+                  "state": {
+                    "enum": [
+                      "effective",
+                      "pending"
+                    ],
+                    "type": "string"
+                  },
+                  "tool_profile": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "digest": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "version": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "digest",
+                      "id",
+                      "version"
+                    ],
+                    "type": "object"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "context",
+                  "digest",
+                  "execution",
+                  "instructions",
+                  "model",
+                  "plugins",
+                  "profile",
+                  "revision",
+                  "skills",
+                  "state",
+                  "tool_profile",
+                  "version"
+                ],
+                "type": "object"
+              },
+              "pending": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "context": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "compaction_policy": {
+                            "enum": [
+                              "none",
+                              "summarize"
+                            ],
+                            "type": "string"
+                          },
+                          "mode": {
+                            "enum": [
+                              "managed",
+                              "full",
+                              "rolling"
+                            ],
+                            "type": "string"
+                          },
+                          "preserve_recent_turns": {
+                            "maximum": 1000,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "target_tokens": {
+                            "minimum": 1024,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "compaction_policy",
+                          "mode",
+                          "preserve_recent_turns",
+                          "target_tokens"
+                        ],
+                        "type": "object"
+                      },
+                      "digest": {
+                        "type": "string"
+                      },
+                      "execution": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "isolation": {
+                            "enum": [
+                              "trusted_local",
+                              "container",
+                              "vm",
+                              "remote"
+                            ],
+                            "type": "string"
+                          },
+                          "network": {
+                            "enum": [
+                              "denied",
+                              "restricted",
+                              "allowed"
+                            ],
+                            "type": "string"
+                          },
+                          "sandbox": {
+                            "anyOf": [
+                              {
+                                "type": "null"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "profile": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "profile"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "target_id": {
+                            "type": "string"
+                          },
+                          "workspace_id": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "isolation",
+                          "network",
+                          "sandbox",
+                          "target_id",
+                          "workspace_id"
+                        ],
+                        "type": "object"
+                      },
+                      "instructions": {
+                        "type": "string"
+                      },
+                      "model": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "reasoning_level": {
+                            "enum": [
+                              "none",
+                              "minimal",
+                              "low",
+                              "medium",
+                              "high",
+                              "xhigh",
+                              "max",
+                              "ultra"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "reasoning_level"
+                        ],
+                        "type": "object"
+                      },
+                      "plugins": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "capabilities": {
+                              "items": {
+                                "type": "string"
+                              },
+                              "maxItems": 64,
+                              "type": "array",
+                              "uniqueItems": true
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "version": {
+                              "anyOf": [
+                                {
+                                  "type": "null"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "capabilities",
+                            "id",
+                            "version"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 64,
+                        "type": "array"
+                      },
+                      "profile": {
+                        "const": "coding"
+                      },
+                      "revision": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "skills": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "digest": {
+                              "anyOf": [
+                                {
+                                  "type": "null"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "version": {
+                              "anyOf": [
+                                {
+                                  "type": "null"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "digest",
+                            "id",
+                            "version"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 64,
+                        "type": "array"
+                      },
+                      "state": {
+                        "enum": [
+                          "effective",
+                          "pending"
+                        ],
+                        "type": "string"
+                      },
+                      "tool_profile": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "digest": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "digest",
+                          "id",
+                          "version"
+                        ],
+                        "type": "object"
+                      },
+                      "version": {
+                        "const": 1
+                      }
+                    },
+                    "required": [
+                      "context",
+                      "digest",
+                      "execution",
+                      "instructions",
+                      "model",
+                      "plugins",
+                      "profile",
+                      "revision",
+                      "skills",
+                      "state",
+                      "tool_profile",
+                      "version"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "effective",
+              "pending",
+              "session_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.session.configuration"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.session.fork": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "at_event_cursor": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "config_patch": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "context": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "compaction_policy": {
+                            "enum": [
+                              "none",
+                              "summarize"
+                            ],
+                            "type": "string"
+                          },
+                          "mode": {
+                            "enum": [
+                              "managed",
+                              "full",
+                              "rolling"
+                            ],
+                            "type": "string"
+                          },
+                          "preserve_recent_turns": {
+                            "maximum": 1000,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "target_tokens": {
+                            "minimum": 1024,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "compaction_policy",
+                          "mode",
+                          "preserve_recent_turns",
+                          "target_tokens"
+                        ],
+                        "type": "object"
+                      },
+                      "execution": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "isolation": {
+                            "enum": [
+                              "trusted_local",
+                              "container",
+                              "vm",
+                              "remote"
+                            ],
+                            "type": "string"
+                          },
+                          "network": {
+                            "enum": [
+                              "denied",
+                              "restricted",
+                              "allowed"
+                            ],
+                            "type": "string"
+                          },
+                          "sandbox": {
+                            "anyOf": [
+                              {
+                                "type": "null"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "profile": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "profile"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "target_id": {
+                            "type": "string"
+                          },
+                          "workspace_id": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "isolation",
+                          "network",
+                          "sandbox",
+                          "target_id",
+                          "workspace_id"
+                        ],
+                        "type": "object"
+                      },
+                      "instructions": {
+                        "type": "string"
+                      },
+                      "model": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "reasoning_level": {
+                            "enum": [
+                              "none",
+                              "minimal",
+                              "low",
+                              "medium",
+                              "high",
+                              "xhigh",
+                              "max",
+                              "ultra"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "reasoning_level"
+                        ],
+                        "type": "object"
+                      },
+                      "plugins": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "capabilities": {
+                              "items": {
+                                "type": "string"
+                              },
+                              "maxItems": 64,
+                              "type": "array",
+                              "uniqueItems": true
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "version": {
+                              "anyOf": [
+                                {
+                                  "type": "null"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "capabilities",
+                            "id",
+                            "version"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 64,
+                        "type": "array"
+                      },
+                      "skills": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "digest": {
+                              "anyOf": [
+                                {
+                                  "type": "null"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "version": {
+                              "anyOf": [
+                                {
+                                  "type": "null"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "digest",
+                            "id",
+                            "version"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 64,
+                        "type": "array"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  }
+                ]
+              },
+              "config_policy": {
+                "enum": [
+                  "inherit",
+                  "override"
+                ],
+                "type": "string"
+              },
+              "mutation_id": {
+                "type": "string"
+              },
+              "relation": {
+                "enum": [
+                  "fork",
+                  "side_chat"
+                ],
+                "type": "string"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "source_session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              },
+              "workspace_policy": {
+                "enum": [
+                  "snapshot",
+                  "shared_read_only",
+                  "shared_mutable"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "at_event_cursor",
+              "config_patch",
+              "config_policy",
+              "mutation_id",
+              "relation",
+              "session_id",
+              "source_session_id",
+              "version",
+              "workspace_policy"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.session.fork"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.session.forked": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "config_revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "context_revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "fork_event_cursor": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "mutation_id": {
+                "type": "string"
+              },
+              "parent_session_id": {
+                "type": "string"
+              },
+              "relation": {
+                "enum": [
+                  "fork",
+                  "side_chat"
+                ],
+                "type": "string"
+              },
+              "root_session_id": {
+                "type": "string"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              },
+              "workspace_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "config_revision",
+              "context_revision",
+              "fork_event_cursor",
+              "mutation_id",
+              "parent_session_id",
+              "relation",
+              "root_session_id",
+              "session_id",
+              "version",
+              "workspace_id"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.session.forked"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.turn.steer": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "attachment_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 32,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "mutation_id": {
+                "type": "string"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "target_command_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "attachment_ids",
+              "mutation_id",
+              "session_id",
+              "target_command_id",
+              "text",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.turn.steer"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.attachment.commit": {
+      "role": "request",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "attachment_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "attachment_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/client"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.attachment.commit"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.session.configured": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "config": {
+                "additionalProperties": false,
+                "properties": {
+                  "context": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "compaction_policy": {
+                        "enum": [
+                          "none",
+                          "summarize"
+                        ],
+                        "type": "string"
+                      },
+                      "mode": {
+                        "enum": [
+                          "managed",
+                          "full",
+                          "rolling"
+                        ],
+                        "type": "string"
+                      },
+                      "preserve_recent_turns": {
+                        "maximum": 1000,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "target_tokens": {
+                        "minimum": 1024,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "compaction_policy",
+                      "mode",
+                      "preserve_recent_turns",
+                      "target_tokens"
+                    ],
+                    "type": "object"
+                  },
+                  "digest": {
+                    "type": "string"
+                  },
+                  "execution": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "isolation": {
+                        "enum": [
+                          "trusted_local",
+                          "container",
+                          "vm",
+                          "remote"
+                        ],
+                        "type": "string"
+                      },
+                      "network": {
+                        "enum": [
+                          "denied",
+                          "restricted",
+                          "allowed"
+                        ],
+                        "type": "string"
+                      },
+                      "sandbox": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "profile": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "profile"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "target_id": {
+                        "type": "string"
+                      },
+                      "workspace_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "isolation",
+                      "network",
+                      "sandbox",
+                      "target_id",
+                      "workspace_id"
+                    ],
+                    "type": "object"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "reasoning_level": {
+                        "enum": [
+                          "none",
+                          "minimal",
+                          "low",
+                          "medium",
+                          "high",
+                          "xhigh",
+                          "max",
+                          "ultra"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "reasoning_level"
+                    ],
+                    "type": "object"
+                  },
+                  "plugins": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "capabilities": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 64,
+                          "type": "array",
+                          "uniqueItems": true
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "capabilities",
+                        "id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 64,
+                    "type": "array"
+                  },
+                  "profile": {
+                    "const": "coding"
+                  },
+                  "revision": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "skills": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "digest": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "anyOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "digest",
+                        "id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 64,
+                    "type": "array"
+                  },
+                  "state": {
+                    "enum": [
+                      "effective",
+                      "pending"
+                    ],
+                    "type": "string"
+                  },
+                  "tool_profile": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "digest": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "version": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "digest",
+                      "id",
+                      "version"
+                    ],
+                    "type": "object"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "context",
+                  "digest",
+                  "execution",
+                  "instructions",
+                  "model",
+                  "plugins",
+                  "profile",
+                  "revision",
+                  "skills",
+                  "state",
+                  "tool_profile",
+                  "version"
+                ],
+                "type": "object"
+              },
+              "disposition": {
+                "enum": [
+                  "applied",
+                  "pending",
+                  "duplicate"
+                ],
+                "type": "string"
+              },
+              "effective_from": {
+                "enum": [
+                  "current",
+                  "next_command"
+                ],
+                "type": "string"
+              },
+              "mutation_id": {
+                "type": "string"
+              },
+              "previous_revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "sequence": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              }
+            },
+            "required": [
+              "config",
+              "disposition",
+              "effective_from",
+              "mutation_id",
+              "previous_revision",
+              "sequence",
+              "session_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.session.configured"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.turn.receipt": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "discriminator": {
+              "propertyName": "disposition"
+            },
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "disposition": {
+                    "const": "accepted"
+                  },
+                  "error": {
+                    "const": null
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "session_revision": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "state": {
+                    "enum": [
+                      "active",
+                      "queued"
+                    ],
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "disposition",
+                  "error",
+                  "sequence",
+                  "session_id",
+                  "session_revision",
+                  "state",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "disposition": {
+                    "const": "duplicate"
+                  },
+                  "error": {
+                    "const": null
+                  },
+                  "sequence": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "session_revision": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "state": {
+                    "enum": [
+                      "active",
+                      "queued"
+                    ],
+                    "type": "string"
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "disposition",
+                  "error",
+                  "sequence",
+                  "session_id",
+                  "session_revision",
+                  "state",
+                  "version"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command_id": {
+                    "type": "string"
+                  },
+                  "disposition": {
+                    "const": "rejected"
+                  },
+                  "error": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "code": {
+                        "enum": [
+                          "invalid_field",
+                          "invalid_id",
+                          "unsupported_version",
+                          "too_large",
+                          "conflict",
+                          "not_found",
+                          "gap",
+                          "unavailable"
+                        ],
+                        "type": "string"
+                      },
+                      "field": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "version": {
+                        "const": 1
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "field",
+                      "version"
+                    ],
+                    "type": "object"
+                  },
+                  "sequence": {
+                    "const": null
+                  },
+                  "session_id": {
+                    "type": "string"
+                  },
+                  "session_revision": {
+                    "const": null
+                  },
+                  "state": {
+                    "const": null
+                  },
+                  "version": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "command_id",
+                  "disposition",
+                  "error",
+                  "sequence",
+                  "session_id",
+                  "session_revision",
+                  "state",
+                  "version"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.turn.receipt"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.session.opened": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "protocol_profile": {
+                "const": "coding"
+              },
+              "protocol_version": {
+                "const": 1
+              },
+              "session_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              },
+              "workspace_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "protocol_profile",
+              "protocol_version",
+              "session_id",
+              "version",
+              "workspace_id"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.session.opened"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    },
+    "jido.client.v1.workspace.configured": {
+      "role": "result",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": false,
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "created",
+                  "updated",
+                  "unchanged"
+                ],
+                "type": "string"
+              },
+              "mutation_id": {
+                "type": "string"
+              },
+              "version": {
+                "const": 1
+              },
+              "workspace": {
+                "additionalProperties": false,
+                "properties": {
+                  "file_path": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "mode": {
+                    "enum": [
+                      "shared",
+                      "isolated"
+                    ],
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "ownership": {
+                    "enum": [
+                      "borrowed",
+                      "managed"
+                    ],
+                    "type": "string"
+                  },
+                  "runtime_path": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "enum": [
+                      "ready",
+                      "unavailable"
+                    ],
+                    "type": "string"
+                  },
+                  "version": {
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "file_path",
+                  "id",
+                  "mode",
+                  "name",
+                  "ownership",
+                  "runtime_path",
+                  "status",
+                  "version"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "disposition",
+              "mutation_id",
+              "version",
+              "workspace"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "source": {
+            "const": "/jido/code/server"
+          },
+          "specversion": {
+            "const": "1.0"
+          },
+          "type": {
+            "const": "jido.client.v1.workspace.configured"
+          }
+        },
+        "required": [
+          "specversion",
+          "id",
+          "source",
+          "type",
+          "data"
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "version": 1
+}

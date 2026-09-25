@@ -1,0 +1,53 @@
+name: Documentation
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - name: Verify Seigyo import
+        run: python3 scripts/verify_import.py
+      - name: Verify frozen contract
+        run: python3 upstream/seigyo/apps/jido_code_acceptance/scripts/verify_contract.py upstream/seigyo/apps/jido_seigyo/priv/seigyo/coding-v1 --digest 772c344d263f7cf35ba49c01040832192e75324001e75ad5409f57ae78aacb56
+      - name: Run portable protocol checks
+        env:
+          SEIGYO_CONTRACT: upstream/seigyo/apps/jido_seigyo/priv/seigyo/coding-v1
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest discover -s upstream/seigyo/apps/jido_code_acceptance/scripts -p 'test_*.py'
+      - run: npm run docs:build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: website/.vitepress/dist
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

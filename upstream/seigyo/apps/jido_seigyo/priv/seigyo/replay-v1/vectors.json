@@ -1,0 +1,303 @@
+{
+  "format": 1,
+  "session_id": "ses_01994770-1234-7000-8000-000000000001",
+  "cases": [
+    {
+      "name": "apply then equal duplicate",
+      "after": 0,
+      "window": 2,
+      "steps": [
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 1,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": true,
+          "cursor": 1
+        },
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 1,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "duplicate",
+          "commit": true,
+          "cursor": 1
+        },
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 2,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": true,
+          "cursor": 2
+        }
+      ]
+    },
+    {
+      "name": "failed application does not advance",
+      "after": 0,
+      "window": 2,
+      "steps": [
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 1,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": false,
+          "cursor": 0
+        },
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 1,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": true,
+          "cursor": 1
+        }
+      ]
+    },
+    {
+      "name": "conflict at the same sequence",
+      "after": 0,
+      "window": 2,
+      "steps": [
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 1,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": true,
+          "cursor": 1
+        },
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 1,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "queued"
+            }
+          },
+          "check": "conflict",
+          "commit": false,
+          "cursor": 1
+        }
+      ]
+    },
+    {
+      "name": "gap cannot skip application",
+      "after": 0,
+      "window": 2,
+      "steps": [
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 2,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "gap",
+          "commit": false,
+          "cursor": 0
+        },
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 1,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": true,
+          "cursor": 1
+        },
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 2,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": true,
+          "cursor": 2
+        }
+      ]
+    },
+    {
+      "name": "evidence is bounded",
+      "after": 0,
+      "window": 1,
+      "steps": [
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 1,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": true,
+          "cursor": 1
+        },
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 2,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": true,
+          "cursor": 2
+        },
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 1,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "gap",
+          "commit": false,
+          "cursor": 2
+        }
+      ]
+    },
+    {
+      "name": "cursor restored without fingerprints",
+      "after": 2,
+      "window": 2,
+      "steps": [
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 2,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "gap",
+          "commit": false,
+          "cursor": 2
+        },
+        {
+          "update": {
+            "version": 1,
+            "session_id": "ses_01994770-1234-7000-8000-000000000001",
+            "sequence": 3,
+            "kind": "event",
+            "event_type": "command_accepted",
+            "command_id": "cmd_01994770-1234-7000-8000-000000000002",
+            "payload": {
+              "kind": "submit_text",
+              "state": "active"
+            }
+          },
+          "check": "apply",
+          "commit": true,
+          "cursor": 3
+        }
+      ]
+    }
+  ]
+}

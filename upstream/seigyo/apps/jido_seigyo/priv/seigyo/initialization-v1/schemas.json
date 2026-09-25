@@ -1,0 +1,343 @@
+{
+  "offer": {
+    "additionalProperties": false,
+    "properties": {
+      "optional_features": {
+        "items": {
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+/[1-9][0-9]*$",
+          "type": "string"
+        },
+        "maxItems": 32,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "profile": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 64,
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "versions": {
+            "items": {
+              "maximum": 9007199254740991,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "versions"
+        ],
+        "type": "object"
+      },
+      "required_features": {
+        "items": {
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+/[1-9][0-9]*$",
+          "type": "string"
+        },
+        "maxItems": 32,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "versions": {
+        "items": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "maxItems": 8,
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      }
+    },
+    "required": [
+      "optional_features",
+      "profile",
+      "required_features",
+      "versions"
+    ],
+    "type": "object",
+    "x-seigyo-maxJsonBytes": 8192
+  },
+  "saved_requirements": {
+    "additionalProperties": false,
+    "properties": {
+      "profile": {
+        "additionalProperties": false,
+        "properties": {
+          "digest": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "id": {
+            "maxLength": 64,
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "version": {
+            "maximum": 9007199254740991,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "digest",
+          "id",
+          "version"
+        ],
+        "type": "object"
+      },
+      "protocol_version": {
+        "maximum": 9007199254740991,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "required_features": {
+        "items": {
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+/[1-9][0-9]*$",
+          "type": "string"
+        },
+        "maxItems": 32,
+        "type": "array",
+        "uniqueItems": true
+      }
+    },
+    "required": [
+      "profile",
+      "protocol_version",
+      "required_features"
+    ],
+    "type": "object"
+  },
+  "selection": {
+    "additionalProperties": false,
+    "properties": {
+      "capabilities": {
+        "additionalProperties": false,
+        "properties": {
+          "controls": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 64,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "operations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 64,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "principal": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          },
+          "profile": {
+            "maxLength": 64,
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "push_signal_types": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 64,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "request_signal_types": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 64,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "result_signal_types": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 64,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "update_event_types": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 64,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "version": {
+            "maximum": 9007199254740991,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "controls",
+          "operations",
+          "principal",
+          "profile",
+          "push_signal_types",
+          "request_signal_types",
+          "result_signal_types",
+          "update_event_types",
+          "version"
+        ],
+        "type": "object"
+      },
+      "features": {
+        "items": {
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+/[1-9][0-9]*$",
+          "type": "string"
+        },
+        "maxItems": 32,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "limits": {
+        "additionalProperties": false,
+        "properties": {
+          "attachment_bytes": {
+            "maximum": 104857600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "attachment_chunk_decoded_bytes": {
+            "maximum": 65536,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "command_text_bytes": {
+            "maximum": 8192,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "history_text_bytes": {
+            "maximum": 4000,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "json_integer_max": {
+            "maximum": 9007199254740991,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "page_items": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "progress_text_bytes": {
+            "maximum": 16384,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "request_ref_bytes": {
+            "maximum": 128,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "result_blocks_json_bytes": {
+            "maximum": 262144,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "result_text_bytes": {
+            "maximum": 32768,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "session_instructions_bytes": {
+            "maximum": 16384,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "signal_json_bytes": {
+            "maximum": 512000,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "updates_page_json_bytes": {
+            "maximum": 262144,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "websocket_frame_bytes": {
+            "maximum": 524288,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "workspace_patch_bytes": {
+            "maximum": 65536,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "websocket_frame_bytes",
+          "signal_json_bytes",
+          "request_ref_bytes",
+          "json_integer_max",
+          "page_items",
+          "updates_page_json_bytes"
+        ],
+        "type": "object"
+      },
+      "profile": {
+        "additionalProperties": false,
+        "properties": {
+          "digest": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "id": {
+            "maxLength": 64,
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "version": {
+            "maximum": 9007199254740991,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "digest",
+          "id",
+          "version"
+        ],
+        "type": "object"
+      },
+      "version": {
+        "const": 1
+      }
+    },
+    "required": [
+      "capabilities",
+      "features",
+      "limits",
+      "profile",
+      "version"
+    ],
+    "type": "object"
+  }
+}

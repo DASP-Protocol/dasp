@@ -1,0 +1,925 @@
+{
+  "capabilities": {
+    "controls": [
+      "watch_progress",
+      "watch_updates"
+    ],
+    "operations": [
+      "open",
+      "submit",
+      "updates",
+      "history",
+      "view",
+      "trace",
+      "workspace_changes",
+      "workspaces",
+      "workspace_configure",
+      "execution_catalog",
+      "configuration",
+      "configuration_history",
+      "configure",
+      "fork",
+      "submit_turn",
+      "steer_turn",
+      "cancel_turn",
+      "result",
+      "attachment_begin",
+      "attachment_chunk",
+      "attachment_commit"
+    ],
+    "profile": "coding",
+    "push_signal_types": [
+      "jido.client.v1.update",
+      "jido.client.v1.progress",
+      "jido.client.v1.resync.required"
+    ],
+    "request_signal_types": [
+      "jido.client.v1.session.open",
+      "jido.client.v1.command",
+      "jido.client.v1.session.configure",
+      "jido.client.v1.session.fork",
+      "jido.client.v1.turn.submit",
+      "jido.client.v1.turn.steer",
+      "jido.client.v1.turn.cancel",
+      "jido.client.v1.workspace.configure",
+      "jido.client.v1.attachment.begin",
+      "jido.client.v1.attachment.chunk",
+      "jido.client.v1.attachment.commit"
+    ],
+    "result_signal_types": [
+      "jido.client.v1.session.opened",
+      "jido.client.v1.receipt",
+      "jido.client.v1.updates.page",
+      "jido.client.v1.history.page",
+      "jido.client.v1.view",
+      "jido.client.v1.trace",
+      "jido.client.v1.workspace.changes",
+      "jido.client.v1.execution.catalog",
+      "jido.client.v1.session.configuration",
+      "jido.client.v1.session.configurations.page",
+      "jido.client.v1.session.configured",
+      "jido.client.v1.session.forked",
+      "jido.client.v1.turn.receipt",
+      "jido.client.v1.turn.controlled",
+      "jido.client.v1.result",
+      "jido.client.v1.failure",
+      "jido.client.v1.workspaces",
+      "jido.client.v1.workspace.configured",
+      "jido.client.v1.attachment"
+    ],
+    "update_event_types": [
+      "command_accepted",
+      "turn_started",
+      "turn_steered",
+      "turn_cancel_requested",
+      "command_completed",
+      "command_failed",
+      "command_cancelled",
+      "command_uncertain",
+      "session_configured",
+      "context_compacted"
+    ],
+    "version": 1
+  },
+  "controls": [
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "request_ref": {
+            "minLength": 1,
+            "pattern": "^[^\\u0000-\\u001f\\u007f]+$",
+            "type": "string",
+            "x-seigyo-maxUtf8Bytes": 128
+          },
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "request_ref",
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "SEIGYO-TEST-003"
+      ],
+      "name": "watch_progress",
+      "payload_keys": [
+        "request_ref",
+        "session_id"
+      ],
+      "push_event": "progress",
+      "push_signal_type": "jido.client.v1.progress",
+      "reply": "session_id"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "after_sequence": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "request_ref": {
+            "minLength": 1,
+            "pattern": "^[^\\u0000-\\u001f\\u007f]+$",
+            "type": "string",
+            "x-seigyo-maxUtf8Bytes": 128
+          },
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "after_sequence",
+          "request_ref",
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "SEIGYO-TEST-008",
+        "SEIGYO-TEST-020"
+      ],
+      "name": "watch_updates",
+      "payload_keys": [
+        "after_sequence",
+        "request_ref",
+        "session_id"
+      ],
+      "push_events": [
+        "update",
+        "resync_required"
+      ],
+      "push_signal_types": [
+        "jido.client.v1.update",
+        "jido.client.v1.resync.required"
+      ],
+      "reply": "jido.client.v1.updates.page"
+    }
+  ],
+  "errors": {
+    "invalid_command": {
+      "code": "invalid_id",
+      "field": "command_id"
+    },
+    "invalid_cursor": {
+      "code": "invalid_field",
+      "field": "after_sequence"
+    },
+    "invalid_limit": {
+      "code": "invalid_field",
+      "field": "limit"
+    },
+    "invalid_revision_cursor": {
+      "code": "invalid_field",
+      "field": "after_revision"
+    },
+    "invalid_session": {
+      "code": "invalid_id",
+      "field": "session_id"
+    },
+    "invalid_target_command": {
+      "code": "invalid_id",
+      "field": "target_command_id"
+    },
+    "missing_workspace_root": {
+      "code": "unavailable",
+      "field": "workspace_root"
+    },
+    "unknown_command": {
+      "code": "not_found",
+      "field": "command_id"
+    },
+    "unknown_session": {
+      "code": "not_found",
+      "field": "session_id"
+    }
+  },
+  "limits": {
+    "attachment_bytes": 104857600,
+    "attachment_chunk_decoded_bytes": 65536,
+    "command_text_bytes": 8192,
+    "history_text_bytes": 4000,
+    "json_integer_max": 9007199254740991,
+    "page_items": 100,
+    "progress_text_bytes": 16384,
+    "request_ref_bytes": 128,
+    "result_blocks_json_bytes": 262144,
+    "result_text_bytes": 32768,
+    "session_instructions_bytes": 16384,
+    "signal_json_bytes": 512000,
+    "updates_page_json_bytes": 262144,
+    "websocket_frame_bytes": 524288,
+    "workspace_patch_bytes": 65536
+  },
+  "operations": [
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-001",
+        "SEIGYO-TEST-018"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "signal",
+      "name": "open",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.session.open",
+      "result_signal_type": "jido.client.v1.session.opened"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-002",
+        "SEIGYO-TEST-018"
+      ],
+      "failure_delivery": [
+        "failure",
+        "rejected_receipt"
+      ],
+      "input": "signal",
+      "name": "submit",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.command",
+      "result_signal_type": "jido.client.v1.receipt"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "after_sequence": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "limit": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "after_sequence",
+          "limit",
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "SEIGYO-TEST-007",
+        "SEIGYO-TEST-020"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "updates",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.updates.page"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "after_sequence": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "limit": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "after_sequence",
+          "limit",
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "SEIGYO-TEST-007"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "history",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.history.page"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "SEIGYO-TEST-009"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "view",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.view"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "command_id": {
+            "pattern": "^cmd_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "command_id",
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "SEIGYO-TEST-004"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "trace",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.trace"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "SEIGYO-TEST-004",
+        "CODING-SESSION-002"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "workspace_changes",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.workspace.changes"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "CODING-SESSION-016"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "workspaces",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.workspaces"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-019",
+        "CODING-SESSION-016"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "signal",
+      "name": "workspace_configure",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.workspace.configure",
+      "result_signal_type": "jido.client.v1.workspace.configured"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "CODING-SESSION-012",
+        "CODING-SESSION-018"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "execution_catalog",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.execution.catalog"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "CODING-SESSION-007"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "configuration",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.session.configuration"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "after_revision": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "limit": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "after_revision",
+          "limit",
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "CODING-SESSION-007"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "configuration_history",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.session.configurations.page"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-019",
+        "CODING-SESSION-007"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "signal",
+      "name": "configure",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.session.configure",
+      "result_signal_type": "jido.client.v1.session.configured"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-019",
+        "CODING-SESSION-010",
+        "CODING-SESSION-017"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "signal",
+      "name": "fork",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.session.fork",
+      "result_signal_type": "jido.client.v1.session.forked"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-002",
+        "CODING-SESSION-008"
+      ],
+      "failure_delivery": [
+        "failure",
+        "rejected_receipt"
+      ],
+      "input": "signal",
+      "name": "submit_turn",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.turn.submit",
+      "result_signal_type": "jido.client.v1.turn.receipt"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-019",
+        "CODING-SESSION-008"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "signal",
+      "name": "steer_turn",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.turn.steer",
+      "result_signal_type": "jido.client.v1.turn.controlled"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-019",
+        "CODING-SESSION-008"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "signal",
+      "name": "cancel_turn",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.turn.cancel",
+      "result_signal_type": "jido.client.v1.turn.controlled"
+    },
+    {
+      "args_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "command_id": {
+            "pattern": "^cmd_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "session_id": {
+            "pattern": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "command_id",
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "conformance_cases": [
+        "SEIGYO-TEST-020",
+        "CODING-SESSION-013"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "args",
+      "name": "result",
+      "payload_keys": [
+        "args",
+        "op",
+        "request_ref"
+      ],
+      "request_signal_type": null,
+      "result_signal_type": "jido.client.v1.result"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-019",
+        "CODING-SESSION-011"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "signal",
+      "name": "attachment_begin",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.attachment.begin",
+      "result_signal_type": "jido.client.v1.attachment"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-019",
+        "CODING-SESSION-011"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "signal",
+      "name": "attachment_chunk",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.attachment.chunk",
+      "result_signal_type": "jido.client.v1.attachment"
+    },
+    {
+      "args_schema": null,
+      "conformance_cases": [
+        "SEIGYO-TEST-019",
+        "CODING-SESSION-011"
+      ],
+      "failure_delivery": [
+        "failure"
+      ],
+      "input": "signal",
+      "name": "attachment_commit",
+      "payload_keys": [
+        "op",
+        "request_ref",
+        "signal"
+      ],
+      "request_signal_type": "jido.client.v1.attachment.commit",
+      "result_signal_type": "jido.client.v1.attachment"
+    }
+  ],
+  "passing_slices": [
+    "SEIGYO-TEST-001:sequential-open-simple-reply",
+    "SEIGYO-TEST-001:concurrent-open",
+    "SEIGYO-TEST-002:duplicate-conflict",
+    "SEIGYO-TEST-002:concurrent-duplicate-conflict",
+    "SEIGYO-TEST-002:effective-model-retry-identity",
+    "SEIGYO-TEST-003:disconnect-recovery",
+    "SEIGYO-TEST-003:all-update-variants-disconnect-replay",
+    "SEIGYO-TEST-003:live-progress-watch",
+    "SEIGYO-TEST-003:live-update-reattach",
+    "SEIGYO-TEST-004:trace-isolation",
+    "SEIGYO-TEST-004:trace-reasoning-redaction",
+    "SEIGYO-TEST-004:workspace-changes",
+    "SEIGYO-TEST-004:workspace-patch-limit",
+    "SEIGYO-TEST-005:known-failure-recovery",
+    "SEIGYO-TEST-005:failure-view-outcome",
+    "SEIGYO-TEST-005:uncertain-effect-block",
+    "SEIGYO-TEST-006:invalid-session-id",
+    "SEIGYO-TEST-006:client-command-input-validation",
+    "SEIGYO-TEST-007:updates-page",
+    "SEIGYO-TEST-007:in-flight-page-growth",
+    "SEIGYO-TEST-007:history-page",
+    "SEIGYO-TEST-007:closed-page-contracts",
+    "SEIGYO-TEST-008:attach-replay-overlap",
+    "SEIGYO-TEST-008:bounded-loss-resync",
+    "SEIGYO-TEST-009:stable-view",
+    "SEIGYO-TEST-009:command-status-view",
+    "SEIGYO-TEST-009:closed-typed-view",
+    "SEIGYO-TEST-009:bounded-view-window",
+    "SEIGYO-TEST-009:multibyte-view-bounds",
+    "SEIGYO-TEST-009:coherent-view-race",
+    "SEIGYO-TEST-010:invalid-credential",
+    "SEIGYO-TEST-010:principal-isolation",
+    "SEIGYO-TEST-013:completed-session-file-restart",
+    "SEIGYO-TEST-013:in-flight-session-file-restart",
+    "SEIGYO-TEST-013:uncertain-view-recovery",
+    "SEIGYO-TEST-018:coding-profile-discovery",
+    "SEIGYO-TEST-018:operation-error-matrix",
+    "SEIGYO-TEST-019:durable-mutation-replay",
+    "SEIGYO-TEST-020:cursor-delivery-integrity",
+    "CODING-SESSION-001:multiple-turn-history",
+    "CODING-SESSION-002:tracked-file-change",
+    "CODING-SESSION-003:inspect-edit-verify",
+    "CODING-SESSION-004:second-turn-correction",
+    "CODING-SESSION-005:one-active-command",
+    "CODING-SESSION-006:mixed-outcome-correlation",
+    "CODING-SESSION-007:versioned-session-configuration",
+    "CODING-SESSION-007:pinned-protocol-config-tool-history",
+    "CODING-SESSION-007-CONTEXT:layered-agent-context",
+    "CODING-SESSION-008:queue-steer-cancel",
+    "CODING-SESSION-008-LONG:long-session-continuation",
+    "CODING-SESSION-009:long-context-compaction",
+    "CODING-SESSION-010:fork-side-chat",
+    "CODING-SESSION-011:immutable-attachment-upload-and-reuse",
+    "CODING-SESSION-011:durable-upload-and-ready-recovery",
+    "CODING-SESSION-012:execution-target-sandbox-recovery",
+    "CODING-SESSION-013:normalized-result-hidden-orchestration",
+    "CODING-SESSION-013:execution-completion-and-usage-measurement",
+    "CODING-SESSION-014:provider-openai-chat",
+    "CODING-SESSION-014:provider-anthropic-messages",
+    "CODING-SESSION-015:beam-client-fault-isolation",
+    "CODING-SESSION-016:workspace-catalog-runtime-path",
+    "CODING-SESSION-017:coherent-current-head-fork",
+    "CODING-SESSION-018:default-local-smolbox-placement",
+    "CODING-SESSION-019:unavailable-smolbox-admission",
+    "CODING-SESSION-020:smolbox-workspace-effect"
+  ],
+  "profile": "coding",
+  "status": "coding-v1-local-release-bundle",
+  "transport": {
+    "call_event": "call",
+    "frame_shape": [
+      "join_ref",
+      "ref",
+      "topic",
+      "event",
+      "payload"
+    ],
+    "http": false,
+    "join_event": "phx_join",
+    "name": "phoenix-channel-websocket",
+    "phoenix_version": "2.0.0",
+    "reply_event": "phx_reply",
+    "route": "/client/socket/websocket",
+    "topic": "client:v1"
+  },
+  "validation": {
+    "closed_objects": true,
+    "custom_refinements": [
+      {
+        "applies_to": "bounded strings and request_ref",
+        "error_code": "too_large",
+        "id": "utf8-byte-length",
+        "rule": "Limits use encoded UTF-8 bytes, not Unicode character count."
+      },
+      {
+        "applies_to": "metadata, result blocks, and open values",
+        "error_code": "invalid_field",
+        "id": "portable-json-tree",
+        "rule": "Values contain only JSON objects with string keys, arrays, strings, booleans, null, and safe integers within the published limits."
+      },
+      {
+        "applies_to": "Signals with related identifiers, states, or ranges",
+        "error_code": "invalid_field",
+        "id": "cross-field-coherence",
+        "rule": "Related fields must identify one coherent protocol object and state transition."
+      },
+      {
+        "applies_to": "updates, history, and configuration history pages",
+        "error_code": "invalid_field",
+        "id": "ordered-page",
+        "rule": "Page entries are strictly ordered and cursor fields describe the returned range."
+      }
+    ],
+    "id_patterns": {
+      "actor": "^act_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "actor_instance": "^ain_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "artifact": "^art_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "attachment": "^att_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "command": "^cmd_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "mutation": "^mut_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "result": "^res_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "sandbox": "^sbx_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "session": "^ses_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "signal": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "target": "^tgt_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "workspace": "^ws_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "json_values": {
+      "atoms_or_runtime_values": false,
+      "floats": false,
+      "map_keys": "string"
+    },
+    "request_ref": {
+      "control_characters": false,
+      "max_utf8_bytes": 128,
+      "min_utf8_bytes": 1,
+      "unique_while_active": true
+    },
+    "unknown_signal_types": "reject"
+  },
+  "version": 1
+}
