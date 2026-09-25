@@ -62,8 +62,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .dasp-home .intro { padding: 80px 0 64px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(360px, 1fr); gap: 64px; align-items: center; }
 .dasp-home .hero-copy h1 { text-wrap: wrap; font-size: clamp(42px, 3.9vw, 54px); line-height: 1.12; letter-spacing: -.035em; font-weight: 550; margin: 0; }
-.hero-copy h1 em { font-style: normal; color: var(--vp-c-brand-1); }
-.dasp-home .hero-description { font-size: 18px; line-height: 1.75; max-width: 45ch; color: var(--vp-c-text-2); margin: 26px 0 30px; }
+.dasp-home .hero-tagline { font-size: 22px; line-height: 1.45; font-weight: 500; letter-spacing: -.015em; color: var(--vp-c-brand-1); margin: 22px 0 0; text-wrap: balance; }
+.dasp-home .hero-description { font-size: 18px; line-height: 1.75; max-width: 45ch; color: var(--vp-c-text-2); margin: 18px 0 30px; }
 .hero-actions { display: flex; gap: 26px; align-items: center; flex-wrap: wrap; }
 .dasp-home .primary-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--dasp-button-bg); color: var(--dasp-button-text); padding: 14px 20px; min-height: 48px; border-radius: 6px; font-size: 14px; font-weight: 600; line-height: 1.5; }
 .dasp-home .primary-link:hover { background: var(--vp-c-brand-2); color: var(--vp-c-bg); }

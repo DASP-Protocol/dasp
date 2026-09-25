@@ -9,7 +9,8 @@ const link = (p) => withBase(p);
     <section class="intro" aria-labelledby="hero-title">
       <div class="hero-grid">
         <div class="hero-copy">
-          <h1 id="hero-title">The connection ends.<br><em>The session continues.</em></h1>
+          <h1 id="hero-title">Durable Actor<br>Session Protocol</h1>
+          <p class="hero-tagline">The connection ends. The session continues.</p>
           <p class="hero-description">A shared protocol for commands, saved outcomes, and recovery. Connect to durable actors across languages. Pick up where you left off.</p>
           <div class="hero-actions">
             <a class="primary-link" :href="link('/guide.html')">Explore the protocol <ArrowIcon /></a>
