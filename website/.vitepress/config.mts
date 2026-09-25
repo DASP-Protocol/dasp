@@ -53,6 +53,7 @@ export default defineConfig({
     sidebar: {
       '/guide/': [{ text: 'Guide', items: [
         { text: 'What is DASP?', link: '/guide/' },
+        { text: 'Why DASP? FAQ', link: '/guide/faq' },
         { text: 'Core concepts', link: '/guide/concepts' },
         { text: 'Use cases', link: '/guide/use-cases' },
         { text: 'Add DASP to a project', link: '/build/' }

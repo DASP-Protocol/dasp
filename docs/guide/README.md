@@ -37,3 +37,5 @@ More than one authorized client can read a session and submit profile commands. 
 Draft-01 contains core requirements, JSON Schemas, examples, and artifact checks. It is open for technical review and can change. No production binding, host, or client package is released.
 
 Continue with [core concepts](concepts.md), [use cases](use-cases.md), or [the build guide](../build/README.md).
+
+For short answers about A2A, MCP, and other protocols, read [Why DASP? FAQ](faq.md).

@@ -1,5 +1,6 @@
 export const pages = {
   'docs/guide/README.md': 'guide/index.md',
+  'docs/guide/faq.md': 'guide/faq.md',
   'docs/guide/concepts.md': 'guide/concepts.md',
   'docs/guide/use-cases.md': 'guide/use-cases.md',
   'docs/build/README.md': 'build/index.md',
