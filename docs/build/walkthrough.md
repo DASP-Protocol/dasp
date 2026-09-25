@@ -1,53 +1,31 @@
 # The request timed out. Did the work happen?
 
-You ask an agent to update a dependency, run the tests, and prepare a pull request. Your app shows a spinner. Then the connection drops.
+You ask an agent to make a code change. Then the connection drops. Did the server accept the work? Is it safe to try again?
 
-Sending the request was easy. Now you need to know what the server accepted, what the agent did, and whether it is safe to try again.
+Follow one task through four common problems. DASP defines what the server saves and what each client can recover.
 
 <WalkthroughStory />
 
-## What needs to survive?
+## What this means for your project
 
-A stream can show activity while a client is connected. Recovery needs a saved record. DASP gives that record meaning at the server boundary.
+Your app should not need to stay connected to know what happened. A DASP server keeps command records, ordered updates, and final outcomes. Clients return to that shared record after a failure.
 
-| Information | What the client can rely on |
-| --- | --- |
-| Accepted receipt | The server saved admission. Work can still be pending. |
-| Progress message | Temporary activity, such as “Running tests.” It does not prove completion. |
-| Saved update | A fact with a position in the session history. It can be read again. |
-| Saved outcome | The final result the server can establish, including uncertainty. |
-
-A **cursor** is the last saved update a client applied. The client saves that position with its application state. Receiving a receipt or showing a progress message does not advance it.
-
-## Your application still decides
-
-DASP defines the server contract. The agent's tool calls, execution engine, and application policy remain your choice. A profile must make these decisions explicit:
+You still choose the agent, its tools, and what counts as success. DASP does not guarantee exactly-once effects in external services.
 
 <details>
-<summary>When is the work complete?</summary>
+<summary>What must my application define?</summary>
 
-For this example, “complete” could require passing tests and a confirmed pull request reference. A message saying “Done” is not enough. The profile defines the evidence needed before the server can save a completed outcome.
+An application profile defines commands, inputs, and results. For this example, success could require passing tests and a confirmed pull request reference.
+
+The profile also defines how to check an external result. In draft-01, an uncertain outcome is final. A later check requires a separate profile action; it cannot change the original outcome.
+
+Cancellation also needs application rules. Stopping new tool calls does not undo a pull request. DASP core has no generic cancellation operation.
 
 </details>
 
-<details>
-<summary>What would Cancel mean?</summary>
+## Take the next step
 
-Stopping new tool calls does not undo a branch or delete a pull request. A cancellation command needs a profile-defined target and cleanup boundary. DASP core does not supply a generic cancellation operation.
+The dependency task is an illustration. No server runs on this page, and this application profile is not released.
 
-</details>
-
-<details>
-<summary>How do you check an external effect?</summary>
-
-Use the external service's effect keys, a transaction where available, or a way to look up the result. If the server cannot establish the effect, it saves an uncertain outcome. DASP does not guarantee exactly-once external effects.
-
-An uncertain outcome stays fixed in draft-01. Later reconciliation requires a separately specified profile action; it cannot rewrite the original outcome.
-
-</details>
-
-## Inspect a complete recorded exchange
-
-The story uses an illustrative dependency-update command. To inspect checked-in messages, continue with the smaller [counter exchange](../reference/recorded-exchange.md). It includes the install commands, full CloudEvents, a lost receipt, a retry, and two clients recovering the same state.
-
-[Inspect the recorded exchange](../reference/recorded-exchange.md) · [Read the recovery requirements](../specification/recovery.md)
+- [Inspect the recorded counter exchange](../reference/recorded-exchange.md) for complete messages and commands to run the artifact checks.
+- [Add DASP to your project](README.md) to review the server, client, and profile responsibilities.
