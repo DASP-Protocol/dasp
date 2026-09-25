@@ -9,6 +9,8 @@
     "docs:preview": "vitepress preview website"
   },
   "devDependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
     "vitepress": "1.6.4"
   },
   "overrides": {
