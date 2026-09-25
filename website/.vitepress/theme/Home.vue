@@ -1,6 +1,7 @@
 <script setup>
 import { withBase } from 'vitepress';
 import ArrowIcon from './ArrowIcon.vue';
+import ProtocolExplainer from './ProtocolExplainer.vue';
 const link = (p) => withBase(p);
 </script>
 
@@ -10,35 +11,41 @@ const link = (p) => withBase(p);
       <div class="hero-grid">
         <div class="hero-copy">
           <h1 id="hero-title">Durable Actor<br>Session Protocol</h1>
-          <p class="hero-tagline">The connection ends. The session continues.</p>
-          <p class="hero-description">A shared protocol for commands, saved outcomes, and recovery. Connect to durable actors across languages. Pick up where you left off.</p>
+          <p class="hero-tagline">A control protocol for durable actors.</p>
+          <p class="hero-description">For agent builders who need commands, saved outcomes, and recovery across languages—without requiring chat or turn semantics in the core.</p>
           <div class="hero-actions">
             <a class="primary-link" :href="link('/guide.html')">Explore the protocol <ArrowIcon /></a>
             <a class="text-link" href="https://github.com/DASP-Protocol/dasp">View on GitHub <ArrowIcon /></a>
           </div>
           <div class="hero-context"><span class="draft-tag"><span class="status-dot"></span> Design draft</span><p class="hero-note">Built from Seigyo. Elixir first. TypeScript next.</p></div>
         </div>
-        <figure class="session-diagram" aria-label="A client submits a command, disconnects, and resumes from a saved update cursor. The actor continues its work.">
-          <figcaption class="diagram-header">A session across two connections</figcaption>
-          <div class="lane-labels"><span>Client</span><span>Actor session</span></div>
-          <div class="diagram-body">
-            <div class="client-line"></div><div class="actor-line"></div>
-            <div class="flow-row row-command"><span class="flow-label">submit command</span><i></i><b></b></div>
-            <div class="flow-row row-receipt reverse"><span class="flow-label">admission receipt</span><i></i><b></b></div>
-            <div class="disconnect"><span>connection lost</span></div>
-            <div class="saved-work"><span class="small-dot"></span> work continues<br><span class="saved-sub">outcome saved</span></div>
-            <div class="flow-row row-resume"><span class="flow-label">resume after cursor</span><i></i><b></b></div>
-            <div class="flow-row row-updates reverse"><span class="flow-label">replay saved updates</span><i></i><b></b></div>
-          </div>
-          <div class="diagram-footer"><span class="small-dot"></span> Same session. Same command identity.</div>
-        </figure>
+        <ProtocolExplainer kind="actors" />
       </div>
     </section>
 
-    <section class="principles" aria-label="Protocol principles">
-      <article><h2>Intent has an identity.</h2><p>Retry a command with the same ID and data. A lost reply must not create new work.</p></article>
-      <article><h2>Saved facts come first.</h2><p>Receipts report admission. Saved outcomes establish what happened. Progress stays temporary.</p></article>
-      <article><h2>Recovery is part of the contract.</h2><p>Apply ordered updates. Save the cursor. Resume from that point after a connection fails.</p></article>
+    <section class="actor-introduction" aria-labelledby="actor-title">
+      <h2 id="actor-title">Actors have work to do.<br>A conversation is optional.</h2>
+      <p>An actor accepts intent, manages state, and performs application work. DASP is defining the shared control contract around that work. A profile supplies the application-specific inputs and results; the core does not prescribe a chat interface.</p>
+    </section>
+
+    <section class="explanation-row" aria-labelledby="admission-title">
+      <div class="explanation-copy">
+        <h2 id="admission-title">Accepted does not<br>mean completed.</h2>
+        <p>A command carries a stable identity. Its receipt reports admission. A saved outcome tells the client what happened—even when the answer is uncertain.</p>
+        <p>Temporary progress helps a client show activity. It cannot prove completion.</p>
+        <a class="text-link" :href="link('/protocol/messages.html')">Understand the messages <ArrowIcon /></a>
+      </div>
+      <ProtocolExplainer kind="admission" />
+    </section>
+
+    <section class="explanation-row recovery-row" aria-labelledby="recovery-title">
+      <ProtocolExplainer kind="recovery" />
+      <div class="explanation-copy">
+        <h2 id="recovery-title">The connection ends.<br>The session continues.</h2>
+        <p>A disconnect does not cancel accepted work. Saved updates remain ordered within the session. A returning client reads after its last applied cursor.</p>
+        <p>Retry unresolved intent with the same command ID and data. Keep recovery explicit.</p>
+        <a class="text-link" :href="link('/protocol/recovery.html')">Read the recovery rules <ArrowIcon /></a>
+      </div>
     </section>
 
     <section class="contract-section" aria-labelledby="contract-title">
