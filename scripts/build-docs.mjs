@@ -1,42 +1,44 @@
-import { mkdir, readFile, writeFile, cp } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, cp, rm } from 'node:fs/promises';
 import path from 'node:path';
+import { pages, artifacts, aliases, generatedDirectories } from './site-map.mjs';
 
-const root = process.cwd();
 const repository = 'https://github.com/DASP-Protocol/dasp/blob/main/';
-const files = {
-  'docs/specification/README.md': 'protocol/index.md',
-  'docs/specification/cloudevents.md': 'protocol/cloudevents.md',
-  'docs/specification/profiles-and-bindings.md': 'protocol/profiles-and-bindings.md',
-  'docs/design/seigyo-mapping.md': 'project/seigyo-mapping.md',
-  'docs/specification/messages.md': 'protocol/messages.md',
-  'docs/specification/recovery.md': 'protocol/recovery.md',
-  'docs/specification/security-and-versioning.md': 'protocol/security-and-versioning.md',
-  'docs/specification/example.md': 'protocol/example.md',
-  'docs/design/decisions.md': 'project/decisions.md',
-  'docs/design/ahp-reference.md': 'project/ahp-reference.md',
-  'clients/README.md': 'clients/index.md',
-  'clients/elixir/README.md': 'clients/elixir.md',
-  'clients/typescript/README.md': 'clients/typescript.md',
-  'conformance/README.md': 'conformance/index.md',
-  'upstream/README.md': 'source/index.md'
-};
-for (const [source, destination] of Object.entries(files)) {
-  let text = await readFile(path.join(root, source), 'utf8');
+// Only these dedicated generated directories are removed. Authored theme/brand files are preserved.
+for (const directory of generatedDirectories) await rm(path.join('website', directory), { recursive: true, force: true });
+for (const directory of ['schemas', 'fixtures']) await rm(path.join('website/public', directory), { recursive: true, force: true });
+const requirements = JSON.parse(await readFile('conformance/requirements.json', 'utf8')).requirements;
+for (const [source, destination] of Object.entries(pages)) {
+  let text = await readFile(source, 'utf8');
+  if (source === 'conformance/README.md') {
+    const rows = requirements.map(r => `| [${r.id}](../${r.document}#${r.anchor}) | ${r.title} | ${r.artifactCases.join(', ') || 'None'} | ${r.runtimeCases.join(', ') || 'Not specified'} — not executed |`);
+    text = text.replace('<!-- REQUIREMENT_COVERAGE -->', '## Requirement index\n\nAll artifact links below indicate partial example coverage only.\n\n| Requirement | Scope | Artifact cases | Runtime cases |\n| --- | --- | --- | --- |\n' + rows.join('\n'));
+  }
   text = text.replace(/\]\(([^)]+)\)/g, (match, target) => {
     if (/^(https?:|mailto:|#)/.test(target)) return match;
     const [file, fragment] = target.split('#');
     const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(source), file));
-    const mapped = files[resolved];
-    const link = mapped
-      ? path.posix.relative(path.posix.dirname(destination), mapped).replace(/\.md$/, '.html')
-      : repository + resolved;
+    let link;
+    if (pages[resolved]) link = '/' + pages[resolved].replace(/index\.md$/, '').replace(/\.md$/, '.html');
+    else if (artifacts[resolved]) link = '/' + artifacts[resolved];
+    else link = repository + resolved;
     return `](${link}${fragment ? '#' + fragment : ''})`;
   });
-  const output = path.join(root, 'website', destination);
+  const paragraph = text.split('\n\n').find(p => !p.startsWith('#') && !p.startsWith('**') && !p.startsWith('Requirement')) || 'DASP protocol documentation.';
+  const description = paragraph.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*`]/g, '').replace(/\s+/g, ' ').slice(0, 180);
+  const output = path.join('website', destination);
   await mkdir(path.dirname(output), { recursive: true });
-  await writeFile(output, `---\neditLink: false\n---\n\n${text}`);
+  const fm = `---\ndescription: ${JSON.stringify(description)}\neditLink: false\n---\n\n`;
+  await writeFile(output, fm + text);
 }
-console.log(`Generated ${Object.keys(files).length} site pages from project documents.`);
-
-await mkdir('website/public/schemas', { recursive: true });
-await cp('specification/draft-01', 'website/public/schemas/draft-01', { recursive: true });
+for (const [source, destination] of Object.entries(artifacts)) {
+  const output = path.join('website/public', destination);
+  await mkdir(path.dirname(output), { recursive: true });
+  await cp(source, output);
+}
+for (const [alias, target] of Object.entries(aliases)) {
+  const link = '/' + target.replace(/index\.md(?=#|$)/, '').replace(/\.md(?=#|$)/, '.html');
+  const output = path.join('website', alias);
+  await mkdir(path.dirname(output), { recursive: true });
+  await writeFile(output, `---\nlayout: page\nsearch: false\nsidebar: false\ncanonicalPath: ${JSON.stringify(link)}\n---\n\n# Documentation moved\n\n[Continue to the current DASP documentation](${link}).\n`);
+}
+console.log(`Generated ${Object.keys(pages).length} documentation pages, ${Object.keys(aliases).length} compatibility pages, and ${Object.keys(artifacts).length} downloads.`);

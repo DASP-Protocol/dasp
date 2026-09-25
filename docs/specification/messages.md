@@ -4,7 +4,9 @@ All messages use the [CloudEvents envelope](cloudevents.md). The names below are
 
 Fields in each shape are required unless marked `?`. Optional and null are different. Core objects are closed, including the `error` and `profile` objects.
 
-## Shared values
+## Shared values {#dasp-msg-001}
+
+Requirement group **DASP-MSG-001**.
 
 | Name | Shape |
 | --- | --- |
@@ -19,7 +21,9 @@ Fields in each shape are required unless marked `?`. Optional and null are diffe
 
 The host MUST reject new writes before sequence exhaustion; it cannot wrap or reset a cursor within an existing session.
 
-## Catalog
+## Catalog {#dasp-msg-002}
+
+Requirement group **DASP-MSG-002**.
 
 Each type starts with `dasp.` and ends with `.v1`. Version 1 is a draft namespace until release.
 
@@ -40,9 +44,11 @@ Each type starts with `dasp.` and ends with `.v1`. Version 1 is a draft namespac
 | `dasp.resync.required.v1` | Host → client | Live delivery no longer complete |
 | `dasp.failure.v1` | Host → client | Request failed at the protocol boundary |
 
-Every client request and direct reply requires `requestid`. A reply MUST repeat the request ID. Push updates, progress, and resync notices do not use request correlation. A client MUST check reply type, request context, and resource identity before accepting a reply. A failure can reply to any request. Responses for different requests can arrive in any order.
+Every client request and direct reply requires `requestid`. A reply MUST repeat the request ID. Push updates, progress, and resync notices do not use request correlation. An optional `requestid` on a push event has no correlation meaning and MUST NOT be required by a receiver. A client MUST check reply type, request context, and resource identity before accepting a reply. A failure can reply to any request. Responses for different requests can arrive in any order.
 
-## Session
+## Session {#dasp-msg-003}
+
+Requirement group **DASP-MSG-003**.
 
 ```text
 SessionOpen = { session_id: ID, actor_id: ID, profile: Profile }
@@ -53,7 +59,9 @@ The client chooses the session ID. On first open, the host saves the identity, a
 
 A new session starts at cursor 0. Session creation itself does not consume an update sequence in this draft. Session expiry or deletion MUST NOT make the same ID available for an unrelated session.
 
-## Command and receipt
+## Command and receipt {#dasp-msg-004}
+
+Requirement group **DASP-MSG-004**.
 
 ```text
 Command = {
@@ -76,7 +84,9 @@ The profile defines `name` and `input`. The host MUST NOT infer chat or turn beh
 
 Accepted and duplicate receipts have the original admission sequence and a null error. Rejected receipts have a null admission sequence and a nonnull error. A duplicate reports the original saved admission, not current execution state.
 
-## Saved updates
+## Saved updates {#dasp-msg-005}
+
+Requirement group **DASP-MSG-005**.
 
 ```text
 Update = {
@@ -90,11 +100,13 @@ Update = {
 
 For `command.accepted`, `command_id` is required and nonnull; `payload` is exactly `{ "name": Name }`.
 
-For `command.outcome`, `command_id` is required and nonnull; `payload` is the Outcome value below. There is exactly one terminal outcome per admitted command. Its sequence is greater than the command's admission sequence.
+For `command.outcome`, `command_id` is required and nonnull; `payload` is the Outcome value below. An admitted command has at most one terminal outcome; a settled command has exactly one. Its sequence is greater than the command's admission sequence.
 
 For `application`, `payload` is exactly `{ "name": Name, "data": Payload }`. The profile defines the name and data. The command ID can be null for an actor event not caused by a command. A nonnull ID MUST refer to an admitted command in this session.
 
-## Outcomes
+## Outcomes {#dasp-msg-006}
+
+Requirement group **DASP-MSG-006**.
 
 ```text
 Outcome = {
@@ -120,7 +132,9 @@ The profile MUST define what completion and cancellation establish. Completion d
 
 A pending reply has null sequence and outcome. A settled reply contains the terminal update sequence and its exact saved outcome. Unknown or inaccessible command IDs return a protocol failure, never a false pending state.
 
-## Views and replay pages
+## Views and replay pages {#dasp-msg-007}
+
+Requirement group **DASP-MSG-007**.
 
 ```text
 ViewRead = { session_id: ID }
@@ -148,7 +162,9 @@ An update page takes a stable high-water mark `head`. Its events start at `after
 
 Nested events are the original saved CloudEvents. A new page has its own outer event ID and request ID. It MUST NOT replace nested event IDs with page-local identities.
 
-## Progress and resync
+## Progress and resync {#dasp-msg-008}
+
+Requirement group **DASP-MSG-008**.
 
 ```text
 Progress = {
@@ -169,7 +185,9 @@ Progress has no saved sequence. It may be delayed, repeated, reordered, or lost.
 
 On resync, the client MUST stop treating its live stream as complete and read saved events after its own last applied cursor. The host's head is informational.
 
-## Failure
+## Failure {#dasp-msg-009}
+
+Requirement group **DASP-MSG-009**.
 
 ```text
 Failure = { error: Error }
@@ -180,3 +198,40 @@ Core error codes are `invalid_message`, `unsupported_version`, `unsupported_prof
 Use a rejected receipt for a valid command whose admission is declined. Use failure for invalid requests, failed reads, or failures before a receipt can be established. If a malformed request has no valid request ID, the binding handles rejection without inventing correlation.
 
 A protocol failure or timeout does not establish an execution outcome. `retryable` indicates that the same request may be attempted again; it never permits a new command ID for uncertain work.
+
+
+## Operation rules {#dasp-msg-010}
+
+Requirement group **DASP-MSG-010**.
+
+The tables below apply after binding selection and authentication. A failure does not establish command settlement. Direct replies repeat the attempt's `requestid`.
+
+| Request | Preconditions | Success reply | Saved effect | Repeat behavior |
+| --- | --- | --- | --- | --- |
+| `session.open` | Authorized actor, supported profile, valid identity | `session.opened` | Saves a new session tuple at cursor 0 | Same tuple reopens; changed tuple conflicts |
+| `command` | Existing session, valid profile command, current permission | `receipt` | Accepted intent saves one admission fact | Equal admitted intent returns duplicate; changed intent conflicts |
+| `view.read` | Current read permission | `view` | None | A new read can return a later coherent cursor |
+| `updates.read` | Current read permission and cursor at or below head | `updates` | None | Saved nested events keep their identities; head can advance |
+| `outcome.read` | Current read permission and admitted command | `outcome` | None | Pending can settle; settled value remains unchanged |
+
+Push updates follow saved commits. Progress and resync notices add no saved fact. A binding defines whether live delivery exists and how it begins and recovers.
+
+## Core error meanings {#dasp-msg-011}
+
+Requirement group **DASP-MSG-011**.
+
+| Code | Condition |
+| --- | --- |
+| `invalid_message` | Envelope or core data fails validation |
+| `unsupported_version` | The required core contract cannot be selected |
+| `unsupported_profile` | The requested profile version is not supported |
+| `unsupported_command` | The selected profile does not support the command |
+| `not_found` | Resource is absent or not accessible under the disclosure policy |
+| `conflict` | An existing session tuple or admitted command identity has different semantic data |
+| `invalid_cursor` | Requested cursor is greater than the committed head or invalid for the operation |
+| `limit_exceeded` | Negotiated size, capacity, or sequence limits prevent the operation |
+| `unavailable` | The host cannot currently serve the operation |
+
+A valid command declined before admission uses a rejected receipt and its error code. A failed read or invalid request uses failure. Binding selection errors can occur before DASP framing; the binding specifies their representation. Profile validation errors use a documented profile code or `invalid_message` when no more specific code applies.
+
+The `retryable` value describes whether another attempt may succeed under the current error condition. It is not a promise of eventual success and does not weaken command retry identity.

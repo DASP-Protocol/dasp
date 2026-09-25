@@ -1,6 +1,8 @@
 # Profiles and transport bindings
 
-## Application profile
+## Application profile {#dasp-profile-001}
+
+Requirement group **DASP-PROFILE-001**.
 
 A profile supplies domain meaning while the core keeps the same shapes. Its immutable identity is an absolute URI plus a version string.
 
@@ -22,9 +24,11 @@ A workflow profile could define `job.start`. A device profile could define `targ
 
 The [counter example](example.md) defines a small illustrative profile. It is not a released standard profile.
 
-## Transport binding
+## Transport binding {#dasp-profile-002}
 
-The core specifies messages and behavior, not endpoints or connection frames. No Phoenix, HTTP, WebSocket, broker, or runtime is required by this draft.
+Requirement group **DASP-PROFILE-002**.
+
+The core specifies messages and behavior, not endpoints or connection frames. No specific HTTP, WebSocket, broker, or runtime binding is required by this draft.
 
 Every binding MUST define:
 
@@ -43,12 +47,16 @@ Binary CloudEvents encoding can be added by a future binding with a lossless map
 
 A host can enforce admission limits without promising a queue. Queue policy and per-command ordering are profile behavior. The order of saved updates does not by itself mean commands executed serially.
 
-## Multiple clients
+## Multiple clients {#dasp-profile-003}
+
+Requirement group **DASP-PROFILE-003**.
 
 The core allows authorized clients to read the same session and submit profile commands. It does not define membership roles, presence, shared text editing, or conflict-free concurrent application edits.
 
 Authorization policy remains a host concern. A collaboration profile or extension must define stronger multi-user behavior before clients rely on it. A client-provided user ID is never authority.
 
-## Release boundary
+## Release boundary {#dasp-profile-004}
 
-Draft-01 does not select the first production binding. A transport implementation and its conformance vectors are required before an independently built client can claim interoperability. This is an explicit remaining release decision, not an implicit adoption of a source transport.
+Requirement group **DASP-PROFILE-004**.
+
+Draft-01 does not select the first production binding. A transport implementation and its conformance vectors are required before an independently built client can claim interoperability. This is an explicit remaining release decision.

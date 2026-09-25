@@ -1,6 +1,8 @@
 # Security and versions
 
-## Trust boundary
+## Trust boundary {#dasp-sec-001}
+
+Requirement group **DASP-SEC-001**.
 
 The host MUST use trusted transport or application authentication context for authorization. CloudEvents `source`, `subject`, event ID, session ID, command ID, and `requestid` are untrusted input. None grants access.
 
@@ -12,7 +14,9 @@ Receivers MUST enforce byte, depth, collection, and integer limits before execut
 
 Schema URIs are identifiers, not instructions to fetch network resources. Validators SHOULD use locally pinned schemas. Hosts MUST NOT follow `source`, `dataschema`, or profile URIs supplied by a client to make unapproved network requests.
 
-## Independent versions
+## Independent versions {#dasp-sec-002}
+
+Requirement group **DASP-SEC-002**.
 
 | Identity | Meaning |
 | --- | --- |

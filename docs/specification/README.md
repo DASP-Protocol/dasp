@@ -1,59 +1,42 @@
 # DASP core specification
 
-**Status: draft-01. Not a released interoperability contract.**
+**Status: draft-01. Working review draft; not a released interoperability contract.**
 
-DASP is a language-independent protocol for durable actor sessions. It uses CloudEvents for message envelopes and defines the meaning of commands, admission, saved facts, and recovery. It does not require a chat interface, a particular actor runtime, or a storage engine.
+DASP is a language-independent protocol for controlling durable actors through shared sessions. It defines command admission, saved outcomes, ordered updates, and recovery using CloudEvents messages.
 
-This draft is the active DASP design. The imported implementation is reference material, not the normative DASP wire contract. Existing clients are not automatically compatible with this draft.
+## Scope and authority
 
-The words MUST, MUST NOT, SHOULD, and MAY identify requirements within this draft. An implementation cannot claim released DASP conformance until a release fixes the core, profiles, bindings, and conformance suite.
+The model, envelope, message definitions, recovery rules, profile and binding requirements, and security/version rules are normative for this draft. The designated [JSON Schema](../../specification/draft-01/envelope.schema.json) defines structural constraints. Prose defines behavior and cross-message rules. Both must agree; a conflict is a specification defect.
+
+Guides, diagrams, examples, and design questions are informative. A proposal does not add a core operation. Tests provide evidence only for the cases they execute; they cannot override a requirement.
+
+The core requires no chat interface, actor runtime, storage engine, or programming language. Profiles provide application meaning. Bindings provide transport behavior. No production binding, profile, host, or DASP client is released.
+
+## Conventions
+
+Uppercase requirement terms, including MUST, MUST NOT, SHOULD, and MAY, use the meanings in BCP 14, [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119.html) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174.html). Lowercase words have their ordinary meanings.
+
+Each normative section has a stable requirement or requirement-group ID. A group identifies all constraints in that section, including its field tables. The [coverage index](../../conformance/README.md) links those IDs to executed artifact checks and planned runtime cases. An ID alone does not imply that a runtime test exists.
 
 ## Layers
 
 | Layer | Responsibility |
 | --- | --- |
 | CloudEvents 1.0 | Event identity, source, type, and metadata |
-| DASP core | Sessions, command identity, admission, updates, outcomes, and recovery |
-| Application profile | Command names, input schemas, state, output schemas, and completion scope |
-| Transport binding | Connection setup, authentication, discovery, routing, reads, subscriptions, and delivery |
+| DASP core | Sessions, commands, admission, updates, outcomes, views, and recovery |
+| Application profile | Inputs, outputs, state, completion, concurrency, and domain rules |
+| Transport binding | Selection, authentication, connection, routing, and delivery |
 | Implementation | Runtime, storage, scheduling, and execution |
 
-DASP uses the [CloudEvents 1.0.2 specification](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md) and its [JSON event format](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md). The wire value of `specversion` is `"1.0"`. CloudEvents does not supply DASP's command, ordering, retry, or durability rules.
+DASP uses [CloudEvents 1.0.2](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md) and its [JSON event format](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md). The wire value of `specversion` is `"1.0"`. CloudEvents does not supply DASP's retry, ordering, or durability rules.
 
-## Core model
+## Read the contract
 
-An **actor** is a logical target that performs application work. Its identity does not name a process, machine, language object, or connection.
+1. [Model and lifecycle](model.md)
+2. [CloudEvents envelope](cloudevents.md)
+3. [Message shapes](messages.md)
+4. [Admission and recovery](recovery.md)
+5. [Profiles and bindings](profiles-and-bindings.md)
+6. [Security and versions](security-and-versioning.md)
 
-A **session** binds one actor identity to one application profile and one ordered history. Its identity and profile remain fixed for its lifetime. More than one authorized client MAY observe it. An actor MAY have more than one session. There is no order across sessions.
-
-A **command** is durable intent with a stable command ID. A **receipt** reports whether the host saved admission. An **outcome** records what the host can establish about execution. These are separate facts.
-
-An **update** is an immutable saved event in a session. A **view** is a coherent projection at a saved cursor. **Progress** is temporary information that clients MAY discard.
-
-A **host authority** is the logical service that owns sessions, command retry records, and the update log. It can span multiple processes or machines. It MUST publish a stable authority identity through its binding.
-
-## Required behavior
-
-- Save admission and its retry record before reporting acceptance.
-- Keep each command ID unique across sessions within one host authority.
-- Publish saved updates in session order.
-- Preserve saved facts and event identity during replay.
-- Separate temporary progress from saved outcomes.
-- Check current authorization on each operation, including retries.
-- Preserve uncertainty when effects cannot be established.
-- Keep application-specific inputs and outputs inside profile payloads.
-
-The core has no turn, conversation, message role, model, workspace, tool, or attachment type. Profiles can define these concepts without changing core semantics.
-
-## Read in order
-
-1. [CloudEvents envelope](cloudevents.md)
-2. [Generic message shapes](messages.md)
-3. [Admission and recovery](recovery.md)
-4. [Profiles and transport bindings](profiles-and-bindings.md)
-5. [Security and versions](security-and-versioning.md)
-6. [Worked example](example.md)
-
-The [JSON Schema](../../specification/draft-01/envelope.schema.json) describes structural constraints. Prose defines behavior and cross-message rules. A schema pass alone does not prove conformance.
-
-Source history and compatibility differences are recorded separately in the [source mapping](../design/seigyo-mapping.md).
+Then inspect the [counter example](example.md) and [conformance coverage](../../conformance/README.md). Use the source commit with `draft-01` when citing this evolving draft. See [release preparation](../project/releases.md) for fixed-artifact packaging.

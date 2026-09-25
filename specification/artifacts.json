@@ -1,0 +1,9 @@
+{
+  "algorithm": "sha256",
+  "core": "draft-01",
+  "files": {
+    "specification/draft-01/envelope.schema.json": "74f13ae317c72585bb38296c7dc0f89b80641704299f86fa2916948307ad9c04",
+    "specification/draft-01/examples/counter-profile.schema.json": "61a616e55cc3543425b87cec23d9e5e90d73629058f097d6e9ce7b140320f610",
+    "specification/draft-01/examples/counter.json": "31cfcfd63d5aab32cb2e49d824b91f54cca341177f004d312a38823fb3b2bb52"
+  }
+}

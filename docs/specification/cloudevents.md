@@ -4,7 +4,9 @@ DASP draft-01 uses the CloudEvents 1.0 envelope and JSON structured event format
 
 The format follows [CloudEvents](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md) and its [JSON format](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md). The following restrictions are DASP rules, not additional CloudEvents requirements.
 
-## Attributes
+## Attributes {#dasp-env-001}
+
+Requirement group **DASP-ENV-001**.
 
 | Attribute | DASP rule |
 | --- | --- |
@@ -23,7 +25,9 @@ A command event records that a client issued intent. A read event records a read
 
 The binding selects the destination and reply path. `source` MUST NOT be interpreted as a reply URL to call.
 
-## Three identities
+## Three identities {#dasp-env-002}
+
+Requirement group **DASP-ENV-002**.
 
 | Identity | Purpose |
 | --- | --- |
@@ -37,7 +41,9 @@ The host MUST preserve a saved update's original `source`, `id`, `type`, and `da
 
 Consumers MUST NOT use a transport reference, event ID, timestamp, or progress count as an applied update cursor.
 
-## Extensions and portable data
+## Extensions and portable data {#dasp-env-003}
+
+Requirement group **DASP-ENV-003**.
 
 CloudEvents attribute names use lowercase ASCII letters and digits. DASP's extension is `requestid`. Optional unknown extensions MUST NOT alter admission or execution; receivers ignore their meaning but validate their CloudEvents representation. Forwarders SHOULD preserve them. Any required extension must be negotiated before use.
 
@@ -49,7 +55,9 @@ Draft-01 uses JSON integers in the safe range −9,007,199,254,740,991 through 9
 
 DASP does not accept `data_base64`, a JSON string containing a second encoded object, or a null `data` field. A CloudEvents message that is valid for another application can still be invalid for DASP.
 
-## Baseline limits
+## Baseline limits {#dasp-env-004}
+
+Requirement group **DASP-ENV-004**.
 
 A binding MUST advertise equal or tighter limits before session creation.
 

@@ -1,19 +1,28 @@
-# Local upstream reference checkout
-/reference/agent-host-protocol/
+# Local tools and research stay outside this repository.
+/.agents/
+/.codex/
+/skills-lock.json
+/planning/
+/research/
+/upstream/
+/archive/
+/reference/
 .DS_Store
-# Client build output
 **/node_modules/
 **/dist/
 **/_build/
 **/deps/
-
-# Documentation site output and generated source pages
+**/__pycache__/
 /website/.vitepress/cache/
+/website/guide.md
+/website/guide/
+/website/build/
+/website/specification/
 /website/protocol/
 /website/clients/
 /website/project/
 /website/conformance/
+/website/reference/
 /website/source/
-**/__pycache__/
-
 /website/public/schemas/
+/website/public/fixtures/

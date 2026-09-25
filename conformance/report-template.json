@@ -1,0 +1,14 @@
+{
+  "status": "not-executed",
+  "core": "draft-01",
+  "schemaDigest": null,
+  "suite": "draft-01-artifacts-1",
+  "profile": null,
+  "binding": null,
+  "implementation": null,
+  "environment": null,
+  "durabilityBoundary": null,
+  "executed": [],
+  "skipped": [],
+  "failures": []
+}

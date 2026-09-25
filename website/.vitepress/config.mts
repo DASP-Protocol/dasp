@@ -25,7 +25,7 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#151b24', media: '(prefers-color-scheme: dark)' }]
   ],
   transformHead({ pageData }) {
-    const path = pageData.relativePath.replace(/index\.md$/, '').replace(/\.md$/, '.html');
+    const path = pageData.frontmatter.canonicalPath?.replace(/^\//, '').split('#')[0] || pageData.relativePath.replace(/index\.md$/, '').replace(/\.md$/, '.html');
     const url = 'https://dasp-protocol.github.io/dasp/' + path;
     const title = pageData.title === 'DASP' ? 'DASP — Durable Actor Session Protocol' : pageData.title + ' | DASP';
     const description = pageData.description || 'A shared contract for commands, saved outcomes, and recovery.';
@@ -42,41 +42,59 @@ export default defineConfig({
     logo: { light: '/brand/dasp-mark-light.svg', dark: '/brand/dasp-mark-dark.svg', alt: 'DASP' },
     siteTitle: 'DASP',
     nav: [
-      { text: 'Protocol', link: '/protocol/' },
-      { text: 'Clients', link: '/clients/' },
+      { text: 'Guide', link: '/guide/' },
+      { text: 'Build', link: '/build/' },
+      { text: 'Specification', link: '/specification/' },
       { text: 'Conformance', link: '/conformance/' },
-      { text: 'Project', link: '/project/decisions' }
+      { text: 'Reference', link: '/reference/' }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/DASP-Protocol/dasp' }],
     search: { provider: 'local' },
-    sidebar: [
-      { text: 'Start here', items: [
-        { text: 'Introduction', link: '/guide' },
-        { text: 'Protocol overview', link: '/protocol/' }
-      ]},
-      { text: 'The contract', items: [
-        { text: 'CloudEvents envelope', link: '/protocol/cloudevents' },
-        { text: 'Profiles & bindings', link: '/protocol/profiles-and-bindings' },
-        { text: 'Message shapes', link: '/protocol/messages' },
-        { text: 'Recovery', link: '/protocol/recovery' },
-        { text: 'Security & versions', link: '/protocol/security-and-versioning' },
-        { text: 'Examples & fixtures', link: '/protocol/example' }
-      ]},
-      { text: 'Implement', items: [
-        { text: 'Client overview', link: '/clients/' },
-        { text: 'Elixir', link: '/clients/elixir' },
-        { text: 'TypeScript', link: '/clients/typescript' },
-        { text: 'Conformance', link: '/conformance/' }
-      ]},
-      { text: 'Project', items: [
-        { text: 'Brand & assets', link: '/brand' },
-        { text: 'Decisions & next steps', link: '/project/decisions' },
-        { text: 'Source mapping', link: '/project/seigyo-mapping' },
-        { text: 'Seigyo source', link: '/source/' },
-        { text: 'Microsoft AHP reference', link: '/project/ahp-reference' }
-      ]}
-    ],
+    sidebar: {
+      '/guide/': [{ text: 'Guide', items: [
+        { text: 'What is DASP?', link: '/guide/' },
+        { text: 'Core concepts', link: '/guide/concepts' },
+        { text: 'Use cases', link: '/guide/use-cases' },
+        { text: 'Add DASP to a project', link: '/build/' }
+      ]}],
+      '/build/': [{ text: 'Build with DASP', items: [
+        { text: 'Add DASP to your project', link: '/build/' },
+        { text: 'Command and recovery', link: '/build/walkthrough' },
+        { text: 'Language clients', link: '/build/clients' },
+        { text: 'Conformance coverage', link: '/conformance/' }
+      ]}],
+      '/specification/': [{ text: 'Core draft · draft-01', items: [
+        { text: 'Status and conventions', link: '/specification/' },
+        { text: 'Model and lifecycle', link: '/specification/model' },
+        { text: 'CloudEvents envelope', link: '/specification/cloudevents' },
+        { text: 'Messages and errors', link: '/specification/messages' },
+        { text: 'Admission and recovery', link: '/specification/recovery' },
+        { text: 'Profiles and bindings', link: '/specification/profiles-and-bindings' },
+        { text: 'Security and versions', link: '/specification/security-and-versioning' }
+      ]}],
+      '/conformance/': [{ text: 'Conformance', items: [
+        { text: 'Scope and coverage', link: '/conformance/' },
+        { text: 'Run the checks', link: '/conformance/running-checks' },
+        { text: 'Behavioral cases', link: '/conformance/behavioral-cases' }
+      ]}],
+      '/reference/': [{ text: 'Technical reference', items: [
+        { text: 'Reference index', link: '/reference/' },
+        { text: 'Schemas and downloads', link: '/reference/schemas' },
+        { text: 'Examples and traces', link: '/reference/examples' },
+        { text: 'Counter profile', link: '/reference/counter' },
+        { text: 'Glossary', link: '/reference/glossary' }
+      ]}],
+      '/project/': [{ text: 'Project', items: [
+        { text: 'About DASP', link: '/project/about' },
+        { text: 'Review questions', link: '/project/feedback' },
+        { text: 'Release preparation', link: '/project/releases' },
+        { text: 'Contributing', link: '/project/contributing' },
+        { text: 'Security', link: '/project/security' },
+        { text: 'Changes', link: '/project/changes' },
+        { text: 'Brand and assets', link: '/brand' }
+      ]}]
+    },
     outline: [2, 3],
-    footer: { message: 'Durable Actor Session Protocol · An open specification in development.' }
+    footer: { message: 'DASP · Working review draft · <a href="/dasp/project/about.html">About</a> · <a href="/dasp/project/feedback.html">Review questions</a> · <a href="/dasp/project/releases.html">Releases</a>' }
   }
 });

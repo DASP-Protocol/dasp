@@ -1,0 +1,491 @@
+{
+  "core": "draft-01",
+  "scope": "Artifact checks are partial evidence only. No runtime cases are executed.",
+  "requirements": [
+    {
+      "id": "DASP-MODEL-001",
+      "document": "docs/specification/model.md",
+      "anchor": "dasp-model-001",
+      "title": "Actor and host",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MODEL-002",
+      "document": "docs/specification/model.md",
+      "anchor": "dasp-model-002",
+      "title": "Session identity",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MODEL-003",
+      "document": "docs/specification/model.md",
+      "anchor": "dasp-model-003",
+      "title": "Command lifecycle",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MODEL-004",
+      "document": "docs/specification/model.md",
+      "anchor": "dasp-model-004",
+      "title": "Saved and temporary data",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-ENV-001",
+      "document": "docs/specification/cloudevents.md",
+      "anchor": "dasp-env-001",
+      "title": "Attributes",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-EXTENSIONS"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-ENV-002",
+      "document": "docs/specification/cloudevents.md",
+      "anchor": "dasp-env-002",
+      "title": "Three identities",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-EXTENSIONS"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-ENV-003",
+      "document": "docs/specification/cloudevents.md",
+      "anchor": "dasp-env-003",
+      "title": "Extensions and portable data",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-EXTENSIONS"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-ENV-004",
+      "document": "docs/specification/cloudevents.md",
+      "anchor": "dasp-env-004",
+      "title": "Baseline limits",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-EXTENSIONS"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-001",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-001",
+      "title": "Shared values",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-002",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-002",
+      "title": "Catalog",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-003",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-003",
+      "title": "Session",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-004",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-004",
+      "title": "Command and receipt",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-005",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-005",
+      "title": "Saved updates",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-006",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-006",
+      "title": "Outcomes",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-007",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-007",
+      "title": "Views and replay pages",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-008",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-008",
+      "title": "Progress and resync",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-009",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-009",
+      "title": "Failure",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-010",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-010",
+      "title": "Operation rules",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-MSG-011",
+      "document": "docs/specification/messages.md",
+      "anchor": "dasp-msg-011",
+      "title": "Core error meanings",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES",
+        "ART-NEGATIVE",
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-PROFILE-001",
+      "document": "docs/specification/profiles-and-bindings.md",
+      "anchor": "dasp-profile-001",
+      "title": "Application profile",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-PROFILE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-PROFILE-002",
+      "document": "docs/specification/profiles-and-bindings.md",
+      "anchor": "dasp-profile-002",
+      "title": "Transport binding",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-PROFILE-003",
+      "document": "docs/specification/profiles-and-bindings.md",
+      "anchor": "dasp-profile-003",
+      "title": "Multiple clients",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-PROFILE-004",
+      "document": "docs/specification/profiles-and-bindings.md",
+      "anchor": "dasp-profile-004",
+      "title": "Release boundary",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-SEC-001",
+      "document": "docs/specification/security-and-versioning.md",
+      "anchor": "dasp-sec-001",
+      "title": "Trust boundary",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTH"
+      ]
+    },
+    {
+      "id": "DASP-SEC-002",
+      "document": "docs/specification/security-and-versioning.md",
+      "anchor": "dasp-sec-002",
+      "title": "Independent versions",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-CORE-001",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-001",
+      "title": "Validation before admission",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-CORE-002",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-002",
+      "title": "Command identity and retry equality",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-CONFLICT"
+      ]
+    },
+    {
+      "id": "DASP-CORE-003",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-003",
+      "title": "Concurrent retry decision",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-RETRY"
+      ]
+    },
+    {
+      "id": "DASP-CORE-004",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-004",
+      "title": "Recoverable admission",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-ADMISSION"
+      ]
+    },
+    {
+      "id": "DASP-CORE-005",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-005",
+      "title": "Connection loss is not cancellation",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-DISCONNECT"
+      ]
+    },
+    {
+      "id": "DASP-CORE-006",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-006",
+      "title": "Immutable terminal outcome",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-OUTCOME"
+      ]
+    },
+    {
+      "id": "DASP-CORE-007",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-007",
+      "title": "Owner loss and uncertainty",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-UNCERTAIN"
+      ]
+    },
+    {
+      "id": "DASP-CORE-008",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-008",
+      "title": "Completion evidence",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-SHAPES"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-CORE-009",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-009",
+      "title": "Ordered saved facts",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-RELATIONS",
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-REPLAY"
+      ]
+    },
+    {
+      "id": "DASP-CORE-010",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-010",
+      "title": "Applied state and cursor",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-CURSOR"
+      ]
+    },
+    {
+      "id": "DASP-CORE-011",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-011",
+      "title": "Connection recovery",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": []
+    },
+    {
+      "id": "DASP-CORE-012",
+      "document": "docs/specification/recovery.md",
+      "anchor": "dasp-core-012",
+      "title": "Storage lifetime",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-RESTART"
+      ]
+    }
+  ]
+}

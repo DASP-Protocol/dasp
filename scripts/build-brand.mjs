@@ -8,9 +8,7 @@ const font = opentype.parse(readFileSync('assets/brand/DM-Sans.ttf').buffer);
 const blue = '#315da8', pale = '#93b8f5', ink = '#202938', dark = '#151b24', paper = '#f7f8fa';
 // One source of geometry for every production asset. The left bar is saved state.
 const shapes = {
-  session: 'M24 8H32C46 8 56 18 56 32S46 56 32 56H24V48H32C41 48 48 41 48 32S41 16 32 16H24ZM8 8H16V56H8Z',
-  continuity: 'M8 8H32C46 8 56 18 56 32S46 56 32 56H8V36H32V44H16V48H32C41 48 48 41 48 32S41 16 32 16H16V28H8Z',
-  ledger: 'M8 8H28V16H16V48H28V56H8ZM36 8H56V56H36V48H48V16H36ZM24 28H40V36H24Z'
+  session: 'M24 8H32C46 8 56 18 56 32S46 56 32 56H24V48H32C41 48 48 41 48 32S41 16 32 16H24ZM8 8H16V56H8Z'
 };
 function svg(w, h, content, title = 'DASP — Durable Actor Session Protocol') {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img"><title>${title}</title>${content}</svg>`;

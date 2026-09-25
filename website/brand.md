@@ -68,15 +68,6 @@ The 1200 × 630 PNG is used for Open Graph and large social cards. Each document
 - Do not add gradients, shadows, outlines, or extra symbols.
 - Do not use the mark to imply conformance or security certification.
 
-## Other directions considered
-
-The session mark is the working identity. Two alternatives explore a return path and a bounded state. They are review assets, not production logos.
-
-<div class="brand-pair">
-  <div class="brand-sample brand-light"><img :src="withBase('/brand/concept-continuity-horizontal-light.svg')" alt="Alternative DASP mark with a return path" /><span>Continuity — more detail at small sizes</span></div>
-  <div class="brand-sample brand-light"><img :src="withBase('/brand/concept-ledger-horizontal-light.svg')" alt="Alternative DASP mark with a bounded state" /><span>Bounded state — less direct link to the name</span></div>
-</div>
-
 ## Source and maintenance
 
 Run `npm run brand:build` to rebuild the assets. The canonical geometry is in `scripts/build-brand.mjs`. All production variants come from the same path. DM Sans is included under the SIL Open Font License.

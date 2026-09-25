@@ -91,7 +91,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .dasp-home .source-section .source-note { font-size: 13px; }
 .start-section { display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: 56px 0; }
 .dasp-home .start-section h2 { font-size: 28px; margin: 0; }
-.home-footer { display: flex; justify-content: space-between; gap: 24px; border-top: 1px solid var(--vp-c-divider); padding: 25px 0 32px; font-size: 12px; color: var(--vp-c-text-2); }
+.home-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; border-top: 1px solid var(--vp-c-divider); padding: 25px 0 32px; font-size: 12px; color: var(--vp-c-text-2); }
 .home-footer a { display: inline-flex; align-items: center; gap: 12px; color: var(--vp-c-text-2); }
 .home-footer a:hover { color: var(--vp-c-brand-1); }
 

@@ -1,0 +1,533 @@
+[
+  {
+    "id": "missing-source",
+    "reason": "CloudEvents source is required.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "wrong-envelope-version",
+    "reason": "The wire version is 1.0.",
+    "event": {
+      "specversion": "1.0.2",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "relative-source",
+    "reason": "DASP requires an absolute source URI.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "/relative/source",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "missing-request-id",
+    "reason": "Requests need attempt correlation.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      }
+    }
+  },
+  {
+    "id": "unknown-core-field",
+    "reason": "Core data is closed.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        },
+        "text": "outside profile"
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "fractional-payload",
+    "reason": "Payload quantities use safe integers or profile strings.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 1.5
+        }
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "unsafe-integer",
+    "reason": "Numbers must be safe integers.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 9007199254740992
+        }
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "null-data",
+    "reason": "Core data must be an object.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": null,
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "binary-data",
+    "reason": "This draft uses structured JSON object data.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add",
+      "data_base64": "e30="
+    }
+  },
+  {
+    "id": "invalid-extension-name",
+    "reason": "Context names use lowercase letters and digits.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add",
+      "bad_extension": "x"
+    }
+  },
+  {
+    "id": "object-extension",
+    "reason": "Context extensions must use CloudEvents scalar types.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add",
+      "extension": {
+        "nested": true
+      }
+    }
+  },
+  {
+    "id": "oversized-context-integer",
+    "reason": "Context integers are signed 32-bit values.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add",
+      "extension": 2147483648
+    }
+  },
+  {
+    "id": "accepted-without-sequence",
+    "reason": "Accepted receipts contain the admission sequence.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-7",
+      "source": "urn:example:host:one",
+      "type": "dasp.receipt.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "disposition": "accepted",
+        "admission_sequence": null,
+        "error": null
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "accepted-with-error",
+    "reason": "Accepted receipts have no error.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-7",
+      "source": "urn:example:host:one",
+      "type": "dasp.receipt.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "disposition": "accepted",
+        "admission_sequence": 1,
+        "error": {
+          "code": "unavailable",
+          "message": "x",
+          "retryable": true
+        }
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "uncertain-without-error",
+    "reason": "Uncertain outcomes identify an error.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-14",
+      "source": "urn:example:host:one",
+      "type": "dasp.outcome.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "state": "settled",
+        "sequence": 3,
+        "outcome": {
+          "status": "uncertain",
+          "output": {
+            "value": 3
+          },
+          "error": null
+        }
+      },
+      "requestid": "request-outcome"
+    }
+  },
+  {
+    "id": "zero-update-sequence",
+    "reason": "Saved updates start at 1.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-4",
+      "source": "urn:example:host:one",
+      "type": "dasp.update.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "sequence": 0,
+        "kind": "command.accepted",
+        "payload": {
+          "name": "counter.add"
+        }
+      }
+    }
+  },
+  {
+    "id": "non-update-in-page",
+    "reason": "Replay pages contain saved update events.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-12",
+      "source": "urn:example:host:one",
+      "type": "dasp.updates.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "after": 1,
+        "next": 3,
+        "head": 3,
+        "events": [
+          {
+            "specversion": "1.0",
+            "id": "event-5",
+            "source": "urn:example:host:one",
+            "type": "dasp.progress.v1",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 2,
+              "kind": "application",
+              "payload": {
+                "name": "counter.changed",
+                "data": {
+                  "value": 3
+                }
+              }
+            }
+          },
+          {
+            "specversion": "1.0",
+            "id": "event-6",
+            "source": "urn:example:host:one",
+            "type": "dasp.update.v1",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 3,
+              "kind": "command.outcome",
+              "payload": {
+                "status": "completed",
+                "output": {
+                  "value": 3
+                },
+                "error": null
+              }
+            }
+          }
+        ]
+      },
+      "requestid": "request-replay"
+    }
+  },
+  {
+    "id": "page-over-limit",
+    "reason": "Maximum page count is 100.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-11",
+      "source": "urn:example:client:one",
+      "type": "dasp.updates.read.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "after": 1,
+        "limit": 101
+      },
+      "requestid": "request-replay"
+    }
+  },
+  {
+    "id": "empty-page-limit",
+    "reason": "The requested limit must be positive.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-11",
+      "source": "urn:example:client:one",
+      "type": "dasp.updates.read.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "after": 1,
+        "limit": 0
+      },
+      "requestid": "request-replay"
+    }
+  },
+  {
+    "id": "unknown-outcome",
+    "reason": "Running is not a terminal outcome.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-14",
+      "source": "urn:example:host:one",
+      "type": "dasp.outcome.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "state": "settled",
+        "sequence": 3,
+        "outcome": {
+          "status": "running",
+          "output": {
+            "value": 3
+          },
+          "error": null
+        }
+      },
+      "requestid": "request-outcome"
+    }
+  },
+  {
+    "id": "pending-with-settlement",
+    "reason": "Pending replies have no settlement data.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-14",
+      "source": "urn:example:host:one",
+      "type": "dasp.outcome.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "state": "pending",
+        "sequence": 3,
+        "outcome": {
+          "status": "completed",
+          "output": {
+            "value": 3
+          },
+          "error": null
+        }
+      },
+      "requestid": "request-outcome"
+    }
+  },
+  {
+    "id": "rejected-with-admission",
+    "reason": "Rejected receipts have no admission sequence.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-7",
+      "source": "urn:example:host:one",
+      "type": "dasp.receipt.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "disposition": "rejected",
+        "admission_sequence": 1,
+        "error": {
+          "code": "conflict",
+          "message": "x",
+          "retryable": false
+        }
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "unknown-event-type",
+    "reason": "Only core event types are allowed.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.chat.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "invalid-command-id",
+    "reason": "Command IDs use the specified ASCII set.",
+    "event": {
+      "specversion": "1.0",
+      "id": "event-3",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "has spaces",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add"
+    }
+  }
+]

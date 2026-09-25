@@ -1,51 +1,57 @@
 # Durable Actor Session Protocol
 
-DASP comes from the Seigyo Protocol in the Jido Core workspace. This project will develop its language-independent specification and maintain its language clients. Elixir and TypeScript are the first targets.
+DASP is an open, language-independent protocol for controlling durable actors through shared sessions. It defines command admission, saved outcomes, ordered updates, and recovery using CloudEvents messages.
 
-Project home: [DASP Protocol](https://github.com/DASP-Protocol).
+For agent builders connecting applications, tools, and automation to durable actors.
 
-## Scope
+**Status: draft-01, a working review draft.** The core can change. Elixir and TypeScript clients are planned. No transport binding or production profile is released.
 
-Only the Seigyo protocol is taken from Jido Code: its specification, schemas, wire fixtures, protocol checks, and existing Elixir client. DASP does not include the Jido Code product, server, runtime, storage, or user interfaces. Jido Code is the source implementation, not a required architecture for DASP hosts.
+[Read the guide](https://dasp-protocol.github.io/dasp/guide/) · [Specification](https://dasp-protocol.github.io/dasp/specification/) · [Conformance](https://dasp-protocol.github.io/dasp/conformance/)
 
-## Active specification
+## What DASP defines
 
-[DASP draft-01](docs/specification/README.md) defines a standalone, generic actor-session protocol based on CloudEvents 1.0. Application profiles supply domain data. Transport bindings supply connection and routing behavior.
+- A stable identity for commands and explicit admission decisions.
+- Saved outcomes that distinguish completion, failure, cancellation, and uncertainty.
+- Ordered session updates and recovery from a saved cursor.
+- Shared sessions that more than one authorized client can use.
+- Generic message shapes, with application data defined by profiles.
 
-The draft includes [generic schemas and example events](specification/draft-01/). Run `npm run spec:check` for structural checks. It is not a released interoperability contract. The first production binding, profile, host, and DASP clients remain to be implemented.
+The core does not require chat, turns, a model provider, an actor runtime, or a storage engine. CloudEvents supplies the envelope; DASP supplies the session behavior.
 
-## Source and compatibility
+## Find your path
 
-The Seigyo specification and client are imported as immutable reference material. DASP preserves their useful admission, retry, replay, and uncertainty semantics, but defines its own generic shapes. The imported coding contract does not take precedence over the active DASP draft.
+| Purpose | Start here |
+| --- | --- |
+| Understand the protocol | [Guide](docs/guide/README.md) |
+| Use DASP in a project | [Build guide](docs/build/README.md) |
+| Implement the contract | [Specification](docs/specification/README.md) |
+| Inspect test coverage | [Conformance suite](conformance/README.md) |
+| Find schemas and examples | [Reference](docs/reference/README.md) |
+| Propose a change | [Contributing](CONTRIBUTING.md) |
 
-See the [source mapping](docs/design/seigyo-mapping.md) for deliberate differences and adapter requirements, and [import provenance](upstream/README.md) for source identity. The imported Elixir client does not implement DASP draft-01. Archived proposals are not active specifications.
+## Work on this repository
 
-## Read the documents
-
-- [Specification guide](docs/specification/README.md)
-- [Messages and wire format](docs/specification/messages.md)
-- [Recovery rules](docs/specification/recovery.md)
-- [Client status](clients/README.md)
-- [Conformance checks](conformance/README.md)
-- [Extraction decisions](docs/design/decisions.md)
-
-`upstream/seigyo/` contains only the selected Seigyo source files, with their original bytes. `reference/agent-host-protocol/` contains the separate Microsoft reference clone. DASP defines a separate draft contract. The reference imports retain their original meaning and bytes.
-
-## Brand assets
-
-See the [brand guide](website/brand.md) for logos, icons, social previews, and use rules. Run `npm run brand:build` to rebuild all assets from the shared vector source.
-
-## Documentation website
-
-The design preview is published at [dasp-protocol.github.io/dasp](https://dasp-protocol.github.io/dasp/).
+Use Node.js 22 or later and npm.
 
 ```sh
 npm ci
+npm run check
 npm run docs:dev
 ```
 
-Run `npm run docs:build` for the production site. Run `npm run docs:preview` to inspect that build locally.
+`npm run check` checks the draft artifacts, publication inputs, the site build, and internal site links. It does not test a host or prove runtime conformance. `npm run docs:preview` serves the production build.
 
-VitePress builds the site from `website/`. The landing page and introduction are authored there. `scripts/build-docs.mjs` generates the protocol, client, and project pages from this repository's Markdown documents. Edit the original documents; generated pages are excluded from Git. Source-only links point to GitHub.
+## Repository structure
 
-The `Documentation` workflow checks the Seigyo import and portable protocol tests, then builds the site. A successful `main` build deploys to GitHub Pages. Pull requests build without deployment. Vite is pinned to a patched 6.x release through an npm override while VitePress 1.x retains its older dependency range.
+| Path | Contents |
+| --- | --- |
+| `docs/` | Authored guide, specification, and project documents |
+| `specification/` | Language-neutral schemas and example events |
+| `conformance/` | Shared fixtures, coverage, and behavioral case definitions |
+| `clients/` | Language client status and future implementations |
+| `website/` | Site theme and public brand assets |
+| `scripts/` | Validation, site generation, and release preparation |
+
+Generated pages are not edited or committed. Research, local skills, and work notes belong outside this Git repository.
+
+See [RELEASING.md](RELEASING.md) to prepare a versioned review bundle locally. Package versions, protocol versions, and CloudEvents versions have separate meanings.

@@ -27,7 +27,7 @@ onBeforeUnmount(() => {
   document.removeEventListener('visibilitychange', syncVisibility);
 });
 const titles = {
-  actors: 'Different roles. One actor contract.',
+  actors: 'Clients connect through an actor host.',
   admission: 'Acceptance and completion are separate facts.',
   recovery: 'A connection is temporary. Saved history remains.',
   multiplayer: 'Shared updates. Separate client cursors.'
@@ -37,12 +37,12 @@ const titles = {
 <template>
   <figure ref="root" class="protocol-explainer" :class="{ running: visible && !hidden && !paused && !reduced, 'static-motion': reduced }">
     <figcaption>{{ titles[kind] }}</figcaption>
-    <svg v-if="kind === 'actors'" class="explainer-svg" viewBox="0 0 480 330" role="img" aria-label="A web client, command-line client, and service connect through DASP to actors for workflows, devices, and agents. These are illustrative application roles.">
+    <svg v-if="kind === 'actors'" class="explainer-svg" viewBox="0 0 480 330" role="img" aria-label="A web client, command-line client, and service connect through a DASP host authority to actors for workflows, devices, and agents. These are illustrative application roles.">
       <g class="wire"><path d="M96 80V122H240V151M240 80V151M384 80V122H240M240 191V224H96V254M240 191V254M240 224H384V254" /></g>
       <g class="wire flow"><path d="M96 80V122H240V151M240 80V151M384 80V122H240M240 191V224H96V254M240 191V254M240 224H384V254" /></g>
       <g class="node"><rect x="40" y="38" width="112" height="42" rx="6"/><rect x="184" y="38" width="112" height="42" rx="6"/><rect x="328" y="38" width="112" height="42" rx="6"/></g>
       <g class="svg-label"><text x="96" y="64">Web client</text><text x="240" y="64">CLI</text><text x="384" y="64">Service</text></g>
-      <rect class="contract-node" x="155" y="151" width="170" height="40" rx="6"/><text class="contract-label" x="240" y="177">DASP</text>
+      <rect class="contract-node" x="155" y="151" width="170" height="40" rx="6"/><text class="contract-label" x="240" y="177">DASP host</text>
       <g class="node"><rect x="40" y="254" width="112" height="42" rx="6"/><rect x="184" y="254" width="112" height="42" rx="6"/><rect x="328" y="254" width="112" height="42" rx="6"/></g>
       <g class="svg-label"><text x="96" y="280">Workflow actor</text><text x="240" y="280">Device actor</text><text x="384" y="280">Agent actor</text></g>
     </svg>
@@ -68,7 +68,7 @@ const titles = {
       <circle class="cursor-ring" cx="164" cy="242" r="14"/>
       <text class="svg-note" x="164" y="275">Last applied cursor</text>
     </svg>
-    <svg v-else-if="kind === 'multiplayer'" class="explainer-svg" viewBox="0 0 480 330" role="img" aria-label="One actor session sends saved updates to three clients. Each client keeps a separate update cursor. Multiple clients can observe the same session; multi-user access is proposed.">
+    <svg v-else-if="kind === 'multiplayer'" class="explainer-svg" viewBox="0 0 480 330" role="img" aria-label="One actor session sends saved updates to three clients. Each client keeps a separate update cursor. The host checks authorization. Each client reads the same ordered saved history.">
       <rect class="contract-node" x="140" y="30" width="200" height="44" rx="6"/>
       <text class="contract-label" x="240" y="58">Actor session</text>
       <path class="wire" d="M240 74V116"/>
@@ -82,7 +82,7 @@ const titles = {
       <g class="svg-label"><text x="96" y="273">Web client</text><text x="240" y="273">CLI</text><text x="384" y="273">Service</text></g>
       <g class="svg-note"><text x="96" y="312">Own cursor</text><text x="240" y="312">Own cursor</text><text x="384" y="312">Own cursor</text></g>
     </svg>
-    <div class="explainer-controls"><span>{{ kind === 'actors' ? 'Illustrative roles · application profiles in design' : 'Protocol explanation · no live execution' }}</span><button v-if="!reduced" type="button" :aria-label="`${paused ? 'Play' : 'Pause'} animation: ${titles[kind]}`" :aria-pressed="paused" @click="paused = !paused">{{ paused ? 'Play' : 'Pause' }}</button><span v-else class="motion-note">Static view</span></div>
+    <div class="explainer-controls"><span>{{ kind === 'actors' ? 'Host authority · admission, history, recovery' : 'Protocol explanation · no live execution' }}</span><button v-if="!reduced" type="button" :aria-label="`${paused ? 'Play' : 'Pause'} animation: ${titles[kind]}`" :aria-pressed="paused" @click="paused = !paused">{{ paused ? 'Play' : 'Pause' }}</button><span v-else class="motion-note">Static view</span></div>
   </figure>
 </template>
 
