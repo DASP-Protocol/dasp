@@ -29,7 +29,8 @@ onBeforeUnmount(() => {
 const titles = {
   actors: 'Different roles. One actor contract.',
   admission: 'Acceptance and completion are separate facts.',
-  recovery: 'A connection is temporary. Saved history remains.'
+  recovery: 'A connection is temporary. Saved history remains.',
+  multiplayer: 'Shared updates. Separate client cursors.'
 };
 </script>
 
@@ -54,7 +55,7 @@ const titles = {
       </ol>
       <p class="diagram-aside">Temporary progress does not settle a command.</p>
     </div>
-    <svg v-else class="explainer-svg" viewBox="0 0 480 330" role="img" aria-label="An earlier connection ends. Saved updates stay in the session. A later connection reads after the last applied cursor, preserving history.">
+    <svg v-else-if="kind === 'recovery'" class="explainer-svg" viewBox="0 0 480 330" role="img" aria-label="An earlier connection ends. Saved updates stay in the session. A later connection reads after the last applied cursor, preserving history.">
       <text class="svg-label" x="101" y="35">Earlier connection</text><text class="svg-label" x="379" y="35">Later connection</text>
       <g class="node"><rect x="45" y="53" width="112" height="43" rx="6"/><rect x="323" y="53" width="112" height="43" rx="6"/></g>
       <text class="svg-label" x="101" y="80">Client</text><text class="svg-label" x="379" y="80">Client</text>
@@ -66,6 +67,20 @@ const titles = {
       <g class="saved-event"><circle cx="89" cy="242" r="7"/><circle cx="164" cy="242" r="7"/><circle cx="240" cy="242" r="7"/><circle cx="316" cy="242" r="7"/><circle cx="392" cy="242" r="7"/></g>
       <circle class="cursor-ring" cx="164" cy="242" r="14"/>
       <text class="svg-note" x="164" y="275">Last applied cursor</text>
+    </svg>
+    <svg v-else-if="kind === 'multiplayer'" class="explainer-svg" viewBox="0 0 480 330" role="img" aria-label="One actor session sends saved updates to three clients. Each client keeps a separate update cursor. Multiple clients can observe the same session; multi-user access is proposed.">
+      <rect class="contract-node" x="140" y="30" width="200" height="44" rx="6"/>
+      <text class="contract-label" x="240" y="58">Actor session</text>
+      <path class="wire" d="M240 74V116"/>
+      <rect class="history-box" x="40" y="116" width="400" height="64" rx="6"/>
+      <text class="svg-label" x="240" y="142">One ordered update history</text>
+      <path class="wire" d="M100 161H380"/>
+      <g class="saved-event"><circle cx="100" cy="161" r="4"/><circle cx="170" cy="161" r="4"/><circle cx="240" cy="161" r="4"/><circle cx="310" cy="161" r="4"/><circle cx="380" cy="161" r="4"/></g>
+      <path class="wire" d="M96 180V246M240 180V246M384 180V246"/>
+      <path class="wire flow" d="M96 180V246M240 180V246M384 180V246"/>
+      <g class="node"><rect x="40" y="246" width="112" height="44" rx="6"/><rect x="184" y="246" width="112" height="44" rx="6"/><rect x="328" y="246" width="112" height="44" rx="6"/></g>
+      <g class="svg-label"><text x="96" y="273">Web client</text><text x="240" y="273">CLI</text><text x="384" y="273">Service</text></g>
+      <g class="svg-note"><text x="96" y="312">Own cursor</text><text x="240" y="312">Own cursor</text><text x="384" y="312">Own cursor</text></g>
     </svg>
     <div class="explainer-controls"><span>{{ kind === 'actors' ? 'Illustrative roles · general actor profiles in design' : 'Protocol explanation · no live execution' }}</span><button v-if="!reduced" type="button" :aria-label="`${paused ? 'Play' : 'Pause'} animation: ${titles[kind]}`" :aria-pressed="paused" @click="paused = !paused">{{ paused ? 'Play' : 'Pause' }}</button><span v-else class="motion-note">Static view</span></div>
   </figure>

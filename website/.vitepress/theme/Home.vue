@@ -48,6 +48,16 @@ const link = (p) => withBase(p);
       </div>
     </section>
 
+    <section class="explanation-row" aria-labelledby="multiplayer-title">
+      <div class="explanation-copy">
+        <h2 id="multiplayer-title">Many clients.<br>One shared session.</h2>
+        <p>Follow the same actor from more than one client. The server controls command admission and shared state. Each client reads the saved updates with its own cursor.</p>
+        <p>Multi-user roles, presence, and shared editing are proposed extensions. They are not part of the current contract.</p>
+        <a class="text-link" href="https://github.com/DASP-Protocol/dasp/blob/main/upstream/seigyo/docs/seigyo/collaboration.md">Read the collaboration proposal <ArrowIcon /></a>
+      </div>
+      <ProtocolExplainer kind="multiplayer" />
+    </section>
+
     <section class="contract-section" aria-labelledby="contract-title">
       <div><h2 id="contract-title">Common rules.<br>Native clients.</h2><p>The specification defines the meaning. Each language chooses its API. Shared schemas and conformance checks keep them aligned.</p><a class="text-link" :href="link('/protocol/index.html')">Read the specification <ArrowIcon /></a></div>
       <div class="client-table">
