@@ -14,11 +14,17 @@ An **actor** performs application work. A **session** gives clients a durable co
 
 After connection loss, retry unresolved intent with the same command ID and data. Read saved updates after the last applied cursor. Temporary progress can help the display, but it does not establish a saved outcome.
 
+## CloudEvents, generic shapes
+
+CloudEvents defines event identity, source, and type. DASP defines sessions, commands, admission, saved outcomes, and replay. Application profiles define the data inside command inputs, outputs, and state.
+
+The core does not require chat, turns, models, or workspaces. A transport binding defines how these events move between a client and a host.
+
 ## What exists today
 
-DASP starts from the Seigyo protocol in Jido Code. The imported source includes a coding profile, an Elixir client, closed schemas, wire fixtures, and portable checks. The current binding uses Phoenix Channel WebSocket frames.
+DASP draft-01 includes standalone core requirements, a JSON Schema, example events, and structural checks. It is not a released contract. A production binding, application profile, and DASP clients remain to be implemented.
 
-The language-independent general actor contract is being defined. TypeScript is the next client target. There is no released DASP package yet.
+An imported source implementation supplies reference behavior and an Elixir client for its own contract. It does not establish compatibility with the new draft.
 
 ::: info Scope
 This project contains the protocol, its clients, and shared checks. Actor execution, storage engines, and product interfaces belong to host implementations.
@@ -26,7 +32,7 @@ This project contains the protocol, its clients, and shared checks. Actor execut
 
 ## Where to go next
 
-- Read the [protocol guide](./protocol/index.md) for the source contract.
+- Read the [protocol guide](./protocol/index.md) for the active core draft.
 - Read [recovery](./protocol/recovery.md) for retry and cursor rules.
 - Check [client status](./clients/index.md) before choosing an implementation.
 - Review the [open decisions](./project/decisions.md) to help define DASP.

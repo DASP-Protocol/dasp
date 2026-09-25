@@ -1,5 +1,15 @@
 # Conformance
 
+## DASP draft checks
+
+Run `npm run spec:check`. It validates the generic CloudEvents message schema against 16 example events and 18 invalid shapes. It also checks replay event identity, receipt correlation, saved outcome equality, and example cursor consistency.
+
+These checks validate draft artifacts. They do not execute a host, prove concurrency safety, test authorization, or establish restart durability. The checker does not yet enforce raw JSON duplicate-key detection, all CloudEvents Unicode constraints, encoded-byte limits, or runtime profile behavior.
+
+Before a release, add binding and profile fixtures plus behavioral fault checks for concurrent retries, lost receipts, command-ID conflicts across sessions, uncertain effects, immutable settlement, replay gaps, access revocation, and process restart.
+
+## Source reference checks
+
 The import includes the Seigyo frozen release bundle, Python checker, schema and frame vectors, and independent protocol verification scripts. These replace the initial hypothetical test plan.
 
 From the DASP root, verify the frozen bundle:

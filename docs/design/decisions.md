@@ -1,29 +1,30 @@
-# Extraction decisions
+# DASP design decisions
 
-DASP starts from Jido Seigyo. The imported contract takes precedence over the initial independent proposal.
+DASP now defines a standalone generic actor-session contract based on CloudEvents. Source signals inform the semantics; they do not set the public wire names or require a coding product.
 
-| Area | Source rule to preserve |
+## Selected for draft-01
+
+| Area | Decision |
 | --- | --- |
-| Transport | Phoenix Channel WebSocket frames with Signals |
-| Command lifecycle | Admission Receipt is separate from outcome |
-| Recovery | Contiguous saved Updates and applied cursors |
-| Identity | Typed IDs; preserve retry scope and equality rules |
-| Portable data | Closed schemas, safe JSON integers, explicit limits |
-| Commit authority | Session Store and Agent checkpoint are separate |
-| Profiles | Common semantics plus profile-specific schemas |
-| Release | Immutable bundle and separate source provenance |
+| Envelope | CloudEvents 1.0, structured JSON |
+| Core | Generic sessions, commands, receipts, updates, outcomes, views, and progress |
+| Domain data | Explicit versioned application profiles |
+| Identity | Opaque IDs; command keys span sessions in one host authority |
+| Replay | Contiguous saved sequences and stable CloudEvents identities |
+| Completion | Immutable saved outcome, including uncertainty |
+| Data | Closed core shapes and profile-defined nested objects |
+| Transport | Separate binding; none selected for release |
+| Language | Same wire values and behavior for Elixir and TypeScript |
+| Source | Immutable reference import, with a separate migration map |
 
-## Next extraction work
+## Remaining release work
 
-1. Define the DASP common profile from the source's common semantics. Keep coding-specific fields in the coding profile.
-2. Decide whether DASP retains the existing wire names or introduces a new version. Do not rename them during import.
-3. Establish language-independent ownership of schemas and validation rules. Keep custom rules and negative vectors with the schemas.
-4. Extract the existing Elixir client into this project's release structure. Replace workspace-relative dependencies with reviewed package dependencies.
-5. Implement the TypeScript client against the same published frames and vectors.
-6. Define external authentication, deployment limits, package names, and project licensing before a public release.
+1. Review the core draft and negative cases.
+2. Select and specify the first transport binding, including discovery and authentication.
+3. Publish the first useful application profile and its behavioral checks.
+4. Implement an independent DASP host or a reviewed source adapter.
+5. Implement Elixir and TypeScript clients against the same core, profile, and binding.
+6. Add fault-injection tests for concurrency, lost replies, replay, restart, and uncertain effects.
+7. Freeze a release bundle with schema and fixture digests.
 
-Only the selected protocol source remains unchanged under `upstream/seigyo/`. The active guides do not promote proposed Work, general-agent, or collaboration features into current coding v1 requirements.
-
-## Project boundary
-
-Jido Code is the source of Seigyo, not the product being imported. DASP owns the protocol specification, shared conformance material, and language clients. Host runtimes, storage engines, agent execution, and user interfaces are separate implementations.
+The draft includes structural schemas and examples. It does not claim a complete transport or server implementation. See the [source mapping](seigyo-mapping.md) for preserved rules and deliberate compatibility changes.

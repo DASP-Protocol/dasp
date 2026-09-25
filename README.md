@@ -8,15 +8,17 @@ Project home: [DASP Protocol](https://github.com/DASP-Protocol).
 
 Only the Seigyo protocol is taken from Jido Code: its specification, schemas, wire fixtures, protocol checks, and existing Elixir client. DASP does not include the Jido Code product, server, runtime, storage, or user interfaces. Jido Code is the source implementation, not a required architecture for DASP hosts.
 
-## Source and status
+## Active specification
 
-The [imported Seigyo specification](upstream/seigyo/docs/seigyo/README.md) is the starting point. The import includes the protocol package, an Elixir WebSocket client, JSON schemas, fixed release fixtures, and independent protocol verification scripts.
+[DASP draft-01](docs/specification/README.md) defines a standalone, generic actor-session protocol based on CloudEvents 1.0. Application profiles supply domain data. Transport bindings supply connection and routing behavior.
 
-The source is the local `proj_jido_core/jido_code` repository at commit `ce19eaad40002f0c80e4d71a4c89fea281c7959e`. Its configured remote is `mikehostetler/jido_keel`. This local commit is two commits ahead of the recorded remote branch. See [import provenance](upstream/README.md).
+The draft includes [generic schemas and example events](specification/draft-01/). Run `npm run spec:check` for structural checks. It is not a released interoperability contract. The first production binding, profile, host, and DASP clients remain to be implemented.
 
-The imported source calls the protocol **Seigyo**. Its current baseline is protocol `1`, profile `coding`, binding `phoenix-channel-websocket`. The broader general-actor contract remains a design target. The DASP name does not change existing Signal types, requirement IDs, version numbers, or contract digests.
+## Source and compatibility
 
-The earlier JSON-RPC proposal is [archived](docs/archive/initial-proposal/README.md) and superseded. It was written before the Seigyo source was found and is not the DASP contract.
+The Seigyo specification and client are imported as immutable reference material. DASP preserves their useful admission, retry, replay, and uncertainty semantics, but defines its own generic shapes. The imported coding contract does not take precedence over the active DASP draft.
+
+See the [source mapping](docs/design/seigyo-mapping.md) for deliberate differences and adapter requirements, and [import provenance](upstream/README.md) for source identity. The imported Elixir client does not implement DASP draft-01. Archived proposals are not active specifications.
 
 ## Read the documents
 
@@ -27,7 +29,7 @@ The earlier JSON-RPC proposal is [archived](docs/archive/initial-proposal/README
 - [Conformance checks](conformance/README.md)
 - [Extraction decisions](docs/design/decisions.md)
 
-`upstream/seigyo/` contains only the selected Seigyo source files, with their original bytes. `reference/agent-host-protocol/` contains the separate Microsoft reference clone. DASP documents explain the source; they do not silently replace its contract.
+`upstream/seigyo/` contains only the selected Seigyo source files, with their original bytes. `reference/agent-host-protocol/` contains the separate Microsoft reference clone. DASP defines a separate draft contract. The reference imports retain their original meaning and bytes.
 
 ## Brand assets
 

@@ -1,12 +1,12 @@
 # Language clients
 
-Elixir and TypeScript are the first DASP client targets. They must share the imported contract and its conformance fixtures.
+Elixir and TypeScript are the first DASP client targets. Both will implement the same [CloudEvents core draft](../docs/specification/README.md), selected application profile, and transport binding.
 
 | Language | Current status |
 | --- | --- |
-| [Elixir](elixir/README.md) | Existing Seigyo client imported unchanged; DASP package extraction remains |
-| [TypeScript](typescript/README.md) | Source design proposal exists; implementation remains |
+| [Elixir](elixir/README.md) | Source client imported; DASP draft client not implemented |
+| [TypeScript](typescript/README.md) | DASP draft client not implemented |
 
-Clients must preserve the distinction between Receipt, saved Update, Result, View, and temporary Progress. A retry keeps the same Command ID and data. Applied cursor persistence belongs to the application. Client APIs may use language conventions, but their wire values must satisfy the same closed schemas and limits.
+Client APIs can follow language conventions. Wire values, retry identity, receipt meaning, and applied-cursor behavior must remain the same. Neither client may require a chat interface.
 
-The imported client and source documents retain Seigyo names. This project has not published a renamed DASP package.
+The imported source client is reference material. It is not compatible with the new draft without an adapter. A binding and profile must be fixed before interoperable client releases.

@@ -1,35 +1,59 @@
-# DASP specification guide
+# DASP core specification
 
-The source contract is the [Seigyo specification](../../upstream/seigyo/docs/seigyo/README.md). This guide introduces it without adding wire requirements.
+**Status: draft-01. Not a released interoperability contract.**
 
-## Common contract
+DASP is a language-independent protocol for durable actor sessions. It uses CloudEvents for message envelopes and defines the meaning of commands, admission, saved facts, and recovery. It does not require a chat interface, a particular actor runtime, or a storage engine.
 
-A Session is a durable client context with ordered saved history. A Command states client intent and has a stable retry identifier. A Receipt reports admission. A saved outcome reports completion, failure, cancellation, or uncertainty. Temporary Progress does not prove completion.
+This draft is the active DASP design. The imported implementation is reference material, not the normative DASP wire contract. Existing clients are not automatically compatible with this draft.
 
-An Update is a saved fact. Its positive integer sequence is contiguous within its Session. A client saves the last sequence that it has applied. After connection loss, it reads saved Updates after that cursor. A View presents a bounded, coherent saved state.
+The words MUST, MUST NOT, SHOULD, and MAY identify requirements within this draft. An implementation cannot claim released DASP conformance until a release fixes the core, profiles, bindings, and conformance suite.
 
-The trusted connection identity controls access. Signal fields, identifiers, and transport topics do not grant access. A connection loss does not cancel accepted work.
+## Layers
 
-These meanings can apply across languages. The specification must not require an Elixir process, struct, or exception in a client. The imported JSON schemas, frame fixtures, limits, and portable validation rules provide the external data contract.
-
-## Current profile and future scope
-
-The current production profile is `coding` version `1`. It includes Workspace, model, configuration, turn, attachment, and result types. General actor profiles must preserve the common identity, admission, retry, replay, and outcome rules. They need their own closed schemas and conformance cases before use.
-
-The current opt-in initialization includes a test-only `echo` profile. It is evidence for profile separation, not a released general-actor profile. Public Work, schedules, and collaboration remain proposals or draft contracts where marked by the source.
-
-## Source map
-
-| Subject | Source |
+| Layer | Responsibility |
 | --- | --- |
-| Meaning and ownership | [Model](../../upstream/seigyo/docs/seigyo/model.md) |
-| Operations and correlation | [Messages](../../upstream/seigyo/docs/seigyo/messages.md) |
-| Admission and outcome | [Processing](../../upstream/seigyo/docs/seigyo/processing.md) |
-| Retry and saved Updates | [Delivery](../../upstream/seigyo/docs/seigyo/delivery.md) |
-| Cursor application | [Replay](../../upstream/seigyo/docs/seigyo/replay.md) |
-| Current wire types | [Signal catalog](../../upstream/seigyo/docs/seigyo/signals.md) |
-| Transport and validation | [Wire](../../upstream/seigyo/docs/seigyo/wire.md) |
-| Version and feature selection | [Initialization](../../upstream/seigyo/docs/seigyo/initialization.md) |
-| Immutable baseline | [Release policy](../../upstream/seigyo/docs/seigyo/release-policy.md) |
+| CloudEvents 1.0 | Event identity, source, type, and metadata |
+| DASP core | Sessions, command identity, admission, updates, outcomes, and recovery |
+| Application profile | Command names, input schemas, state, output schemas, and completion scope |
+| Transport binding | Connection setup, authentication, discovery, routing, reads, subscriptions, and delivery |
+| Implementation | Runtime, storage, scheduling, and execution |
 
-The name DASP is the project name. Keep `jido.client.v1.*`, `seigyo.core/1`, and `SEIGYO-*` unchanged in imported contracts until a separate version and migration decision permits a change.
+DASP uses the [CloudEvents 1.0.2 specification](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md) and its [JSON event format](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md). The wire value of `specversion` is `"1.0"`. CloudEvents does not supply DASP's command, ordering, retry, or durability rules.
+
+## Core model
+
+An **actor** is a logical target that performs application work. Its identity does not name a process, machine, language object, or connection.
+
+A **session** binds one actor identity to one application profile and one ordered history. Its identity and profile remain fixed for its lifetime. More than one authorized client MAY observe it. An actor MAY have more than one session. There is no order across sessions.
+
+A **command** is durable intent with a stable command ID. A **receipt** reports whether the host saved admission. An **outcome** records what the host can establish about execution. These are separate facts.
+
+An **update** is an immutable saved event in a session. A **view** is a coherent projection at a saved cursor. **Progress** is temporary information that clients MAY discard.
+
+A **host authority** is the logical service that owns sessions, command retry records, and the update log. It can span multiple processes or machines. It MUST publish a stable authority identity through its binding.
+
+## Required behavior
+
+- Save admission and its retry record before reporting acceptance.
+- Keep each command ID unique across sessions within one host authority.
+- Publish saved updates in session order.
+- Preserve saved facts and event identity during replay.
+- Separate temporary progress from saved outcomes.
+- Check current authorization on each operation, including retries.
+- Preserve uncertainty when effects cannot be established.
+- Keep application-specific inputs and outputs inside profile payloads.
+
+The core has no turn, conversation, message role, model, workspace, tool, or attachment type. Profiles can define these concepts without changing core semantics.
+
+## Read in order
+
+1. [CloudEvents envelope](cloudevents.md)
+2. [Generic message shapes](messages.md)
+3. [Admission and recovery](recovery.md)
+4. [Profiles and transport bindings](profiles-and-bindings.md)
+5. [Security and versions](security-and-versioning.md)
+6. [Worked example](example.md)
+
+The [JSON Schema](../../specification/draft-01/envelope.schema.json) describes structural constraints. Prose defines behavior and cross-message rules. A schema pass alone does not prove conformance.
+
+Source history and compatibility differences are recorded separately in the [source mapping](../design/seigyo-mapping.md).

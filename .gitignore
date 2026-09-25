@@ -15,3 +15,5 @@
 /website/conformance/
 /website/source/
 **/__pycache__/
+
+/website/public/schemas/

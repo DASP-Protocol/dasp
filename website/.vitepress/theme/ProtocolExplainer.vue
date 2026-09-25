@@ -82,7 +82,7 @@ const titles = {
       <g class="svg-label"><text x="96" y="273">Web client</text><text x="240" y="273">CLI</text><text x="384" y="273">Service</text></g>
       <g class="svg-note"><text x="96" y="312">Own cursor</text><text x="240" y="312">Own cursor</text><text x="384" y="312">Own cursor</text></g>
     </svg>
-    <div class="explainer-controls"><span>{{ kind === 'actors' ? 'Illustrative roles · general actor profiles in design' : 'Protocol explanation · no live execution' }}</span><button v-if="!reduced" type="button" :aria-label="`${paused ? 'Play' : 'Pause'} animation: ${titles[kind]}`" :aria-pressed="paused" @click="paused = !paused">{{ paused ? 'Play' : 'Pause' }}</button><span v-else class="motion-note">Static view</span></div>
+    <div class="explainer-controls"><span>{{ kind === 'actors' ? 'Illustrative roles · application profiles in design' : 'Protocol explanation · no live execution' }}</span><button v-if="!reduced" type="button" :aria-label="`${paused ? 'Play' : 'Pause'} animation: ${titles[kind]}`" :aria-pressed="paused" @click="paused = !paused">{{ paused ? 'Play' : 'Pause' }}</button><span v-else class="motion-note">Static view</span></div>
   </figure>
 </template>
 

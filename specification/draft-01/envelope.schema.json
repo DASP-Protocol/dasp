@@ -1,0 +1,1735 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dasp-protocol.github.io/dasp/schemas/draft-01/envelope.schema.json",
+  "title": "DASP draft-01 structured CloudEvents",
+  "description": "Structural draft constraints only. Authorization, retry equality, byte limits, and state transitions require behavioral validation.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/session.openEvent"
+    },
+    {
+      "$ref": "#/$defs/session.openedEvent"
+    },
+    {
+      "$ref": "#/$defs/commandEvent"
+    },
+    {
+      "$ref": "#/$defs/receiptEvent"
+    },
+    {
+      "$ref": "#/$defs/updateEvent"
+    },
+    {
+      "$ref": "#/$defs/progressEvent"
+    },
+    {
+      "$ref": "#/$defs/view.readEvent"
+    },
+    {
+      "$ref": "#/$defs/viewEvent"
+    },
+    {
+      "$ref": "#/$defs/updates.readEvent"
+    },
+    {
+      "$ref": "#/$defs/updatesEvent"
+    },
+    {
+      "$ref": "#/$defs/outcome.readEvent"
+    },
+    {
+      "$ref": "#/$defs/outcomeEvent"
+    },
+    {
+      "$ref": "#/$defs/resync.requiredEvent"
+    },
+    {
+      "$ref": "#/$defs/failureEvent"
+    }
+  ],
+  "$defs": {
+    "value": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/value"
+          }
+        }
+      ]
+    },
+    "outcome": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "completed"
+            },
+            "output": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/value"
+              }
+            },
+            "error": {
+              "const": null
+            }
+          },
+          "required": [
+            "status",
+            "output",
+            "error"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "enum": [
+                "failed",
+                "uncertain"
+              ]
+            },
+            "output": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/value"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "error": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "retryable": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "retryable"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "status",
+            "output",
+            "error"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "cancelled"
+            },
+            "output": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/value"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "error": {
+              "const": null
+            }
+          },
+          "required": [
+            "status",
+            "output",
+            "error"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "updateData": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "kind": {
+              "const": "command.accepted"
+            },
+            "command_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "session_id",
+            "sequence",
+            "kind",
+            "command_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "kind": {
+              "const": "command.outcome"
+            },
+            "command_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "payload": {
+              "$ref": "#/$defs/outcome"
+            }
+          },
+          "required": [
+            "session_id",
+            "sequence",
+            "kind",
+            "command_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "kind": {
+              "const": "application"
+            },
+            "command_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+                },
+                "data": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/value"
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "data"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "session_id",
+            "sequence",
+            "kind",
+            "command_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "session.openEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.session.open.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "actor_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "profile": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "id",
+                "version"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "session_id",
+            "actor_id",
+            "profile"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "session.openedEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.session.opened.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "actor_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "profile": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "id",
+                "version"
+              ],
+              "additionalProperties": false
+            },
+            "cursor": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "session_id",
+            "actor_id",
+            "profile",
+            "cursor"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "commandEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.command.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "command_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+            },
+            "input": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/value"
+              }
+            }
+          },
+          "required": [
+            "session_id",
+            "command_id",
+            "name",
+            "input"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "receiptEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.receipt.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "session_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "command_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "disposition": {
+                  "enum": [
+                    "accepted",
+                    "duplicate"
+                  ]
+                },
+                "admission_sequence": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "error": {
+                  "const": null
+                }
+              },
+              "required": [
+                "session_id",
+                "command_id",
+                "disposition",
+                "admission_sequence",
+                "error"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "session_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "command_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "disposition": {
+                  "const": "rejected"
+                },
+                "admission_sequence": {
+                  "const": null
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "retryable": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "retryable"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "session_id",
+                "command_id",
+                "disposition",
+                "admission_sequence",
+                "error"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "updateEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.update.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "$ref": "#/$defs/updateData"
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "progressEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.progress.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "command_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/value"
+              }
+            }
+          },
+          "required": [
+            "session_id",
+            "command_id",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "view.readEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.view.read.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            }
+          },
+          "required": [
+            "session_id"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "viewEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.view.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "actor_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "profile": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "id",
+                "version"
+              ],
+              "additionalProperties": false
+            },
+            "cursor": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "state": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/value"
+              }
+            }
+          },
+          "required": [
+            "session_id",
+            "actor_id",
+            "profile",
+            "cursor",
+            "state"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "updates.readEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.updates.read.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "after": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "session_id",
+            "after",
+            "limit"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "updatesEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.updates.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "after": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "next": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "head": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "events": {
+              "type": "array",
+              "maxItems": 100,
+              "items": {
+                "$ref": "#/$defs/updateEvent"
+              }
+            }
+          },
+          "required": [
+            "session_id",
+            "after",
+            "next",
+            "head",
+            "events"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "outcome.readEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.outcome.read.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "command_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            }
+          },
+          "required": [
+            "session_id",
+            "command_id"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "outcomeEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.outcome.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "session_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "command_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "state": {
+                  "const": "pending"
+                },
+                "sequence": {
+                  "const": null
+                },
+                "outcome": {
+                  "const": null
+                }
+              },
+              "required": [
+                "session_id",
+                "command_id",
+                "state",
+                "sequence",
+                "outcome"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "session_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "command_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+                },
+                "state": {
+                  "const": "settled"
+                },
+                "sequence": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "outcome": {
+                  "$ref": "#/$defs/outcome"
+                }
+              },
+              "required": [
+                "session_id",
+                "command_id",
+                "state",
+                "sequence",
+                "outcome"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "resync.requiredEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.resync.required.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "reason": {
+              "enum": [
+                "overflow",
+                "interrupted"
+              ]
+            },
+            "head": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "session_id",
+            "reason",
+            "head"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    },
+    "failureEvent": {
+      "type": "object",
+      "properties": {
+        "specversion": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "const": "dasp.failure.v1"
+        },
+        "datacontenttype": {
+          "const": "application/json"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "retryable": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "retryable"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "error"
+          ],
+          "additionalProperties": false
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataschema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "requestid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+        }
+      },
+      "required": [
+        "specversion",
+        "id",
+        "source",
+        "type",
+        "datacontenttype",
+        "data",
+        "requestid"
+      ],
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          }
+        ]
+      }
+    }
+  }
+}

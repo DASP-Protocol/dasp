@@ -1,7 +1,9 @@
 # TypeScript client
 
-Status: not implemented. Use the imported [client proposal](../../upstream/seigyo/docs/seigyo/client-design.md).
+Status: not implemented.
 
-Implement the existing Phoenix Channel frames first. Validate Signals against the same closed schemas and custom rules as the Elixir client. Preserve safe integer bounds, typed IDs, admission and outcome separation, and applied Update cursors.
+Target the [DASP CloudEvents core](../../docs/specification/README.md), not the imported transport frames. Keep the core decoder, profile validation, transport binding, and application state separate.
 
-Use the [shared fixtures](../../upstream/seigyo/apps/jido_seigyo/priv/seigyo/coding-v1/contract.json) and [replay vectors](../../upstream/seigyo/apps/jido_seigyo/priv/seigyo/replay-v1/vectors.json). Keep UI code outside the client package. Do not use the superseded JSON-RPC draft as the implementation contract.
+Preserve safe integers, stable command IDs, saved CloudEvents identities, and applied update cursors. A receipt must not resolve an API that promises a completed outcome. Temporary progress must not advance a saved cursor.
+
+Start with the [draft schema](../../specification/draft-01/envelope.schema.json) and [example events](../../specification/draft-01/examples/counter.json). The first transport binding, profile, package API, and runtime fault checks remain to be implemented. UI code stays outside the client.

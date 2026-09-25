@@ -11,13 +11,13 @@ const link = (p) => withBase(p);
       <div class="hero-grid">
         <div class="hero-copy">
           <h1 id="hero-title">Durable Actor<br>Session Protocol</h1>
-          <p class="hero-tagline">A control protocol for durable actors.</p>
+          <p class="hero-tagline">A CloudEvents protocol for durable actors.</p>
           <p class="hero-description">For agent builders who need commands, saved outcomes, and recovery across languages—without requiring chat or turn semantics in the core.</p>
           <div class="hero-actions">
             <a class="primary-link" :href="link('/guide.html')">Explore the protocol <ArrowIcon /></a>
             <a class="text-link" href="https://github.com/DASP-Protocol/dasp">View on GitHub <ArrowIcon /></a>
           </div>
-          <div class="hero-context"><span class="draft-tag"><span class="status-dot"></span> Design draft</span><p class="hero-note">Built from Seigyo. Elixir first. TypeScript next.</p></div>
+          <div class="hero-context"><span class="draft-tag"><span class="status-dot"></span> Design draft</span><p class="hero-note">CloudEvents core draft. Elixir and TypeScript planned.</p></div>
         </div>
         <ProtocolExplainer kind="actors" />
       </div>
@@ -25,7 +25,7 @@ const link = (p) => withBase(p);
 
     <section class="actor-introduction" aria-labelledby="actor-title">
       <h2 id="actor-title">Actors have work to do.<br>A conversation is optional.</h2>
-      <p>An actor accepts intent, manages state, and performs application work. DASP is defining the shared control contract around that work. A profile supplies the application-specific inputs and results; the core does not prescribe a chat interface.</p>
+      <p>An actor accepts intent, manages state, and performs application work. DASP defines a CloudEvents envelope and a generic control contract around that work. A profile supplies the application-specific inputs and results; the core does not prescribe a chat interface.</p>
     </section>
 
     <section class="explanation-row" aria-labelledby="admission-title">
@@ -61,7 +61,7 @@ const link = (p) => withBase(p);
     <section class="contract-section" aria-labelledby="contract-title">
       <div><h2 id="contract-title">Common rules.<br>Native clients.</h2><p>The specification defines the meaning. Each language chooses its API. Shared schemas and conformance checks keep them aligned.</p><a class="text-link" :href="link('/protocol/index.html')">Read the specification <ArrowIcon /></a></div>
       <div class="client-table">
-        <a :href="link('/clients/elixir.html')"><span><strong>Elixir</strong><small>Existing Seigyo client · extraction planned</small></span><span class="client-status">Imported</span><ArrowIcon /></a>
+        <a :href="link('/clients/elixir.html')"><span><strong>Elixir</strong><small>DASP client planned · source client imported</small></span><span class="client-status">Imported</span><ArrowIcon /></a>
         <a :href="link('/clients/typescript.html')"><span><strong>TypeScript</strong><small>Independent client · shared wire contract</small></span><span class="client-status planned">Planned</span><ArrowIcon /></a>
         <div class="client-footnote">No released DASP packages yet. Client status is explicit.</div>
       </div>
@@ -69,7 +69,7 @@ const link = (p) => withBase(p);
 
     <section class="source-section" aria-labelledby="source-title">
 
-      <div class="source-grid"><h2 id="source-title">From Seigyo.<br>Toward a general actor protocol.</h2><div><p>The starting point is Seigyo’s coding profile: its messages, retry rules, saved updates, schemas, and client. DASP is extracting the common contract for use beyond coding agents.</p><p class="source-note">The current binding uses Phoenix Channel WebSocket frames. General actor profiles and DASP naming decisions remain open.</p><a class="text-link" :href="link('/project/decisions.html')">See the decisions ahead <ArrowIcon /></a></div></div>
+      <div class="source-grid"><h2 id="source-title">Standard envelope.<br>Actor-specific data.</h2><div><p>CloudEvents supplies event identity and context. DASP supplies session, command, outcome, and replay rules. Profiles define the inputs and results for each kind of actor.</p><p class="source-note">Draft-01 has generic message schemas and examples. A production transport binding and application profile remain to be selected.</p><a class="text-link" :href="link('/project/decisions.html')">See the decisions ahead <ArrowIcon /></a></div></div>
     </section>
 
     <section class="start-section" aria-label="Start reading">

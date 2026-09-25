@@ -55,7 +55,9 @@ export default defineConfig({
         { text: 'Protocol overview', link: '/protocol/' }
       ]},
       { text: 'The contract', items: [
-        { text: 'Messages & wire format', link: '/protocol/messages' },
+        { text: 'CloudEvents envelope', link: '/protocol/cloudevents' },
+        { text: 'Profiles & bindings', link: '/protocol/profiles-and-bindings' },
+        { text: 'Message shapes', link: '/protocol/messages' },
         { text: 'Recovery', link: '/protocol/recovery' },
         { text: 'Security & versions', link: '/protocol/security-and-versioning' },
         { text: 'Examples & fixtures', link: '/protocol/example' }
@@ -69,6 +71,7 @@ export default defineConfig({
       { text: 'Project', items: [
         { text: 'Brand & assets', link: '/brand' },
         { text: 'Decisions & next steps', link: '/project/decisions' },
+        { text: 'Source mapping', link: '/project/seigyo-mapping' },
         { text: 'Seigyo source', link: '/source/' },
         { text: 'Microsoft AHP reference', link: '/project/ahp-reference' }
       ]}

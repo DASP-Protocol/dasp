@@ -31,6 +31,8 @@ jobs:
           SEIGYO_CONTRACT: upstream/seigyo/apps/jido_seigyo/priv/seigyo/coding-v1
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 -m unittest discover -s upstream/seigyo/apps/jido_code_acceptance/scripts -p 'test_*.py'
+      - name: Check DASP draft shapes
+        run: npm run spec:check
       - run: npm run docs:build
       - uses: actions/upload-pages-artifact@v3
         with:
