@@ -29,6 +29,10 @@ The earlier JSON-RPC proposal is [archived](docs/archive/initial-proposal/README
 
 `upstream/seigyo/` contains only the selected Seigyo source files, with their original bytes. `reference/agent-host-protocol/` contains the separate Microsoft reference clone. DASP documents explain the source; they do not silently replace its contract.
 
+## Brand assets
+
+See the [brand guide](website/brand.md) for logos, icons, social previews, and use rules. Run `npm run brand:build` to rebuild all assets from the shared vector source.
+
 ## Documentation website
 
 The design preview is published at [dasp-protocol.github.io/dasp](https://dasp-protocol.github.io/dasp/).

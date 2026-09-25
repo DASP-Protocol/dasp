@@ -76,6 +76,6 @@ const link = (p) => withBase(p);
       <div><h2>Make the failure cases clear.</h2></div>
       <a class="primary-link" :href="link('/protocol/recovery.html')">Read the recovery rules <ArrowIcon /></a>
     </section>
-    <footer class="home-footer"><span>DASP / Durable Actor Session Protocol</span><a href="https://github.com/DASP-Protocol/dasp">Developed in the open <ArrowIcon /></a></footer>
+    <footer class="home-footer"><span>DASP / Durable Actor Session Protocol</span><a :href="link('/brand.html')">Brand &amp; assets <ArrowIcon /></a><a href="https://github.com/DASP-Protocol/dasp">Developed in the open <ArrowIcon /></a></footer>
   </div>
 </template>
