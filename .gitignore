@@ -12,6 +12,8 @@
 **/dist/
 **/_build/
 **/deps/
+clients/elixir/*.tar
+clients/typescript/*.tgz
 **/__pycache__/
 /website/.vitepress/cache/
 /website/guide.md

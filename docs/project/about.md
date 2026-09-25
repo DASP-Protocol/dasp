@@ -14,7 +14,7 @@ Process supervision can restart a failed process. Durable session recovery also 
 
 DASP carries these requirements into a generic CloudEvents-based specification. Applications define their own commands and results. Servers and clients can use any language or runtime; Jido, Elixir, and the BEAM are not required.
 
-Elixir and TypeScript are the first planned client languages. The project keeps the specification, shared checks, documentation site, and client work in one repository.
+Elixir and TypeScript are the first experimental client packages. The project keeps the specification, shared checks, documentation site, and client work in one repository.
 
 ## Open for feedback
 

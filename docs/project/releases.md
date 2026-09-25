@@ -2,7 +2,7 @@
 
 **Current status: working review draft, core identifier `draft-01`. No tagged DASP specification release is published.**
 
-The intended first review bundle is `0.1.0-draft.1`. This is a proposed publication version. It is different from CloudEvents `specversion: "1.0"`, the event-type suffix `.v1`, and future client package versions.
+The intended first review bundle is `0.1.0-draft.1`. This is a proposed publication version. It is different from CloudEvents `specversion: "1.0"`, the event-type suffix `.v1`, and client package versions.
 
 Project license selection is pending. The preparation command requires an approved `LICENSE` file before it can create a release archive.
 
@@ -27,4 +27,4 @@ Before a formal release, confirm the chosen version and license, review the open
 
 ## Next implementation milestone
 
-Specify a binding and useful profile, build a persistent example host, and implement Elixir and TypeScript clients. Add concurrent retry, restart, replay, and authorization tests. Publish a compatibility tuple with each implementation: core, profile, binding, and suite version.
+Specify a binding and useful profile, build a persistent example host, and connect the experimental Elixir and TypeScript clients. Add concurrent retry, restart, replay, and authorization tests. Publish a compatibility tuple with each implementation: core, profile, binding, and suite version.

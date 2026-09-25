@@ -7,7 +7,7 @@ const { Layout } = DefaultTheme;
   <Layout>
     <template #layout-top>
       <aside class="draft-ribbon" aria-label="Draft status">
-        <span>Draft for feedback</span>
+        <span>DASP is a draft. Help us improve it.</span>
         <a href="https://github.com/DASP-Protocol/dasp/issues">Share feedback on GitHub <span aria-hidden="true">↗</span></a>
       </aside>
     </template>

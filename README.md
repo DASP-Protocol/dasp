@@ -4,7 +4,7 @@ DASP is an open, language-independent server protocol for controlling durable ac
 
 For agent builders connecting applications, tools, and automation to durable actors.
 
-**Status: draft-01, a working review draft.** The core can change. Elixir and TypeScript clients are planned. No transport binding or production profile is released.
+**Status: draft-01, a working review draft.** The core can change. Experimental Elixir and TypeScript client packages are available in this repository. No transport binding or production profile is released.
 
 [Read the guide](https://dasp-protocol.github.io/dasp/guide/) · [Specification](https://dasp-protocol.github.io/dasp/specification/) · [Conformance](https://dasp-protocol.github.io/dasp/conformance/)
 
@@ -48,7 +48,7 @@ npm run docs:dev
 | `docs/` | Authored guide, specification, and project documents |
 | `specification/` | Language-neutral schemas and example events |
 | `conformance/` | Shared fixtures, coverage, and behavioral case definitions |
-| `clients/` | Language client status and future implementations |
+| `clients/` | Elixir and TypeScript packages, tests, and usage guides |
 | `website/` | Site theme and public brand assets |
 | `scripts/` | Validation, site generation, and release preparation |
 

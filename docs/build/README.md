@@ -1,6 +1,6 @@
 # Add DASP to your project
 
-**Current stage: contract review.** You can run the artifact checks and map an application onto the draft. A production transport binding and DASP client packages are not available yet.
+**Current stage: contract review.** You can run the artifact checks and map an application onto the draft. Experimental Elixir and TypeScript client packages are available for local use. A production transport binding is not released.
 
 ## Build a client
 
@@ -36,4 +36,4 @@ Use the [counter profile](../specification/example.md) as a small example. For a
 
 Start with the [illustrated walkthrough](walkthrough.md) to see why command identity, saved outcomes, and recovery matter. Then inspect the [recorded counter exchange](../reference/recorded-exchange.md) for install commands and artifact checks. Those checks compare recorded messages and expected relationships; they do not start a host or run an actor.
 
-See [client status](../../clients/README.md) and [open decisions](../project/feedback.md) before planning an implementation. The next implementation milestone is one specified binding, a persistent example host, and Elixir and TypeScript clients tested against the same cases.
+See [client status](../../clients/README.md) and [open decisions](../project/feedback.md) before planning an implementation. The next implementation milestone is one specified binding and a persistent example host tested with both client packages.

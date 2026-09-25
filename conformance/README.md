@@ -16,6 +16,8 @@ The suite validates recorded draft-01 events, schemas, a counter profile, and a 
 | Client behavior | Not executed: actual persistence, reconnect, unknown events, duplicate handling |
 | Binding and profile runtime | Not executed: no released binding or production profile |
 
+Separate [client package tests](../clients/README.md#build-and-test) now execute raw JSON parsing, core validation, reply correlation, request deadlines, equal retry construction, replay bounds, and checkpoint duplicate handling in Elixir and TypeScript. They use in-process transport adapters and the shared recorded vectors. They are not included in the artifact report or the host requirement coverage index below. Actual storage, reconnect, host restart, and live binding tests remain open.
+
 A schema pass alone does not establish protocol conformance. “Artifact-partial” in the index means that a recorded example touches part of a requirement; it does not prove the behavior of an implementation.
 
 ## Run and inspect

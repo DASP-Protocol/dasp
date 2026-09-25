@@ -6,6 +6,8 @@ export const pages = {
   'docs/build/README.md': 'build/index.md',
   'docs/build/walkthrough.md': 'build/walkthrough.md',
   'clients/README.md': 'build/clients.md',
+  'clients/elixir/README.md': 'build/elixir.md',
+  'clients/typescript/README.md': 'build/typescript.md',
   'docs/specification/README.md': 'specification/index.md',
   'docs/specification/model.md': 'specification/model.md',
   'docs/specification/cloudevents.md': 'specification/cloudevents.md',

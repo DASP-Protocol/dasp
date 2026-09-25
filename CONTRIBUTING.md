@@ -27,6 +27,17 @@ Edit authored files in `docs/`, not generated website pages. Keep local research
 
 Elixir and TypeScript clients must target the same selected core, profile, and binding. A package version is not a protocol version. Do not claim runtime conformance from example validation.
 
+For client changes, install dependencies in both package directories, then run:
+
+```sh
+npm run clients:test
+npm run clients:package
+```
+
+The package check installs each archive outside the repository and runs a recorded adapter example. Keep the bundled schemas equal to the active draft with `node scripts/sync-client-schemas.mjs`. Client tests must reject invalid wire input, mismatched replies, and unsafe recovery. Do not add transport or application semantics to the generic core.
+
+GitHub runs client tests, package installation checks, and documentation checks on pull requests. Dependabot checks npm, Mix, and GitHub Actions weekly. Review dependency updates before merging; no automatic merge is configured.
+
 ## Review and release
 
 Maintainers review scope, compatibility, examples, and test evidence in pull requests. Record deferred choices on the review page. The [release checklist](RELEASING.md) defines artifact preparation. Report security concerns through [SECURITY.md](SECURITY.md).

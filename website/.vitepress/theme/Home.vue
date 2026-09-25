@@ -63,8 +63,8 @@ const link = (p) => withBase(p);
     <section class="contract-section" aria-labelledby="contract-title">
       <div><h2 id="contract-title">Common rules.<br>Native clients.</h2><p>The specification defines the meaning. Each language chooses its API. Shared schemas and test cases define the target for both implementations.</p><a class="text-link" :href="link('/specification/index.html')">Read the specification <ArrowIcon /></a></div>
       <div class="client-table">
-        <a :href="link('/build/clients.html#elixir')"><span><strong>Elixir</strong><small>Native API · shared wire contract</small></span><span class="client-status planned">Planned</span><ArrowIcon /></a>
-        <a :href="link('/build/clients.html#typescript')"><span><strong>TypeScript</strong><small>Independent client · shared wire contract</small></span><span class="client-status planned">Planned</span><ArrowIcon /></a>
+        <a :href="link('/build/clients.html#elixir')"><span><strong>Elixir</strong><small>Native API · shared wire contract</small></span><span class="client-status planned">Experimental</span><ArrowIcon /></a>
+        <a :href="link('/build/clients.html#typescript')"><span><strong>TypeScript</strong><small>Independent client · shared wire contract</small></span><span class="client-status planned">Experimental</span><ArrowIcon /></a>
         <div class="client-footnote">No released DASP packages yet. Client status is explicit.</div>
       </div>
     </section>

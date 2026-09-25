@@ -12,7 +12,10 @@
     "publication:check": "node scripts/check-publication.mjs",
     "site:check": "node scripts/check-site.mjs",
     "check": "npm run spec:check && npm run publication:check && npm run docs:build && npm run site:check",
-    "release:prepare": "npm run check && node scripts/prepare-release.mjs"
+    "release:prepare": "npm run check && node scripts/prepare-release.mjs",
+    "clients:schemas": "node scripts/sync-client-schemas.mjs --check",
+    "clients:test": "npm run clients:schemas && npm --prefix clients/typescript test && cd clients/elixir && mix format --check-formatted && mix test",
+    "clients:package": "node scripts/check-client-packages.mjs"
   },
   "devDependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",

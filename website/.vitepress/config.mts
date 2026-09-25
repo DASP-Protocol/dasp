@@ -64,6 +64,8 @@ export default defineConfig({
         { text: 'Add DASP to your project', link: '/build/' },
         { text: 'Illustrated walkthrough', link: '/build/walkthrough' },
         { text: 'Language clients', link: '/build/clients' },
+        { text: 'Elixir package', link: '/build/elixir' },
+        { text: 'TypeScript package', link: '/build/typescript' },
         { text: 'Conformance coverage', link: '/conformance/' }
       ]}],
       '/specification/': [{ text: 'Core draft · draft-01', items: [
