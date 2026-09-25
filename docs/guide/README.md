@@ -1,6 +1,6 @@
 # What is DASP?
 
-DASP is the **Durable Actor Session Protocol**. It is an open, language-independent protocol for controlling durable actors through shared sessions. It defines command admission, saved outcomes, ordered updates, and recovery using CloudEvents messages.
+DASP is the **Durable Actor Session Protocol**. It is an open, language-independent server protocol for controlling durable actors through shared sessions. It defines command admission, saved outcomes, ordered updates, and recovery using CloudEvents messages.
 
 ## Why a session matters
 
@@ -38,4 +38,4 @@ Draft-01 contains core requirements, JSON Schemas, examples, and artifact checks
 
 Continue with [core concepts](concepts.md), [use cases](use-cases.md), or [the build guide](../build/README.md).
 
-For short answers about A2A, MCP, and other protocols, read [Why DASP? FAQ](faq.md).
+For short answers about protocol fit, read [DASP and other protocols](faq.md).

@@ -34,6 +34,6 @@ Use the [counter profile](../specification/example.md) as a small example. For a
 
 ## Try the current artifacts
 
-Clone the repository, install dependencies, and run the [walkthrough](walkthrough.md). It checks recorded messages and expected relationships. It does not start a host or run an actor.
+Start with the [illustrated walkthrough](walkthrough.md) to see why command identity, saved outcomes, and recovery matter. Then inspect the [recorded counter exchange](../reference/recorded-exchange.md) for install commands and artifact checks. Those checks compare recorded messages and expected relationships; they do not start a host or run an actor.
 
 See [client status](../../clients/README.md) and [open decisions](../project/feedback.md) before planning an implementation. The next implementation milestone is one specified binding, a persistent example host, and Elixir and TypeScript clients tested against the same cases.

@@ -11,28 +11,28 @@ const link = (p) => withBase(p);
       <div class="hero-grid">
         <div class="hero-copy">
           <h1 id="hero-title">Durable Actor<br>Session Protocol</h1>
-          <p class="hero-tagline">A shared protocol for durable actor sessions.</p>
-          <p class="hero-description">Send commands to actors, follow saved outcomes, and resume after a connection fails. Built for agent builders using CloudEvents across languages.</p>
+          <p class="hero-tagline">A server protocol for durable actors.</p>
+          <p class="hero-description">Connect apps, tools, and agents to durable actor servers. Use CloudEvents to send commands, read saved outcomes, and recover across connections.</p>
           <div class="hero-actions">
             <a class="primary-link" :href="link('/specification/')">Read the specification <ArrowIcon /></a>
-            <a class="text-link" :href="link('/build/walkthrough.html')">Try the example <ArrowIcon /></a>
+            <a class="text-link" :href="link('/build/walkthrough.html')">Follow a command <ArrowIcon /></a>
           </div>
-          <div class="hero-context"><span class="draft-tag"><span class="status-dot"></span> Review draft</span><p class="hero-note">Draft-01 · Core may change. Elixir and TypeScript planned.</p></div>
         </div>
         <ProtocolExplainer kind="actors" />
       </div>
     </section>
 
     <section class="actor-introduction" aria-labelledby="actor-title">
-      <h2 id="actor-title">Work survives<br>the client connection.</h2>
-      <p>An actor performs application work. Its host keeps the session identity and saved history, so clients can return to the same facts. A profile defines the inputs and results. The core does not require a chat interface.</p>
+      <h2 id="actor-title">Your server owns<br>the session.</h2>
+      <div><p>The server is the authority for command admission, saved outcomes, and session history. Clients can disconnect and return to the same record.</p><p>Your application defines the actor's commands, state, and results. Chat is optional. The server can use any language or actor runtime.</p></div>
     </section>
 
     <section class="explanation-row" aria-labelledby="admission-title">
       <div class="explanation-copy">
-        <h2 id="admission-title">Accepted does not<br>mean completed.</h2>
-        <p>A command carries a stable identity. Its receipt reports admission. A saved outcome tells the client what happened—even when the answer is uncertain.</p>
-        <p>Temporary progress helps a client show activity. It cannot prove completion.</p>
+        <p class="section-label">Command admission</p>
+        <h2 id="admission-title">Know what<br>the server saved.</h2>
+        <p>The server saves admission before it accepts a command. It records the final outcome separately, including an uncertain result when effects cannot be established.</p>
+        <p>A retry keeps the command ID and data. It returns the saved admission without starting the work again.</p>
         <a class="text-link" :href="link('/specification/messages.html')">Understand the messages <ArrowIcon /></a>
       </div>
       <ProtocolExplainer kind="admission" />
@@ -41,18 +41,20 @@ const link = (p) => withBase(p);
     <section class="explanation-row recovery-row" aria-labelledby="recovery-title">
       <ProtocolExplainer kind="recovery" />
       <div class="explanation-copy">
-        <h2 id="recovery-title">The connection ends.<br>The session continues.</h2>
-        <p>A disconnect does not cancel accepted work. Saved updates remain ordered within the session. A returning client reads after its last applied cursor.</p>
-        <p>Retry unresolved intent with the same command ID and data. Keep recovery explicit.</p>
+        <p class="section-label">Connection recovery</p>
+        <h2 id="recovery-title">Reconnect to<br>the same record.</h2>
+        <p>The server retains ordered updates when a connection ends. A returning client reads after the last update it applied.</p>
+        <p>If the client stopped at update 2, it resumes with update 3. Accepted work continues independently of the connection.</p>
         <a class="text-link" :href="link('/specification/recovery.html')">Read the recovery rules <ArrowIcon /></a>
       </div>
     </section>
 
     <section class="explanation-row" aria-labelledby="multiplayer-title">
       <div class="explanation-copy">
+        <p class="section-label">Shared sessions</p>
         <h2 id="multiplayer-title">Many clients.<br>One shared session.</h2>
-        <p>Follow the same actor from more than one client. The host controls command admission and saved state. Each client reads the saved updates with its own cursor.</p>
-        <p>The host checks access. The application profile defines how concurrent commands interact. Each client recovers from its own saved state.</p>
+        <p>A web app, command-line tool, and service can use the same actor session. The server checks access and gives each client the same ordered history.</p>
+        <p>Clients can be at different positions. Each saves its own cursor and catches up at its own pace. The application profile defines how concurrent commands interact.</p>
         <a class="text-link" :href="link('/specification/profiles-and-bindings.html#dasp-profile-003')">Understand shared sessions <ArrowIcon /></a>
       </div>
       <ProtocolExplainer kind="multiplayer" />

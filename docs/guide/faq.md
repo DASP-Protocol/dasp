@@ -1,57 +1,76 @@
-# Why DASP? FAQ
+# DASP and other protocols {#why-dasp-faq}
 
-DASP defines a common contract for durable actor sessions. These short answers explain why that contract needs its own specification and how it relates to other protocols.
+A client submits a command, then loses its connection before the reply arrives. Did the actor accept the command? Can the client retry it? Can another client recover the result?
 
-Comparisons reviewed on **25 September 2026**. They describe design scope, not conformance results. DASP is a working draft. No production host, transport binding, or client package is released.
+**DASP defines common rules for these questions** across languages and actor implementations.
+
+*Working draft · [Implementation status](README.md#current-state)*
 
 ## Why another protocol?
 
-We need clients to control a durable actor, share its session, and recover after a lost connection. The same contract must define saved command admission, retries, final outcomes, and replay of saved updates. It must also let the application define its own commands without requiring chat or turns.
+DASP needs a contract for actors that keep their identity and work across client connections. That contract must cover saved command admission, retries, outcomes, and recovery together. The application defines its commands; chat and turns are optional.
 
-The protocols below address related needs. DASP brings these requirements together in a generic actor contract. Without that common contract, each integration must define the missing rules itself. See the [core requirements](../specification/recovery.md).
+The protocols below cover related needs. DASP specifies the actor and recovery rules that integrations would otherwise need to agree on separately.
+
+## When do I need DASP?
+
+Consider DASP when your application needs these properties together:
+
+- **Persistent identity.** Clients return to the same actor and session after a disconnect.
+- **Reliable retries.** A lost reply does not cause a second command admission.
+- **Shared access.** Several authorized clients work with the same session.
+- **Recoverable history.** Each client can read saved outcomes and apply the updates it missed.
+
+For a single tool call or agent task, an existing protocol may meet your needs. Use the [command and recovery walkthrough](../build/walkthrough.md) to assess the fit. DASP does not guarantee exactly-once external effects.
 
 ## Why not A2A?
 
-Agent2Agent (A2A) supports communication between agents through messages, tasks, and artifacts. It already supports long-running tasks, streaming, and reconnecting clients. Its specification makes duplicate detection for Send Message optional. See the [A2A specification](https://a2a-protocol.org/latest/specification/).
+Agent2Agent (A2A) fits task exchange between agents. It supports long-running tasks, streaming, and reconnecting clients. Its [Send Message retry rules](https://a2a-protocol.org/latest/specification/#331-idempotency) make duplicate detection optional.
 
-DASP requires equal command retries to resolve to one saved admission. It also defines ordered replay for a generic actor session, with a saved position for each client. Use A2A when agent task exchange meets your needs; DASP addresses the actor host's durable command contract.
+DASP [requires equal retries to share one saved admission](../specification/recovery.md#dasp-core-003). A client can retry after a lost reply using the same command ID and data. That guarantee is part of the actor session contract.
 
 ## Why not MCP?
 
-The Model Context Protocol (MCP) connects AI applications to tools and context. Its Tasks extension adds durable task handles and recovery of polling after a restart. See the [MCP specification](https://modelcontextprotocol.io/specification/2026-07-28) and [Tasks extension draft](https://tasks.extensions.modelcontextprotocol.io/specification/draft/tasks).
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/specification/2026-07-28) connects AI applications to tools and context. Its [Tasks extension](https://tasks.extensions.modelcontextprotocol.io/specification/draft/tasks) includes durable task handles and polling that can resume after a restart.
 
-DASP specifies a shared actor session that can contain many commands, saved outcomes, and an ordered update history. A durable tool task covers part of this need. DASP makes session recovery and command retry rules part of the same core contract.
+DASP defines recovery across many commands in a shared actor session. Its [recovery rules](../specification/recovery.md#dasp-core-011) cover command retries, saved outcomes, and missed updates together. A durable tool task addresses part of that need.
 
 ## Why not ACP?
 
-The Agent Client Protocol (ACP) defines communication between code editors and coding agents. It gives that integration a common interface. See the [ACP introduction](https://agentclientprotocol.com/get-started/introduction).
+The [Agent Client Protocol (ACP)](https://agentclientprotocol.com/get-started/introduction) defines communication between code editors and coding agents. It is a direct fit for that interface.
 
-DASP serves actor hosts and clients beyond the editor. An actor can be an agent, workflow, or device controller. An application profile defines its commands and results. Choose ACP for editor integration; consider DASP when the shared resource is a durable actor session.
+DASP serves clients of durable actors, including agents, workflows, and device controllers. An [application profile](../specification/profiles-and-bindings.md) defines the commands and results for each use. This lets the same session contract serve an editor, operator console, or background service.
 
 ## Why not AHP?
 
-The Agent Host Protocol (AHP) has close overlap: multiple clients can share synchronized AI agent sessions. Its channel model includes sessions, chats, terminals, and other resources. See the [AHP introduction](https://microsoft.github.io/agent-host-protocol/guide/what-is-ahp.html).
+The Agent Host Protocol (AHP) supports shared agent sessions. Its [reconnection rules](https://microsoft.github.io/agent-host-protocol/specification/lifecycle.html#reconnection) replay missed actions or return fresh snapshots when the replay buffer is exhausted.
 
-DASP starts with generic actors and commands. Its core specifies saved admission, immutable final outcomes, explicit uncertainty, and replay. The application defines its state and command vocabulary. Chat can be an application profile; it is not required by the DASP core.
+DASP draft-01 [retains saved updates, outcomes, and retry records for the full session lifetime](../specification/recovery.md#dasp-core-012). Each client recovers from its own applied position. This preserves the saved history and requires storage that grows with the session. The actor's commands remain application-defined.
 
 ## Why not AG-UI?
 
-The Agent User Interaction Protocol (AG-UI) connects agent runtimes to user interfaces through events and shared state. It addresses how an application presents agent activity and accepts user interaction. See the [AG-UI introduction](https://docs.ag-ui.com/introduction).
+The [Agent User Interaction Protocol (AG-UI)](https://docs.ag-ui.com/introduction) connects agent runtimes to user interfaces through events and shared state. It fits applications that need to present agent activity and accept user interaction.
 
-DASP defines what the actor host saves and what a client can recover. That contract can support a user interface, command-line tool, or background service. A UI event stream and a durable session contract address different parts of an application.
+DASP defines the host's saved facts and the client's recovery behavior. For example, a client must [save its applied update position with its application state](../specification/recovery.md#dasp-core-010). This also serves clients without a user interface.
 
-## Why not CloudEvents alone?
+## What does DASP add to CloudEvents? {#why-not-cloudevents-alone}
 
-CloudEvents defines a common event envelope, including identity, source, type, and data. It leaves application behavior to other specifications. See [CloudEvents 1.0.2](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md).
+[CloudEvents](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md) supplies the common event envelope: identity, source, type, and data. DASP uses that envelope for its messages.
 
-DASP uses that envelope. It adds the rules for command admission, outcomes, ordering, and recovery. A valid CloudEvent alone does not establish that a command was saved or that an update can be replayed. See the [DASP CloudEvents envelope](../specification/cloudevents.md).
+DASP adds [application behavior requirements](../specification/recovery.md) for command admission, outcomes, ordering, and recovery. A valid CloudEvent identifies an event. The DASP rules establish when a command is saved and how a client recovers its result.
 
 ## Could an existing protocol be extended instead?
 
-An extension is a possible implementation approach. It still needs to define the actor model, retry identity, saved outcomes, and recovery rules that clients share. DASP gives those rules one specification that can be reviewed and tested across languages. A mapping to another protocol would need to preserve them and state any limits.
+Yes. DASP's design choice is to keep actor recovery rules independent of a particular agent interaction model. A separate specification lets clients implement and test those rules across languages.
+
+An extension or adapter could expose the same contract through another protocol. It would need to preserve command identity, authorization, outcomes, and replay, and document any limits.
 
 ## Can these protocols work together?
 
-They can serve different interfaces in one system. For example, an agent could accept an A2A task, call an MCP tool, and use a DASP session to control a durable actor. This is a possible architecture, not an integration that DASP currently provides. Adapters need explicit mappings for identity, authorization, outcomes, and recovery.
+Yes, as separate interfaces in one system. An agent could accept an A2A task, call an MCP tool, and use a DASP session to control a durable actor.
 
-Start with [use cases](use-cases.md) to assess the fit, or read [how to add DASP to a project](../build/README.md).
+This is a possible design. DASP has no released adapters. Start with the [build guide](../build/README.md) to review the host, client, and profile responsibilities.
+
+---
+
+*Comparisons reviewed on 25 September 2026. Protocols can change. [Suggest a correction](../project/feedback.md).*

@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile, cp, rm } from 'node:fs/promises';
 import path from 'node:path';
-import { pages, artifacts, aliases, generatedDirectories } from './site-map.mjs';
+import { pages, pageOptions, artifacts, aliases, generatedDirectories } from './site-map.mjs';
 
 const repository = 'https://github.com/DASP-Protocol/dasp/blob/main/';
 // Only these dedicated generated directories are removed. Authored theme/brand files are preserved.
@@ -27,7 +27,8 @@ for (const [source, destination] of Object.entries(pages)) {
   const description = paragraph.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*`]/g, '').replace(/\s+/g, ' ').slice(0, 180);
   const output = path.join('website', destination);
   await mkdir(path.dirname(output), { recursive: true });
-  const fm = `---\ndescription: ${JSON.stringify(description)}\neditLink: false\n---\n\n`;
+  const options = Object.entries(pageOptions[source] || {}).map(([key, value]) => `${key}: ${JSON.stringify(value)}\n`).join('');
+  const fm = `---\ndescription: ${JSON.stringify(description)}\neditLink: false\n${options}---\n\n`;
   await writeFile(output, fm + text);
 }
 for (const [source, destination] of Object.entries(artifacts)) {

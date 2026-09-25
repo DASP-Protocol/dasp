@@ -1,6 +1,6 @@
 # Durable Actor Session Protocol
 
-DASP is an open, language-independent protocol for controlling durable actors through shared sessions. It defines command admission, saved outcomes, ordered updates, and recovery using CloudEvents messages.
+DASP is an open, language-independent server protocol for controlling durable actors through shared sessions. It defines command admission, saved outcomes, ordered updates, and recovery using CloudEvents messages.
 
 For agent builders connecting applications, tools, and automation to durable actors.
 

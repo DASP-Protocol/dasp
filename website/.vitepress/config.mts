@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress';
 
 export default defineConfig({
   title: 'DASP',
-  description: 'Durable Actor Session Protocol. A shared contract for commands, outcomes, and recovery.',
+  description: 'Durable Actor Session Protocol. A server protocol for commands, saved outcomes, and recovery.',
   base: '/dasp/',
   cleanUrls: false,
   lastUpdated: true,
@@ -53,14 +53,14 @@ export default defineConfig({
     sidebar: {
       '/guide/': [{ text: 'Guide', items: [
         { text: 'What is DASP?', link: '/guide/' },
-        { text: 'Why DASP? FAQ', link: '/guide/faq' },
+        { text: 'Protocol FAQ', link: '/guide/faq' },
         { text: 'Core concepts', link: '/guide/concepts' },
         { text: 'Use cases', link: '/guide/use-cases' },
         { text: 'Add DASP to a project', link: '/build/' }
       ]}],
       '/build/': [{ text: 'Build with DASP', items: [
         { text: 'Add DASP to your project', link: '/build/' },
-        { text: 'Command and recovery', link: '/build/walkthrough' },
+        { text: 'Illustrated walkthrough', link: '/build/walkthrough' },
         { text: 'Language clients', link: '/build/clients' },
         { text: 'Conformance coverage', link: '/conformance/' }
       ]}],
@@ -82,6 +82,7 @@ export default defineConfig({
         { text: 'Reference index', link: '/reference/' },
         { text: 'Schemas and downloads', link: '/reference/schemas' },
         { text: 'Examples and traces', link: '/reference/examples' },
+        { text: 'Recorded command exchange', link: '/reference/recorded-exchange' },
         { text: 'Counter profile', link: '/reference/counter' },
         { text: 'Glossary', link: '/reference/glossary' }
       ]}],

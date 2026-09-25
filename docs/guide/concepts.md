@@ -6,6 +6,8 @@ This page explains the model. The [formal model](../specification/model.md) defi
 
 An **actor** is a logical target that performs application work. A **host authority** manages its sessions, saved command records, and ordered updates. The authority can span more than one machine.
 
+A **DASP server** exposes that host authority to clients. The specification uses *host* for this server role; it does not require a single process or machine.
+
 A **session** binds an actor identity, one profile version, and one saved history. An actor can have several sessions. There is no ordering guarantee between sessions.
 
 A **connection** is temporary. Its failure does not cancel accepted work or erase saved session history.

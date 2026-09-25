@@ -1,49 +1,53 @@
-# A command and its recovery
+# The request timed out. Did the work happen?
 
-This walkthrough validates recorded examples. It does not run a server or inject a live connection failure.
+You ask an agent to update a dependency, run the tests, and prepare a pull request. Your app shows a spinner. Then the connection drops.
 
-## Run the checks
+Sending the request was easy. Now you need to know what the server accepted, what the agent did, and whether it is safe to try again.
 
-Use Node.js 22 or later:
+<WalkthroughStory />
 
-```sh
-git clone https://github.com/DASP-Protocol/dasp.git
-cd dasp
-npm ci
-npm run spec:check
-```
+## What needs to survive?
 
-The command reports schema cases, fixture relationships, and the recorded recovery trace. It writes `dist/conformance-report.json` with the executed case IDs. The exact counts come from the checked-in fixtures.
+A stream can show activity while a client is connected. Recovery needs a saved record. DASP gives that record meaning at the server boundary.
 
-## Follow one command
+| Information | What the client can rely on |
+| --- | --- |
+| Accepted receipt | The server saved admission. Work can still be pending. |
+| Progress message | Temporary activity, such as “Running tests.” It does not prove completion. |
+| Saved update | A fact with a position in the session history. It can be read again. |
+| Saved outcome | The final result the server can establish, including uncertainty. |
 
-The [counter profile](../specification/example.md) starts at zero. A client opens `session-counter` on `counter-main` with profile `urn:example:dasp:counter`, version `1`.
+A **cursor** is the last saved update a client applied. The client saves that position with its application state. Receiving a receipt or showing a progress message does not advance it.
 
-It submits `counter.add` with `command_id: command-add-1` and input `{ "amount": 3 }`.
+## Your application still decides
 
-| Step | Evidence | Meaning |
-| --- | --- | --- |
-| Open | `dasp.session.opened.v1`, cursor 0 | The session identity is saved |
-| Admit | `command.accepted`, sequence 1 | The command is admitted |
-| Receipt lost | Accepted receipt is not delivered | The client cannot infer rejection |
-| Save state | `counter.changed`, sequence 2, value 3 | Application state changed |
-| Settle | `command.outcome`, sequence 3 | Completed outcome is saved |
-| Retry | Same command ID and data, new request ID | The host reports duplicate admission at sequence 1 |
-| Read outcome | Settled result at sequence 3 | Value remains 3 |
-| Second client | Reads after cursor 0 | Reads the same three saved updates |
+DASP defines the server contract. The agent's tool calls, execution engine, and application policy remain your choice. A profile must make these decisions explicit:
 
-The [recorded recovery trace](../../conformance/fixtures/recovery-trace.json) contains complete events and expected client checkpoints. The checker compares these records. It does not prove that a host makes these decisions correctly.
+<details>
+<summary>When is the work complete?</summary>
 
-## Recover the first client
+For this example, “complete” could require passing tests and a confirmed pull request reference. A message saying “Done” is not enough. The profile defines the evidence needed before the server can save a completed outcome.
 
-The first client has saved state at cursor 1. It reads updates after 1, applies sequences 2 and 3, and saves state `{ "value": 3 }` with cursor 3. The second client starts from cursor 0 and reaches the same state.
+</details>
 
-The nested replay events keep their original `source` and `id`. A page has a separate event ID and request ID. Those IDs are not application cursors.
+<details>
+<summary>What would Cancel mean?</summary>
 
-## Check failure cases
+Stopping new tool calls does not undo a branch or delete a pull request. A cancellation command needs a profile-defined target and cleanup boundary. DASP core does not supply a generic cancellation operation.
 
-Changing the input to `{ "amount": 4 }` under `command-add-1` is a conflict after admission. It cannot mean new work. An unknown command read is a failure, not a pending outcome.
+</details>
 
-The [negative fixtures](../../conformance/fixtures/invalid-events.json) include malformed envelopes and inconsistent receipt or outcome shapes. Runtime conflicts, concurrent retries, and restart behavior have separate [behavioral case definitions](../../conformance/behavioral-cases.md).
+<details>
+<summary>How do you check an external effect?</summary>
 
-Continue with the [formal message catalog](../specification/messages.md) or [conformance coverage](../../conformance/README.md).
+Use the external service's effect keys, a transaction where available, or a way to look up the result. If the server cannot establish the effect, it saves an uncertain outcome. DASP does not guarantee exactly-once external effects.
+
+An uncertain outcome stays fixed in draft-01. Later reconciliation requires a separately specified profile action; it cannot rewrite the original outcome.
+
+</details>
+
+## Inspect a complete recorded exchange
+
+The story uses an illustrative dependency-update command. To inspect checked-in messages, continue with the smaller [counter exchange](../reference/recorded-exchange.md). It includes the install commands, full CloudEvents, a lost receipt, a retry, and two clients recovering the same state.
+
+[Inspect the recorded exchange](../reference/recorded-exchange.md) · [Read the recovery requirements](../specification/recovery.md)

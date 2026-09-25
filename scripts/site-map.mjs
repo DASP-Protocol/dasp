@@ -20,6 +20,7 @@ export const pages = {
   'docs/reference/README.md': 'reference/index.md',
   'docs/reference/schemas.md': 'reference/schemas.md',
   'docs/reference/examples.md': 'reference/examples.md',
+  'docs/reference/recorded-exchange.md': 'reference/recorded-exchange.md',
   'docs/reference/glossary.md': 'reference/glossary.md',
   'docs/project/about.md': 'project/about.md',
   'docs/project/feedback.md': 'project/feedback.md',
@@ -28,6 +29,9 @@ export const pages = {
   'SECURITY.md': 'project/security.md',
   'RELEASING.md': 'project/releasing.md',
   'CHANGELOG.md': 'project/changes.md'
+};
+export const pageOptions = {
+  'docs/build/walkthrough.md': { aside: false, pageClass: 'walkthrough-page' }
 };
 export const artifacts = {
   'specification/draft-01/envelope.schema.json': 'schemas/draft-01/envelope.schema.json',
