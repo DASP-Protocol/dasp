@@ -11,7 +11,7 @@ defmodule DASP.Checkpoint do
   def from_view(view, validate_profile) do
     Wire.protect(fn ->
       event = Wire.to_signal!(view)
-      if event.type != "dasp.view.v1", do: fail(:checkpoint, "A view is required.")
+      if event.type != "dasp.v1.view", do: fail(:checkpoint, "A view is required.")
       Client.profile!(validate_profile, event)
       d = event.data
 
@@ -36,7 +36,7 @@ defmodule DASP.Checkpoint do
         event = Wire.to_signal!(input)
         d = event.data
 
-        if event.type != "dasp.update.v1" or event.source != current["host_source"] or
+        if event.type != "dasp.v1.update" or event.source != current["host_source"] or
              d["session_id"] != current["session"]["session_id"],
            do: fail(:checkpoint, "Expected an update from the checkpoint session and host.")
 

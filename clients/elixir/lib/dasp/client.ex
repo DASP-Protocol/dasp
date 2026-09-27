@@ -87,7 +87,7 @@ defmodule DASP.Client do
         "specversion" => "1.0",
         "id" => id(),
         "source" => client.source,
-        "type" => "dasp.#{kind}.v1",
+        "type" => "dasp.v1.#{kind}",
         "datacontenttype" => "application/json",
         "requestid" => id(),
         "data" => data
@@ -102,10 +102,10 @@ defmodule DASP.Client do
            response.extensions["requestid"] != event.extensions["requestid"],
          do: fail(:correlation, "Reply source or request ID differs from the request context.")
 
-      if response.type == "dasp.failure.v1",
+      if response.type == "dasp.v1.failure",
         do: fail(:remote_failure, response.data["error"]["message"], response.data["error"])
 
-      if response.type != "dasp.#{reply}.v1", do: fail(:correlation, "Unexpected reply type.")
+      if response.type != "dasp.v1.#{reply}", do: fail(:correlation, "Unexpected reply type.")
       d = response.data
 
       if d["session_id"] != session["session_id"] or

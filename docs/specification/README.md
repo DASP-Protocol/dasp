@@ -1,8 +1,8 @@
-# DASP core specification
+# Scope and versions
 
 **Status: draft-01. Working review draft; not a released interoperability contract.**
 
-DASP is a language-independent protocol for controlling durable actors through shared sessions. It defines command admission, saved outcomes, ordered updates, and recovery using CloudEvents messages.
+Use this section to implement the contract. For an explanation with messages, start with [Follow a command](../build/walkthrough.md).
 
 ## Scope and authority
 
@@ -40,3 +40,7 @@ DASP uses [CloudEvents 1.0.2](https://github.com/cloudevents/spec/blob/v1.0.2/cl
 6. [Security and versions](security-and-versioning.md)
 
 Then inspect the [counter example](example.md) and [conformance coverage](../../conformance/README.md). Use the source commit with `draft-01` when citing this evolving draft. See [release preparation](../project/releases.md) for fixed-artifact packaging.
+
+## Conformance
+
+Read [what is tested](../../conformance/README.md), [run the checks](../../conformance/running-checks.md), and inspect the [runtime test cases](../../conformance/behavioral-cases.md). Passing the artifact suite alone does not establish host conformance.

@@ -25,24 +25,24 @@ The host MUST reject new writes before sequence exhaustion; it cannot wrap or re
 
 Requirement group **DASP-MSG-002**.
 
-Each type starts with `dasp.` and ends with `.v1`. Version 1 is a draft namespace until release.
+Each type starts with `dasp.v1.` followed by the operation name. Version 1 is a draft namespace until release.
 
 | Type | Direction | Meaning |
 | --- | --- | --- |
-| `dasp.session.open.v1` | Client → host | Create or reopen a session |
-| `dasp.session.opened.v1` | Host → client | Saved session identity |
-| `dasp.command.v1` | Client → host | Issue application intent |
-| `dasp.receipt.v1` | Host → client | Admission decision |
-| `dasp.update.v1` | Host → client | Immutable saved fact |
-| `dasp.progress.v1` | Host → client | Temporary activity |
-| `dasp.view.read.v1` | Client → host | Read a coherent projection |
-| `dasp.view.v1` | Host → client | Projection at a cursor |
-| `dasp.updates.read.v1` | Client → host | Read saved events after a cursor |
-| `dasp.updates.v1` | Host → client | Bounded page of saved events |
-| `dasp.outcome.read.v1` | Client → host | Read command settlement |
-| `dasp.outcome.v1` | Host → client | Known outcome or pending state |
-| `dasp.resync.required.v1` | Host → client | Live delivery no longer complete |
-| `dasp.failure.v1` | Host → client | Request failed at the protocol boundary |
+| `dasp.v1.session.open` | Client → host | Create or reopen a session |
+| `dasp.v1.session.opened` | Host → client | Saved session identity |
+| `dasp.v1.command` | Client → host | Issue application intent |
+| `dasp.v1.receipt` | Host → client | Admission decision |
+| `dasp.v1.update` | Host → client | Immutable saved fact |
+| `dasp.v1.progress` | Host → client | Temporary activity |
+| `dasp.v1.view.read` | Client → host | Read a coherent projection |
+| `dasp.v1.view` | Host → client | Projection at a cursor |
+| `dasp.v1.updates.read` | Client → host | Read saved events after a cursor |
+| `dasp.v1.updates` | Host → client | Bounded page of saved events |
+| `dasp.v1.outcome.read` | Client → host | Read command settlement |
+| `dasp.v1.outcome` | Host → client | Known outcome or pending state |
+| `dasp.v1.resync.required` | Host → client | Live delivery no longer complete |
+| `dasp.v1.failure` | Host → client | Request failed at the protocol boundary |
 
 Every client request and direct reply requires `requestid`. A reply MUST repeat the request ID. Push updates, progress, and resync notices do not use request correlation. An optional `requestid` on a push event has no correlation meaning and MUST NOT be required by a receiver. A client MUST check reply type, request context, and resource identity before accepting a reply. A failure can reply to any request. Responses for different requests can arrive in any order.
 
@@ -152,7 +152,7 @@ UpdatesPage = {
   after: Cursor,
   next: Cursor,
   head: Cursor,
-  events: [full dasp.update.v1 CloudEvents]
+  events: [full dasp.v1.update CloudEvents]
 }
 ```
 

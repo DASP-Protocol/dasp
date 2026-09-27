@@ -335,7 +335,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.session.open.v1"
+          "const": "dasp.v1.session.open"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -437,7 +437,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.session.opened.v1"
+          "const": "dasp.v1.session.opened"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -545,7 +545,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.command.v1"
+          "const": "dasp.v1.command"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -640,7 +640,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.receipt.v1"
+          "const": "dasp.v1.receipt"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -792,7 +792,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.update.v1"
+          "const": "dasp.v1.update"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -859,7 +859,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.progress.v1"
+          "const": "dasp.v1.progress"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -960,7 +960,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.view.read.v1"
+          "const": "dasp.v1.view.read"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -1038,7 +1038,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.view.v1"
+          "const": "dasp.v1.view"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -1153,7 +1153,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.updates.read.v1"
+          "const": "dasp.v1.updates.read"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -1243,7 +1243,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.updates.v1"
+          "const": "dasp.v1.updates"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -1347,7 +1347,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.outcome.read.v1"
+          "const": "dasp.v1.outcome.read"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -1430,7 +1430,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.outcome.v1"
+          "const": "dasp.v1.outcome"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -1561,7 +1561,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.resync.required.v1"
+          "const": "dasp.v1.resync.required"
         },
         "datacontenttype": {
           "const": "application/json"
@@ -1651,7 +1651,7 @@
           "format": "uri"
         },
         "type": {
-          "const": "dasp.failure.v1"
+          "const": "dasp.v1.failure"
         },
         "datacontenttype": {
           "const": "application/json"

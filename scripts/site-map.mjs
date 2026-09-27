@@ -1,10 +1,11 @@
 export const pages = {
   'docs/guide/README.md': 'guide/index.md',
-  'docs/guide/faq.md': 'guide/faq.md',
-  'docs/guide/concepts.md': 'guide/concepts.md',
-  'docs/guide/use-cases.md': 'guide/use-cases.md',
+  'docs/guide/faq.md': 'guide/comparisons.md',
+  'docs/guide/cloudevents.md': 'guide/cloudevents.md',
+  'docs/build/host.md': 'build/host.md',
+  'docs/build/profiles-and-bindings.md': 'build/profiles-and-bindings.md',
   'docs/build/README.md': 'build/index.md',
-  'docs/build/walkthrough.md': 'build/walkthrough.md',
+  'docs/build/walkthrough.md': 'guide/walkthrough.md',
   'clients/README.md': 'build/clients.md',
   'clients/elixir/README.md': 'build/elixir.md',
   'clients/typescript/README.md': 'build/typescript.md',
@@ -16,21 +17,19 @@ export const pages = {
   'docs/specification/profiles-and-bindings.md': 'specification/profiles-and-bindings.md',
   'docs/specification/security-and-versioning.md': 'specification/security-and-versioning.md',
   'docs/specification/example.md': 'reference/counter.md',
-  'conformance/README.md': 'conformance/index.md',
-  'conformance/running-checks.md': 'conformance/running-checks.md',
-  'conformance/behavioral-cases.md': 'conformance/behavioral-cases.md',
+  'conformance/README.md': 'specification/conformance/index.md',
+  'conformance/running-checks.md': 'specification/conformance/running-checks.md',
+  'conformance/behavioral-cases.md': 'specification/conformance/behavioral-cases.md',
   'docs/reference/README.md': 'reference/index.md',
   'docs/reference/schemas.md': 'reference/schemas.md',
   'docs/reference/examples.md': 'reference/examples.md',
-  'docs/reference/recorded-exchange.md': 'reference/recorded-exchange.md',
   'docs/reference/glossary.md': 'reference/glossary.md',
-  'docs/project/about.md': 'project/about.md',
-  'docs/project/feedback.md': 'project/feedback.md',
-  'docs/project/releases.md': 'project/releases.md',
-  'CONTRIBUTING.md': 'project/contributing.md',
-  'SECURITY.md': 'project/security.md',
-  'RELEASING.md': 'project/releasing.md',
-  'CHANGELOG.md': 'project/changes.md'
+  'docs/project/about.md': 'about/index.md',
+  'docs/project/feedback.md': 'about/status.md',
+  'CONTRIBUTING.md': 'about/contributing.md',
+  'SECURITY.md': 'about/security.md',
+  'RELEASING.md': 'about/releasing.md',
+  'CHANGELOG.md': 'about/changes.md'
 };
 export const pageOptions = {
   'docs/build/walkthrough.md': { aside: false, pageClass: 'walkthrough-page' }
@@ -48,6 +47,14 @@ export const artifacts = {
 // Neutral compatibility pages preserve useful existing URLs without a second source of docs.
 export const aliases = {
   'guide.md': 'guide/index.md',
+  'guide/faq.md': 'guide/comparisons.md',
+  'guide/concepts.md': 'reference/glossary.md',
+  'guide/use-cases.md': 'guide/index.md#where-it-fits',
+  'build/walkthrough.md': 'guide/walkthrough.md',
+  'reference/recorded-exchange.md': 'reference/examples.md',
+  'conformance/index.md': 'specification/conformance/index.md',
+  'conformance/running-checks.md': 'specification/conformance/running-checks.md',
+  'conformance/behavioral-cases.md': 'specification/conformance/behavioral-cases.md',
   'protocol/index.md': 'specification/index.md',
   'protocol/cloudevents.md': 'specification/cloudevents.md',
   'protocol/messages.md': 'specification/messages.md',
@@ -56,9 +63,23 @@ export const aliases = {
   'protocol/security-and-versioning.md': 'specification/security-and-versioning.md',
   'protocol/example.md': 'reference/counter.md',
   'clients/index.md': 'build/clients.md',
-  'clients/elixir.md': 'build/clients.md#elixir',
-  'clients/typescript.md': 'build/clients.md#typescript',
-  'project/decisions.md': 'project/feedback.md',
-  'source/index.md': 'project/about.md'
+  'clients/elixir.md': 'build/elixir.md',
+  'clients/typescript.md': 'build/typescript.md',
+  'project/about.md': 'about/index.md',
+  'project/feedback.md': 'about/status.md',
+  'project/decisions.md': 'about/status.md',
+  'project/contributing.md': 'about/contributing.md',
+  'project/security.md': 'about/security.md',
+  'project/changes.md': 'about/changes.md',
+  'project/releases.md': 'about/releasing.md',
+  'project/releasing.md': 'about/releasing.md',
+  'source/index.md': 'about/index.md'
 };
-export const generatedDirectories = ['guide', 'build', 'specification', 'protocol', 'clients', 'conformance', 'reference', 'project', 'source'];
+// Retired source pages keep one canonical destination for generated links.
+export const sourceRedirects = {
+  'docs/guide/concepts.md': 'docs/reference/glossary.md',
+  'docs/guide/use-cases.md': 'docs/guide/README.md',
+  'docs/reference/recorded-exchange.md': 'docs/reference/examples.md',
+  'docs/project/releases.md': 'RELEASING.md'
+};
+export const generatedDirectories = ['guide', 'build', 'specification', 'protocol', 'clients', 'conformance', 'reference', 'project', 'source', 'about'];

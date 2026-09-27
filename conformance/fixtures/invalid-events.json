@@ -5,7 +5,7 @@
     "event": {
       "specversion": "1.0",
       "id": "event-3",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -25,7 +25,7 @@
       "specversion": "1.0.2",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -45,7 +45,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "/relative/source",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -65,7 +65,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -84,7 +84,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -105,7 +105,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -125,7 +125,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -145,7 +145,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": null,
       "requestid": "request-add"
@@ -158,7 +158,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -179,7 +179,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -200,7 +200,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -223,7 +223,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -244,7 +244,7 @@
       "specversion": "1.0",
       "id": "event-7",
       "source": "urn:example:host:one",
-      "type": "dasp.receipt.v1",
+      "type": "dasp.v1.receipt",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -263,7 +263,7 @@
       "specversion": "1.0",
       "id": "event-7",
       "source": "urn:example:host:one",
-      "type": "dasp.receipt.v1",
+      "type": "dasp.v1.receipt",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -286,7 +286,7 @@
       "specversion": "1.0",
       "id": "event-14",
       "source": "urn:example:host:one",
-      "type": "dasp.outcome.v1",
+      "type": "dasp.v1.outcome",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -311,7 +311,7 @@
       "specversion": "1.0",
       "id": "event-4",
       "source": "urn:example:host:one",
-      "type": "dasp.update.v1",
+      "type": "dasp.v1.update",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -331,7 +331,7 @@
       "specversion": "1.0",
       "id": "event-12",
       "source": "urn:example:host:one",
-      "type": "dasp.updates.v1",
+      "type": "dasp.v1.updates",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -343,7 +343,7 @@
             "specversion": "1.0",
             "id": "event-5",
             "source": "urn:example:host:one",
-            "type": "dasp.progress.v1",
+            "type": "dasp.v1.progress",
             "datacontenttype": "application/json",
             "data": {
               "session_id": "session-counter",
@@ -362,7 +362,7 @@
             "specversion": "1.0",
             "id": "event-6",
             "source": "urn:example:host:one",
-            "type": "dasp.update.v1",
+            "type": "dasp.v1.update",
             "datacontenttype": "application/json",
             "data": {
               "session_id": "session-counter",
@@ -390,7 +390,7 @@
       "specversion": "1.0",
       "id": "event-11",
       "source": "urn:example:client:one",
-      "type": "dasp.updates.read.v1",
+      "type": "dasp.v1.updates.read",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -407,7 +407,7 @@
       "specversion": "1.0",
       "id": "event-11",
       "source": "urn:example:client:one",
-      "type": "dasp.updates.read.v1",
+      "type": "dasp.v1.updates.read",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -424,7 +424,7 @@
       "specversion": "1.0",
       "id": "event-14",
       "source": "urn:example:host:one",
-      "type": "dasp.outcome.v1",
+      "type": "dasp.v1.outcome",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -449,7 +449,7 @@
       "specversion": "1.0",
       "id": "event-14",
       "source": "urn:example:host:one",
-      "type": "dasp.outcome.v1",
+      "type": "dasp.v1.outcome",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -474,7 +474,7 @@
       "specversion": "1.0",
       "id": "event-7",
       "source": "urn:example:host:one",
-      "type": "dasp.receipt.v1",
+      "type": "dasp.v1.receipt",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -497,7 +497,7 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.chat.v1",
+      "type": "dasp.v1.chat",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
@@ -517,11 +517,30 @@
       "specversion": "1.0",
       "id": "event-3",
       "source": "urn:example:client:one",
-      "type": "dasp.command.v1",
+      "type": "dasp.v1.command",
       "datacontenttype": "application/json",
       "data": {
         "session_id": "session-counter",
         "command_id": "has spaces",
+        "name": "counter.add",
+        "input": {
+          "amount": 3
+        }
+      },
+      "requestid": "request-add"
+    }
+  },
+  {
+    "id": "obsolete-event-type-order",
+    "event": {
+      "specversion": "1.0",
+      "id": "trace-command",
+      "source": "urn:example:client:one",
+      "type": "dasp.command.v1",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
         "name": "counter.add",
         "input": {
           "amount": 3

@@ -1,31 +1,44 @@
-# The request timed out. Did the work happen?
+# Follow a command through DASP
 
-You ask an agent to make a code change. Then the connection drops. Did the server accept the work? Is it safe to try again?
+This counter starts at 0. The client asks it to add 3, loses the receipt, and retries. The value remains 3.
 
-Follow one task through four common problems. DASP defines what the server saves and what each client can recover.
+Use **Next** to follow each message, or **Play** to run the trace. Select a stage to inspect retries, recovery, or a command conflict.
 
-<WalkthroughStory />
+<CommandTrace />
 
-## What this means for your project
+This is a recorded example, not a running host. `counter.add` belongs to the example profile. The saved history and message JSON come from the checked-in recovery trace.
 
-Your app should not need to stay connected to know what happened. A DASP server keeps command records, ordered updates, and final outcomes. Clients return to that shared record after a failure.
+## Read the identifiers
 
-You still choose the agent, its tools, and what counts as success. DASP does not guarantee exactly-once effects in external services.
+| Field | Meaning |
+| --- | --- |
+| `session_id` | The shared actor session |
+| `command_id` | One command; keep it and its input for retries |
+| `requestid` | One request attempt and its reply |
+| `source` + `id` | One event; replay preserves both |
+| `sequence` | A saved update's position in the session |
 
-<details>
-<summary>What must my application define?</summary>
+A client saves its last applied sequence, called its **cursor**, with its application state. A receipt, progress message, or received page does not advance that cursor by itself.
 
-An application profile defines commands, inputs, and results. For this example, success could require passing tests and a confirmed pull request reference.
+## Check the example locally
 
-The profile also defines how to check an external result. In draft-01, an uncertain outcome is final. A later check requires a separate profile action; it cannot change the original outcome.
+Use Node.js 22 or later:
 
-Cancellation also needs application rules. Stopping new tool calls does not undo a pull request. DASP core has no generic cancellation operation.
+```sh
+git clone https://github.com/DASP-Protocol/dasp.git
+cd dasp
+npm ci
+npm run spec:check
+```
 
-</details>
+The checker validates messages and recorded recovery checkpoints. It writes `dist/conformance-report.json`. It does not execute an actor or test a live disconnect.
 
-## Take the next step
+Inspect [the trace file](../../conformance/fixtures/recovery-trace.json) and [counter profile](../specification/example.md).
 
-The dependency task is an illustration. No server runs on this page, and this application profile is not released.
+## Connect your implementation
 
-- [Inspect the recorded counter exchange](../reference/recorded-exchange.md) for complete messages and commands to run the artifact checks.
-- [Add DASP to your project](README.md) to review the server, client, and profile responsibilities.
+Your **profile** defines commands, data, and what completion means. Your **host** saves admission and outcomes, executes work, and serves recovery reads. Your **binding** defines transport, authentication, and message routing.
+
+A disconnect does not cancel accepted work. If the host cannot establish execution effects during recovery, it records `uncertain` and prevents unsafe repeat execution. DASP does not guarantee exactly-once external effects.
+
+Start with [the client packages](../../clients/README.md) or [host implementation steps](host.md). Use the [message catalog](../specification/messages.md) for all operations, including state views, progress, and errors.

@@ -41,3 +41,5 @@ GitHub runs client tests, package installation checks, and documentation checks 
 ## Review and release
 
 Maintainers review scope, compatibility, examples, and test evidence in pull requests. Record deferred choices on the review page. The [release checklist](RELEASING.md) defines artifact preparation. Report security concerns through [SECURITY.md](SECURITY.md).
+
+Maintainers can use the [release procedure](RELEASING.md) to prepare review artifacts.

@@ -15,7 +15,7 @@ Open the session with actor ID `counter-main`, session ID `session-counter`, and
   "specversion": "1.0",
   "id": "event-3",
   "source": "urn:example:client:one",
-  "type": "dasp.command.v1",
+  "type": "dasp.v1.command",
   "datacontenttype": "application/json",
   "requestid": "request-add",
   "data": {

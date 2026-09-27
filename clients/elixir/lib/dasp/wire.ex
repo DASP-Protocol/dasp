@@ -2,7 +2,7 @@ defmodule DASP.Wire do
   @moduledoc """
   Convert between DASP draft-01 JSON and Jido.Signal.
 
-  The wire version is always "1.0". Jido Signal 2.3 uses "1.0.2" internally.
+  The wire and Jido Signal V3 version is always "1.0".
   DASP extensions remain scalar values in signal.extensions. Data keys remain
   strings. Use this codec for DASP instead of the generic Jido serializer.
   No remote schemas are loaded. Profile validation is separate.
@@ -11,11 +11,6 @@ defmodule DASP.Wire do
   import DASP.Error, only: [fail: 2]
   @fields ~w(specversion id source type datacontenttype data subject time dataschema)a
   @wire_fields Enum.map(@fields, &Atom.to_string/1)
-  @external_resource Path.expand("../../priv/envelope.schema.json", __DIR__)
-  @schema @external_resource
-          |> File.read!()
-          |> Jason.decode!()
-          |> JSV.build!(formats: true, atoms: false)
 
   @spec decode(binary()) :: {:ok, Signal.t()} | {:error, DASP.Error.t()}
   def decode(text), do: protect(fn -> decode!(text) end)
@@ -34,7 +29,7 @@ defmodule DASP.Wire do
   def decode!(text) do
     event = text |> DASP.JSON.decode!() |> validate!()
 
-    if event["type"] == "dasp.update.v1" and byte_size(text) > 65_536,
+    if event["type"] == "dasp.v1.update" and byte_size(text) > 65_536,
       do: fail(:invalid_event, "Update exceeds 65536 bytes.")
 
     build_signal!(event)
@@ -43,12 +38,12 @@ defmodule DASP.Wire do
   defp validate!(event) do
     DASP.JSON.encode!(event)
 
-    case JSV.validate(event, @schema, cast: false) do
-      {:ok, _} ->
+    case DASP.Schema.valid?(event) do
+      true ->
         limits!(event)
         event
 
-      {:error, _} ->
+      false ->
         fail(:invalid_event, "Event does not match DASP draft-01.")
     end
   end
@@ -61,8 +56,8 @@ defmodule DASP.Wire do
 
   @doc false
   def to_map!(%Signal{} = signal) do
-    if signal.specversion not in ["1.0", "1.0.2"] or signal.jido_dispatch != nil,
-      do: fail(:invalid_event, "Unsupported signal version or local dispatch metadata.")
+    if signal.specversion != "1.0" or signal.data_base64?,
+      do: fail(:invalid_event, "Unsupported signal version or binary data.")
 
     if not is_map(signal.extensions) or is_struct(signal.extensions) or
          Enum.any?(@wire_fields, &Map.has_key?(signal.extensions, &1)),
@@ -82,18 +77,17 @@ defmodule DASP.Wire do
   def to_map!(event), do: validate!(event)
 
   defp build_signal!(event) do
-    # Keep DASP scalar extensions out of the global Jido extension registry.
-    # from_map/1 also preserves missing time instead of generating a timestamp.
+    # DASP validates its own extension namespace. It permits names that the
+    # Jido convenience API reserves, such as "extensions". Validate the core
+    # through Jido, then retain the already-validated flat DASP attributes.
     extensions = Map.drop(event, @wire_fields)
 
-    attrs =
-      event
-      |> Map.take(@wire_fields)
-      |> Map.put("specversion", "1.0.2")
-      |> Map.put("extensions", extensions)
+    # Time is checked against RFC 3339 above. Jido's convenience timestamp
+    # parser rejects valid leap seconds and lowercase markers.
+    attrs = event |> Map.take(@wire_fields) |> Map.delete("time")
 
     case Signal.from_map(attrs) do
-      {:ok, signal} -> %{signal | extensions: extensions}
+      {:ok, signal} -> %{signal | extensions: extensions, time: event["time"]}
       {:error, _} -> fail(:invalid_event, "Cannot represent this event as a Jido.Signal.")
     end
   end
@@ -112,29 +106,29 @@ defmodule DASP.Wire do
 
     strings!(data)
 
-    if type == "dasp.update.v1" and byte_size(DASP.JSON.encode!(event)) > 65_536,
+    if type == "dasp.v1.update" and byte_size(DASP.JSON.encode!(event)) > 65_536,
       do: fail(:invalid_event, "Update exceeds 65536 bytes.")
 
-    if type == "dasp.updates.v1", do: Enum.each(data["events"], &limits!/1)
+    if type == "dasp.v1.updates", do: Enum.each(data["events"], &limits!/1)
 
     case type do
-      "dasp.command.v1" ->
+      "dasp.v1.command" ->
         payload!(data["input"], 1)
 
-      "dasp.view.v1" ->
+      "dasp.v1.view" ->
         payload!(data["state"], 1)
 
-      "dasp.progress.v1" ->
+      "dasp.v1.progress" ->
         payload!(data["payload"], 1)
 
-      "dasp.update.v1" ->
+      "dasp.v1.update" ->
         case data["kind"] do
           "application" -> payload!(data["payload"]["data"], 1)
           "command.outcome" -> payload!(data["payload"]["output"], 1)
           _ -> :ok
         end
 
-      "dasp.outcome.v1" ->
+      "dasp.v1.outcome" ->
         payload!(get_in(data, ["outcome", "output"]), 1)
 
       _ ->

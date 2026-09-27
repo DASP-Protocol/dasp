@@ -1,4 +1,4 @@
-# Behavioral case definitions
+# Runtime test cases
 
 **Status: specified, not executed.** There is no runtime harness yet. These cases describe the observations required from future client and host implementations.
 

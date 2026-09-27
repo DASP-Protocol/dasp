@@ -1,4 +1,4 @@
-# Security and versions
+# Security and compatibility
 
 ## Trust boundary {#dasp-sec-001}
 
@@ -22,7 +22,7 @@ Requirement group **DASP-SEC-002**.
 | --- | --- |
 | CloudEvents `specversion: "1.0"` | Envelope standard |
 | DASP draft-01 | Current editable design checkpoint |
-| `dasp.*.v1` | Proposed core major-version namespace |
+| `dasp.v1.*` | Proposed core major-version namespace |
 | Profile URI and version | Application contract |
 | Binding name and version | Transport contract |
 | Client package version | Language implementation release |

@@ -22,10 +22,10 @@ function limits(event: Event): void {
   const d: any = event.data;
   if (event.subject !== undefined && d.session_id !== undefined && event.subject !== d.session_id) fail("Subject differs from session_id.");
   strings(d);
-  if (event.type === "dasp.update.v1" && (encodedSize(event) ?? bytes(jsonText(event))) > 65_536) fail("Update exceeds 65536 bytes.");
-  if (event.type === "dasp.updates.v1") for (const update of event.data.events) limits(update);
+  if (event.type === "dasp.v1.update" && (encodedSize(event) ?? bytes(jsonText(event))) > 65_536) fail("Update exceeds 65536 bytes.");
+  if (event.type === "dasp.v1.updates") for (const update of event.data.events) limits(update);
   for (const key of ["input", "state", "payload"]) if (Object.hasOwn(d, key)) {
-    if (event.type === "dasp.update.v1") {
+    if (event.type === "dasp.v1.update") {
       if (d.kind === "application") payload(d.payload.data);
       if (d.kind === "command.outcome" && d.payload.output !== null) payload(d.payload.output);
     } else payload(d[key]);
@@ -35,7 +35,7 @@ function limits(event: Event): void {
 export function decode(input: string | Uint8Array): Event {
   const event = parseJSON(input);
   if (!validate(event)) throw new DASPError("invalid_event", "Event does not match DASP draft-01.", validate.errors);
-  if ((event as unknown as Event).type === "dasp.update.v1" &&
+  if ((event as unknown as Event).type === "dasp.v1.update" &&
       (typeof input === "string" ? bytes(input) : input.byteLength) > 65_536) fail("Update exceeds 65536 bytes.");
   limits(event as unknown as Event);
   return event as unknown as Event;

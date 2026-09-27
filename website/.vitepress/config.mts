@@ -46,61 +46,56 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/' },
       { text: 'Build', link: '/build/' },
       { text: 'Specification', link: '/specification/' },
-      { text: 'Conformance', link: '/conformance/' },
       { text: 'Reference', link: '/reference/' },
-      { text: 'About', link: '/project/about' }
+      { text: 'About', link: '/about/' }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/DASP-Protocol/dasp' }],
     search: { provider: 'local' },
     sidebar: {
-      '/guide/': [{ text: 'Guide', items: [
-        { text: 'What is DASP?', link: '/guide/' },
-        { text: 'Protocol FAQ', link: '/guide/faq' },
-        { text: 'Core concepts', link: '/guide/concepts' },
-        { text: 'Use cases', link: '/guide/use-cases' },
-        { text: 'Add DASP to a project', link: '/build/' }
+      '/guide/': [{ text: 'Understand DASP', items: [
+        { text: 'How DASP works', link: '/guide/' },
+        { text: 'Follow a command', link: '/guide/walkthrough' },
+        { text: 'DASP and other protocols', link: '/guide/comparisons' },
+        { text: 'Why CloudEvents?', link: '/guide/cloudevents' }
       ]}],
       '/build/': [{ text: 'Build with DASP', items: [
-        { text: 'Add DASP to your project', link: '/build/' },
-        { text: 'Illustrated walkthrough', link: '/build/walkthrough' },
-        { text: 'Language clients', link: '/build/clients' },
-        { text: 'Elixir package', link: '/build/elixir' },
-        { text: 'TypeScript package', link: '/build/typescript' },
-        { text: 'Conformance coverage', link: '/conformance/' }
+        { text: 'Start building', link: '/build/' },
+        { text: 'Language clients', link: '/build/clients', items: [
+          { text: 'Elixir', link: '/build/elixir' },
+          { text: 'TypeScript', link: '/build/typescript' }
+        ]},
+        { text: 'Implement a host', link: '/build/host' },
+        { text: 'Define a profile and binding', link: '/build/profiles-and-bindings' }
       ]}],
       '/specification/': [{ text: 'Core draft · draft-01', items: [
-        { text: 'Status and conventions', link: '/specification/' },
-        { text: 'Model and lifecycle', link: '/specification/model' },
-        { text: 'CloudEvents envelope', link: '/specification/cloudevents' },
+        { text: 'Scope and versions', link: '/specification/' },
+        { text: 'Sessions and command lifecycle', link: '/specification/model' },
         { text: 'Messages and errors', link: '/specification/messages' },
+        { text: 'CloudEvents envelope', link: '/specification/cloudevents' },
         { text: 'Admission and recovery', link: '/specification/recovery' },
         { text: 'Profiles and bindings', link: '/specification/profiles-and-bindings' },
-        { text: 'Security and versions', link: '/specification/security-and-versioning' }
+        { text: 'Security and compatibility', link: '/specification/security-and-versioning' }
+      ]}, { text: 'Conformance', items: [
+        { text: 'What is tested', link: '/specification/conformance/' },
+        { text: 'Run the checks', link: '/specification/conformance/running-checks' },
+        { text: 'Runtime test cases', link: '/specification/conformance/behavioral-cases' }
       ]}],
-      '/conformance/': [{ text: 'Conformance', items: [
-        { text: 'Scope and coverage', link: '/conformance/' },
-        { text: 'Run the checks', link: '/conformance/running-checks' },
-        { text: 'Behavioral cases', link: '/conformance/behavioral-cases' }
-      ]}],
-      '/reference/': [{ text: 'Technical reference', items: [
-        { text: 'Reference index', link: '/reference/' },
+      '/reference/': [{ text: 'Reference', items: [
+        { text: 'Find an artifact', link: '/reference/' },
         { text: 'Schemas and downloads', link: '/reference/schemas' },
-        { text: 'Examples and traces', link: '/reference/examples' },
-        { text: 'Recorded command exchange', link: '/reference/recorded-exchange' },
+        { text: 'Message examples and traces', link: '/reference/examples' },
         { text: 'Counter profile', link: '/reference/counter' },
         { text: 'Glossary', link: '/reference/glossary' }
       ]}],
-      '/project/': [{ text: 'Project', items: [
-        { text: 'About DASP', link: '/project/about' },
-        { text: 'Review questions', link: '/project/feedback' },
-        { text: 'Release preparation', link: '/project/releases' },
-        { text: 'Contributing', link: '/project/contributing' },
-        { text: 'Security', link: '/project/security' },
-        { text: 'Changes', link: '/project/changes' },
-        { text: 'Brand and assets', link: '/brand' }
+      '/about/': [{ text: 'About', items: [
+        { text: 'About DASP', link: '/about/' },
+        { text: 'Status and open decisions', link: '/about/status' },
+        { text: 'Contributing', link: '/about/contributing' },
+        { text: 'Changes', link: '/about/changes' },
+        { text: 'Security reporting', link: '/about/security' }
       ]}]
     },
     outline: [2, 3],
-    footer: { message: 'DASP · Working review draft · <a href="/dasp/project/about.html">About</a> · <a href="/dasp/project/feedback.html">Review questions</a> · <a href="/dasp/project/releases.html">Releases</a>' }
+    footer: { message: 'DASP · Working review draft · <a href="/dasp/about/status.html">Status</a> · <a href="/dasp/about/contributing.html">Contribute</a> · <a href="/dasp/about/releasing.html">Release preparation</a> · <a href="/dasp/brand.html">Brand</a>' }
   }
 });

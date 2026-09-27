@@ -15,7 +15,7 @@ addFormats(ajv);
 const validate = ajv.compile(schema);
 const results = [];
 function check(id, description, fn) { fn(); results.push({ id, description, status: 'passed', scope: 'artifact' }); }
-const find = kind => structuredClone(events.find(e => e.type === `dasp.${kind}.v1`));
+const find = kind => structuredClone(events.find(e => e.type === `dasp.v1.${kind}`));
 
 check('ART-SHAPES', 'All 14 core types have valid complete example events', () => {
   for (const event of events) assert(validate(event), JSON.stringify(validate.errors));
@@ -35,7 +35,7 @@ check('ART-EXTENSIONS', 'Optional scalar extensions remain valid', () => {
   assert(validate(event), JSON.stringify(validate.errors));
 });
 check('ART-RELATIONS', 'Counter fixtures preserve replay identity and settlement relationships', () => {
-  const updates = events.filter(e => e.type === 'dasp.update.v1');
+  const updates = events.filter(e => e.type === 'dasp.v1.update');
   const page = find('updates').data;
   assert.deepEqual(updates.map(e => e.data.sequence), [1, 2, 3]);
   assert.deepEqual(page.events, updates.slice(1));

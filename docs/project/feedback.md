@@ -1,6 +1,10 @@
-# Review the draft
+# Status and open decisions
 
-The current review scope is the draft-01 core, its message shapes, and the evidence needed to implement it. Report a concrete ambiguity, contradiction, missing failure case, or integration constraint.
+Draft-01 defines the core contract. The schemas, recorded examples, and experimental clients can be checked locally. No production host or binding is released.
+
+The next step is a persistent example host, one specified binding, and tests with both clients. That will put the recovery rules under real failure conditions.
+
+Report an ambiguity, missing failure case, or integration constraint.
 
 [Open a specification issue](https://github.com/DASP-Protocol/dasp/issues/new?template=specification.yml).
 

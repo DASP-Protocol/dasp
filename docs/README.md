@@ -1,7 +1,7 @@
 # DASP documentation
 
-The [guide](guide/README.md) explains the purpose. The [build guide](build/README.md) describes integration work. The [specification](specification/README.md) defines the contract. The [reference](reference/README.md) links to schemas, examples, and terms.
+Start with the [guide](guide/README.md), [follow a command](build/walkthrough.md), then [choose an implementation path](build/README.md).
 
-The specification is a working review draft. Read the [conformance coverage](../conformance/README.md) before making an implementation claim.
+The [specification](specification/README.md) contains the required behavior and [conformance evidence](../conformance/README.md). The [reference](reference/README.md) contains schemas, examples, and terms. [About DASP](project/about.md) explains the project and its status.
 
-Edit these source documents. The site generator creates their website pages from one source.
+Edit these source files. The site generator creates website pages from them.

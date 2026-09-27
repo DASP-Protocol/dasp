@@ -17,7 +17,7 @@ const client = (transport, extra = {}) => new Client({ ...options, transport, ..
 const submit = c => c.submit(session, { command_id: command.command_id, name: command.name, input: command.input });
 const reducer = (state, event) => event.data.kind === "application" ? event.data.payload.data : state;
 const checkpoint = (cursor = 0, state = { value: 0 }) => checkpointFromView({
-  ...step("opened"), type: "dasp.view.v1", data: { ...session, cursor, state }
+  ...step("opened"), type: "dasp.v1.view", data: { ...session, cursor, state }
 }, profile);
 const code = expected => error => error.code === expected;
 
@@ -95,7 +95,7 @@ test("lost receipt retry preserves command identity and changes attempt identity
 test("request APIs keep admission, view, replay, and outcome separate", async () => {
   assert.equal((await client(async w => reply(w, "opened")).open(session)).data.cursor, 0);
   assert.equal((await client(async w => reply(w, "outcome")).readOutcome(session, command.command_id)).data.state, "settled");
-  const view = { ...step("opened"), type: "dasp.view.v1", data: { ...session, cursor: 3, state: { value: 3 } } };
+  const view = { ...step("opened"), type: "dasp.v1.view", data: { ...session, cursor: 3, state: { value: 3 } } };
   assert.equal((await client(async w => JSON.stringify({ ...view, requestid: JSON.parse(w).requestid })).readView(session)).data.cursor, 3);
   const pending = { ...step("outcome"), data: { ...step("outcome").data, state: "pending", sequence: null, outcome: null } };
   assert.equal((await client(async w => JSON.stringify({ ...pending, requestid: JSON.parse(w).requestid })).readOutcome(session, command.command_id)).data.state, "pending");
@@ -120,7 +120,7 @@ for (const mutate of [
 });
 test("remote failure remains a distinct error", async () => {
   const c = client(async w => JSON.stringify({
-    ...step("duplicate"), requestid: JSON.parse(w).requestid, type: "dasp.failure.v1",
+    ...step("duplicate"), requestid: JSON.parse(w).requestid, type: "dasp.v1.failure",
     data: { error: { code: "unauthorized", message: "Access denied.", retryable: false } }
   }));
   await assert.rejects(submit(c), e => e.code === "remote_failure" && e.detail.code === "unauthorized");
@@ -129,7 +129,7 @@ test("profile rejection stops send and nested replay application", async () => {
   let sent = false;
   await assert.rejects(submit(client(async () => { sent = true; }, { validateProfile: () => false })), code("profile"));
   assert.equal(sent, false);
-  const c = client(async w => reply(w, "page-two"), { validateProfile: e => e.type !== "dasp.update.v1" });
+  const c = client(async w => reply(w, "page-two"), { validateProfile: e => e.type !== "dasp.v1.update" });
   await assert.rejects(c.readUpdates(session, 0), code("profile"));
 });
 test("reply actor and profile must match the requested session", async () => {

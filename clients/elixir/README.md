@@ -1,18 +1,30 @@
 # Elixir client
 
-Experimental `dasp_client`, version `0.1.0-draft.1`, for DASP `draft-01`. Requires Elixir 1.18 or later. No Hex release is published. The project license is pending.
+Experimental `dasp_ex`, version `0.1.0-draft.1`, for DASP `draft-01`. Requires Elixir 1.18 or later. No Hex release is published. The project license is pending.
 
-The Elixir client is **built on [Jido Signal](https://github.com/agentjido/jido_signal)** and depends on `jido_signal ~> 2.3.0`. Client replies, profile callbacks, and reducer events use `%Jido.Signal{}`. Command inputs, session options, and saved checkpoints use string-key maps. This dependency applies to the Elixir implementation; DASP remains a language-independent protocol.
+The Elixir client is **built on [Jido Signal](https://github.com/agentjido/jido_signal)** and depends on `jido_signal ~> 3.0.0-beta.4`. Client replies, profile callbacks, and reducer events use `%Jido.Signal{}`. Command inputs, session options, and saved checkpoints use string-key maps. This dependency applies to the Elixir implementation; DASP remains a language-independent protocol.
+
+## Run the recorded example
+
+From the repository root:
+
+```sh
+cd clients/elixir
+mix deps.get
+mix run examples/recorded.exs
+```
+
+See [recorded.exs](examples/recorded.exs). It uses a local reply adapter, not a server or network binding. See the [shared client guide](../README.md) for test coverage and limits.
 
 ## Install from a local checkout
 
 Add a path dependency to your application's `mix.exs`:
 
 ```elixir
-{:dasp_client, path: "/absolute/path/to/dasp/clients/elixir"}
+{:dasp_ex, path: "/absolute/path/to/dasp/clients/elixir"}
 ```
 
-Then run `mix deps.get`. From the package directory, run `mix test` to use the shared repository fixtures. Build a review archive with `mix hex.build --output /absolute/path/to/dasp_client.tar`. CI also provides archives as [workflow artifacts](https://github.com/DASP-Protocol/dasp/actions/workflows/clients.yml).
+Then run `mix deps.get`. From the package directory, run `mix test` to use the shared repository fixtures. Build a review archive with `mix hex.build --output /absolute/path/to/dasp_ex.tar`. CI also provides archives as [workflow artifacts](https://github.com/DASP-Protocol/dasp/actions/workflows/clients.yml).
 
 ## Connect an application
 
@@ -47,9 +59,9 @@ The profile callback receives a `%Jido.Signal{}` and must return `true` only whe
 
 ## Signals and the wire format
 
-Use `DASP.Wire` to encode and decode DASP traffic. Jido Signal 2.3 uses `"1.0.2"` as its internal version label. The codec converts that label to the required `specversion: "1.0"` on the wire. It keeps the original event identity, data, time, subject, schema URI, and scalar extensions. It does not add a timestamp to a received event.
+Use `DASP.Wire` to encode and decode DASP traffic. Jido Signal V3 and DASP use `specversion: "1.0"`. The only direct runtime package dependency is `jido_signal`. OTP 27 or later supplies JSON parsing. It keeps the original event identity, data, time, subject, schema URI, and scalar extensions. It does not add a timestamp to a received event.
 
-Read correlation from `signal.extensions["requestid"]` and payload fields from `signal.data`. DASP extensions remain flat scalar values in `signal.extensions`. The codec rejects nested extension values, core-attribute collisions, and local `jido_dispatch` metadata. Route messages through the transport adapter.
+Read correlation from `signal.extensions["requestid"]` and payload fields from `signal.data`. DASP extensions remain flat scalar values in `signal.extensions`. The codec rejects nested extension values, core-attribute collisions, and binary payloads. Route messages through the transport adapter.
 
 Do not use `Jido.Signal.serialize/1` or `deserialize/1` for DASP traffic. The DASP codec also enforces strict JSON parsing, the draft schema, and size limits.
 
@@ -99,13 +111,5 @@ The reducer must be pure. A failed batch returns no new checkpoint. Duplicate ev
 
 Error codes include `:invalid_json`, `:invalid_event`, `:configuration`, `:transport`, `:timeout`, `:correlation`, `:remote_failure`, `:profile`, `:replay`, `:checkpoint`, `:gap`, `:changed_update`, and `:missing_evidence`. A remote failure keeps the server error in `detail`. Transport failures and timeouts leave admission unresolved.
 
-## Run the recorded example
-
-```sh
-mix deps.get
-mix run examples/recorded.exs
-```
-
-See [recorded.exs](examples/recorded.exs). It uses a local reply adapter, not a server or network binding. See the [shared client guide](../README.md) for test coverage and limits.
 
 **Experimental API change:** Earlier source revisions returned wire maps. Use `signal.type`, `signal.data`, and `signal.extensions["requestid"]` with the current client. Convert a signal with `DASP.Wire.to_map/1` when an application needs the full wire map.

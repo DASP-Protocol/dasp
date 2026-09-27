@@ -44,7 +44,7 @@ export class Client {
     // Encode before handing control to asynchronous code. Callers cannot mutate an attempt.
     const request = decode(encode({
       specversion: "1.0", id: crypto.randomUUID(), source: this.options.source,
-      type: "dasp." + kind + ".v1", datacontenttype: "application/json",
+      type: "dasp.v1." + kind, datacontenttype: "application/json",
       requestid: crypto.randomUUID(), data
     } as Event));
     const context = structuredClone(session);
@@ -71,15 +71,15 @@ export class Client {
     if (event.source !== this.options.hostSource || event.requestid !== request.requestid) {
       throw new DASPError("correlation", "Reply source or request ID differs from the request context.");
     }
-    if (event.type === "dasp.failure.v1") throw new DASPError("remote_failure", event.data.error.message, event.data.error);
-    if (event.type !== "dasp." + reply + ".v1") throw new DASPError("correlation", "Unexpected reply type.");
+    if (event.type === "dasp.v1.failure") throw new DASPError("remote_failure", event.data.error.message, event.data.error);
+    if (event.type !== "dasp.v1." + reply) throw new DASPError("correlation", "Unexpected reply type.");
     const d: any = event.data, q: any = request.data;
     if (d.session_id !== context.session_id ||
         (q.command_id !== undefined && d.command_id !== q.command_id) ||
         (d.actor_id !== undefined && (d.actor_id !== context.actor_id || canonical(d.profile) !== canonical(context.profile)))) {
       throw new DASPError("correlation", "Reply does not match the session, actor, profile, or command.");
     }
-    if (event.type === "dasp.updates.v1") {
+    if (event.type === "dasp.v1.updates") {
       checkPage(event, q.after, q.limit);
       for (const update of event.data.events) {
         if (update.source !== this.options.hostSource) throw new DASPError("correlation", "Update producer differs from the host context.");

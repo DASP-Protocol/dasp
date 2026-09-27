@@ -1,27 +1,22 @@
 # DASP and other protocols {#why-dasp-faq}
 
-A client submits a command, then loses its connection before the reply arrives. Did the actor accept the command? Can the client retry it? Can another client recover the result?
+DASP addresses the boundary between an actor host and its clients. These protocols cover related boundaries. Start with the job you need to do.
 
-**DASP defines common rules for these questions** across languages and actor implementations.
-
-*Working draft · [Implementation status](README.md#current-state)*
+| Your need | Read |
+| --- | --- |
+| Exchange tasks between agents | [A2A](#why-not-a2a) |
+| Connect an editor to a coding agent | [ACP](#why-not-acp) |
+| Connect tools and context | [MCP](#why-not-mcp) |
+| Share agent sessions | [AHP](#why-not-ahp) |
+| Present agent activity in an interface | [AG-UI](#why-not-ag-ui) |
+| Store and replay stream data | [Durable Streams](#what-about-durable-streams) |
+| Use a common event envelope | [CloudEvents](#why-not-cloudevents-alone) |
 
 ## Why another protocol?
 
-DASP needs a contract for actors that keep their identity and work across client connections. That contract must cover saved command admission, retries, outcomes, and recovery together. The application defines its commands; chat and turns are optional.
+Clients need to agree on what acceptance, retry, and completion mean. DASP puts those rules in a shared actor-session contract. Commands remain application-defined; chat and turns are optional.
 
-The protocols below cover related needs. DASP specifies the actor and recovery rules that integrations would otherwise need to agree on separately.
-
-## When do I need DASP?
-
-Consider DASP when your application needs these properties together:
-
-- **Persistent identity.** Clients return to the same actor and session after a disconnect.
-- **Reliable retries.** A lost reply does not cause a second command admission.
-- **Shared access.** Several authorized clients work with the same session.
-- **Recoverable history.** Each client can read saved outcomes and apply the updates it missed.
-
-For a single tool call or agent task, an existing protocol may meet your needs. Use the [command and recovery walkthrough](../build/walkthrough.md) to assess the fit. DASP does not guarantee exactly-once external effects.
+For one tool call or agent task, another protocol may fit. [Follow a command](../build/walkthrough.md) to assess what DASP adds. See [current status](../project/feedback.md) before planning an integration.
 
 ## Why not A2A?
 
@@ -53,11 +48,19 @@ The [Agent User Interaction Protocol (AG-UI)](https://docs.ag-ui.com/introductio
 
 DASP defines the host's saved facts and the client's recovery behavior. For example, a client must [save its applied update position with its application state](../specification/recovery.md#dasp-core-010). This also serves clients without a user interface.
 
+## What about Durable Streams?
+
+[Durable Streams](https://github.com/durable-streams/durable-streams/blob/main/PROTOCOL.md) defines HTTP operations for saved, ordered stream data. It supports replay and live reads. Its producer rules address duplicate writes.
+
+DASP defines command admission and saved outcomes, including uncertainty after owner loss. A stored message alone does not establish whether an actor completed its work.
+
+A DASP binding could use Durable Streams to carry saved updates. The host would still need to enforce DASP admission, outcome, and retention rules. This is a possible design; no adapter is released.
+
 ## What does DASP add to CloudEvents? {#why-not-cloudevents-alone}
 
 [CloudEvents](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md) supplies the common event envelope: identity, source, type, and data. DASP uses that envelope for its messages.
 
-DASP adds [application behavior requirements](../specification/recovery.md) for command admission, outcomes, ordering, and recovery. A valid CloudEvent identifies an event. The DASP rules establish when a command is saved and how a client recovers its result.
+Read [Why CloudEvents?](cloudevents.md) for an annotated message. DASP adds [application behavior requirements](../specification/recovery.md) for command admission, outcomes, ordering, and recovery. A valid CloudEvent identifies an event. The DASP rules establish when a command is saved and how a client recovers its result.
 
 ## Could an existing protocol be extended instead?
 
@@ -73,4 +76,4 @@ This is a possible design. DASP has no released adapters. Start with the [build 
 
 ---
 
-*Comparisons reviewed on 25 September 2026. Protocols can change. [Suggest a correction](../project/feedback.md).*
+*A2A, MCP, ACP, AHP, and AG-UI comparisons reviewed on 25 September 2026. Durable Streams added on 27 September 2026. Protocols can change. [Suggest a correction](../project/feedback.md).*

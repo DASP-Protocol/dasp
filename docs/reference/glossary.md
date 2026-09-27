@@ -1,9 +1,10 @@
 # Glossary
 
-These short explanations link to the normative definitions.
+Use these terms when reading messages and recovery rules.
 
 | Term | Meaning |
 | --- | --- |
+| CloudEvents | Open standard for the event envelope; [why DASP uses it](../guide/cloudevents.md) |
 | Actor | Logical target that performs application work |
 | Host authority | Service that owns sessions, command retry records, and saved updates |
 | Session | Fixed actor/profile binding with one ordered history |

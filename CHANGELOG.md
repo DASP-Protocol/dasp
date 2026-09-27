@@ -1,5 +1,11 @@
 # Changes
 
+## Draft review changes
+
+- Change CloudEvents types from `dasp.<operation>.v1` to `dasp.v1.<operation>`. This is a breaking draft change. Update clients and hosts together; the old names are not aliases. Refresh schema and example digests for these revised draft artifacts.
+- Add an interactive command trace with sequence diagrams and full message JSON.
+
+
 ## Unreleased — review preparation
 
 - Base the Elixir client on Jido Signal 2.3. Return signals from client calls and pass signals to profile validators and reducers. Preserve the DASP wire format with an explicit codec.

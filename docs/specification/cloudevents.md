@@ -1,5 +1,7 @@
 # CloudEvents envelope
 
+For an introduction and annotated example, read [Why CloudEvents?](../guide/cloudevents.md).
+
 DASP draft-01 uses the CloudEvents 1.0 envelope and JSON structured event format. Where a transport has a content type, the structured message uses `application/cloudevents+json`. The enclosed application data uses `datacontenttype: "application/json"`.
 
 The format follows [CloudEvents](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md) and its [JSON format](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md). The following restrictions are DASP rules, not additional CloudEvents requirements.

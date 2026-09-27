@@ -1,24 +1,18 @@
-# Draft conformance suite
+# What is tested
 
-**Scope: artifact validation. No host or client conformance is established.**
+A schema pass proves that a message has a valid shape. A recovery test must also prove what happens when a process or connection fails.
 
-The suite validates recorded draft-01 events, schemas, a counter profile, and a recovery trace. It checks structure and selected cross-message relationships. It does not connect to a host or execute actor work.
+DASP currently has artifact checks and separate client package tests. There is no complete host conformance runner or certification claim.
 
-## Coverage levels
+## Available evidence
 
-| Scope | Current evidence |
-| --- | --- |
-| Core event shapes | All 14 types represented; positive and negative fixtures |
-| Example relationships | Replay identity, admission sequence, settlement, and cursors |
-| Recorded recovery | Lost receipt, equal retry, conflict, and two clients reaching the same state |
-| Raw message parsing | Not executed: duplicate JSON keys, invalid UTF-8, full Unicode rules, byte/depth limits |
-| Host behavior | Not executed: admission atomicity, concurrent retries, restart, stale workers, authorization |
-| Client behavior | Not executed: actual persistence, reconnect, unknown events, duplicate handling |
-| Binding and profile runtime | Not executed: no released binding or production profile |
+| Check | Runs today | Does not establish |
+| --- | --- | --- |
+| Core artifacts | All 14 event types, invalid vectors, profile payloads, and recorded recovery | Behavior of a running host |
+| Elixir and TypeScript clients | JSON parsing, core validation, reply checks, deadlines, retries, replay bounds, and checkpoints | Persistent storage or a live binding |
+| Host and binding behavior | Written runtime cases only | Admission atomicity, concurrent retries, restart, stale-worker control, authorization, or power-loss safety |
 
-Separate [client package tests](../clients/README.md#build-and-test) now execute raw JSON parsing, core validation, reply correlation, request deadlines, equal retry construction, replay bounds, and checkpoint duplicate handling in Elixir and TypeScript. They use in-process transport adapters and the shared recorded vectors. They are not included in the artifact report or the host requirement coverage index below. Actual storage, reconnect, host restart, and live binding tests remain open.
-
-A schema pass alone does not establish protocol conformance. “Artifact-partial” in the index means that a recorded example touches part of a requirement; it does not prove the behavior of an implementation.
+The artifact report and requirement index below cover recorded fixtures. Client package tests run separately and do not count as host evidence.
 
 ## Run and inspect
 

@@ -1,39 +1,21 @@
-# Add DASP to your project
+# Start building
 
-**Current stage: contract review.** You can run the artifact checks and map an application onto the draft. Experimental Elixir and TypeScript client packages are available for local use. A production transport binding is not released.
+Start at the boundary you own: the client that requests work, or the host that runs it.
 
-## Build a client
+DASP has experimental Elixir and TypeScript clients. You can run their recorded examples today. A production binding and persistent example host are still to be built.
 
-1. Identify the actor host and its supported core, profile, and binding versions.
-2. Select that exact combination before submitting application commands.
-3. Open an authorized session with its actor identity and profile.
-4. Save a command ID and complete input before the first submission. Keep them for retries.
-5. Treat a receipt as admission. Read the saved outcome for completion.
-6. Apply saved updates in order. Save the applied cursor with application state.
-7. After connection loss, recover unresolved commands and read after the saved cursor.
+## Connect a client
 
-Authentication and endpoints come from the binding. Do not use a CloudEvents `source` URI as a destination or access grant.
+Use a [language client](../../clients/README.md) to construct requests, check replies, and apply saved updates. Supply your transport, profile validation, and storage.
 
-## Expose an actor through a host
+Choose [Elixir](../../clients/elixir/README.md) or [TypeScript](../../clients/typescript/README.md). Each page includes a recorded example, setup, and API details.
 
-1. Define the application's commands and state in a profile.
-2. Validate and authorize requests before admission.
-3. Save command identity, retry data, and the admission update as one recoverable decision.
-4. Dispatch only admitted work. Use application effect keys or reconciliation where external effects require them.
-5. Commit ordered updates and one immutable terminal outcome.
-6. Serve coherent views, outcomes, and replay pages to authorized clients.
-7. Recover after process restart and document the tested durability boundary.
+## Expose an actor
 
-Storage and execution remain your choice. The [recovery requirements](../specification/recovery.md) define observable behavior.
+[Implement a host](host.md) around your actor runtime. The host owns admission, saved outcomes, and recovery. Its storage must preserve those decisions before it reports success.
 
-## Define a profile
+[Define a profile and binding](profiles-and-bindings.md) so both sides agree on commands and delivery.
 
-Specify input and output schemas, completion rules, state projection, command ordering, cancellation, progress, and errors. Supply valid and invalid examples plus behavioral cases. Keep domain data inside the designated profile payload fields.
+## Inspect the contract first
 
-Use the [counter profile](../specification/example.md) as a small example. For an agent, define an application command such as `report.create` and state exactly when its result becomes complete. This vocabulary is illustrative.
-
-## Try the current artifacts
-
-Start with the [illustrated walkthrough](walkthrough.md) to see why command identity, saved outcomes, and recovery matter. Then inspect the [recorded counter exchange](../reference/recorded-exchange.md) for install commands and artifact checks. Those checks compare recorded messages and expected relationships; they do not start a host or run an actor.
-
-See [client status](../../clients/README.md) and [open decisions](../project/feedback.md) before planning an implementation. The next implementation milestone is one specified binding and a persistent example host tested with both client packages.
+[Follow a command](walkthrough.md) to see complete messages and recovery. Then use [the specification](../specification/README.md) for requirements and [conformance coverage](../../conformance/README.md) for the evidence behind each check.

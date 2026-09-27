@@ -3,7 +3,7 @@ defmodule DASP.ClientTest do
   alias DASP.{Client, Wire, Checkpoint}
 
   test "update byte limits include whitespace inside replay pages" do
-    update = Jason.encode!(step("admission"))
+    update = JSON.encode!(step("admission"))
     padded = String.replace_prefix(update, "{", "{" <> String.duplicate(" ", 65_536))
     assert {:error, _} = Wire.decode(padded)
 
@@ -12,16 +12,16 @@ defmodule DASP.ClientTest do
       |> put_in(["data", "events"], [step("admission")])
       |> put_in(["data", "next"], 1)
 
-    assert {:error, _} = Wire.decode(String.replace(Jason.encode!(page), update, padded))
+    assert {:error, _} = Wire.decode(String.replace(JSON.encode!(page), update, padded))
   end
 
   @root Path.expand("../../..", __DIR__)
   @valid File.read!(Path.join(@root, "specification/draft-01/examples/counter.json"))
-         |> Jason.decode!()
+         |> JSON.decode!()
   @invalid File.read!(Path.join(@root, "conformance/fixtures/invalid-events.json"))
-           |> Jason.decode!()
+           |> JSON.decode!()
   @trace File.read!(Path.join(@root, "conformance/fixtures/recovery-trace.json"))
-         |> Jason.decode!()
+         |> JSON.decode!()
   defp step(id), do: Enum.find(@trace["steps"], &(&1["id"] == id))["event"]
   defp session, do: step("open")["data"]
   defp profile(%Jido.Signal{}), do: true
@@ -44,8 +44,8 @@ defmodule DASP.ClientTest do
   end
 
   defp reply(wire, id) do
-    request = Jason.decode!(wire)
-    {:ok, step(id) |> Map.put("requestid", request["requestid"]) |> Jason.encode!()}
+    request = JSON.decode!(wire)
+    {:ok, step(id) |> Map.put("requestid", request["requestid"]) |> JSON.encode!()}
   end
 
   defp submit(c),
@@ -61,7 +61,7 @@ defmodule DASP.ClientTest do
   defp checkpoint(cursor \\ 0, state \\ %{"value" => 0}) do
     view =
       step("opened")
-      |> Map.put("type", "dasp.view.v1")
+      |> Map.put("type", "dasp.v1.view")
       |> Map.put("data", Map.merge(session(), %{"cursor" => cursor, "state" => state}))
 
     {:ok, saved} = Checkpoint.from_view(view, &profile/1)
@@ -80,7 +80,7 @@ defmodule DASP.ClientTest do
   for vector <- @invalid do
     test "reject draft vector #{vector["id"]}" do
       assert {:error, %DASP.Error{}} =
-               Wire.decode(Jason.encode!(unquote(Macro.escape(vector["event"]))))
+               Wire.decode(JSON.encode!(unquote(Macro.escape(vector["event"]))))
     end
   end
 
@@ -95,7 +95,7 @@ defmodule DASP.ClientTest do
     test "reject exact nonportable number #{token}" do
       text =
         step("command")
-        |> Jason.encode!()
+        |> JSON.encode!()
         |> String.replace(~s("amount":3), ~s("amount":) <> unquote(token))
 
       assert {:error, %DASP.Error{}} = Wire.decode(text)
@@ -106,7 +106,7 @@ defmodule DASP.ClientTest do
     for token <- ["3.0", "30e-1", "0.003e3"] do
       text =
         step("command")
-        |> Jason.encode!()
+        |> JSON.encode!()
         |> String.replace(~s("amount":3), ~s("amount":) <> token)
 
       assert {:ok, event} = Wire.decode(text)
@@ -115,7 +115,7 @@ defmodule DASP.ClientTest do
   end
 
   test "reject duplicate keys, invalid Unicode, and lossy local values" do
-    text = Jason.encode!(step("command"))
+    text = JSON.encode!(step("command"))
 
     for bad <- [
           String.replace(text, ~s("amount":3), ~S("amount":3,"\u0061mount":4)),
@@ -151,7 +151,7 @@ defmodule DASP.ClientTest do
       client(fn wire, _ ->
         requests =
           Agent.get_and_update(state, fn requests ->
-            {requests, requests ++ [Jason.decode!(wire)]}
+            {requests, requests ++ [JSON.decode!(wire)]}
           end)
 
         if requests == [], do: {:error, :lost_connection}, else: reply(wire, "duplicate")
@@ -181,8 +181,8 @@ defmodule DASP.ClientTest do
     c =
       client(fn wire, _ ->
         {:ok, json} = reply(wire, "opened")
-        event = json |> Jason.decode!() |> Map.put("type", "dasp.view.v1")
-        {:ok, event |> put_in(["data", "state"], %{"value" => 0}) |> Jason.encode!()}
+        event = json |> JSON.decode!() |> Map.put("type", "dasp.v1.view")
+        {:ok, event |> put_in(["data", "state"], %{"value" => 0}) |> JSON.encode!()}
       end)
 
     assert {:ok, %Jido.Signal{data: %{"state" => %{"value" => 0}}}} =
@@ -218,7 +218,7 @@ defmodule DASP.ClientTest do
       c =
         client(fn wire, _ ->
           {:ok, json} = reply(wire, "duplicate")
-          {:ok, json |> Jason.decode!() |> put_in(path, "urn:other:value") |> Jason.encode!()}
+          {:ok, json |> JSON.decode!() |> put_in(path, "urn:other:value") |> JSON.encode!()}
         end)
 
       assert {:error, %DASP.Error{code: :correlation}} = submit(c)
@@ -231,7 +231,7 @@ defmodule DASP.ClientTest do
 
     c =
       client(fn wire, _ -> reply(wire, "page-two") end,
-        validate_profile: &(&1.type != "dasp.update.v1")
+        validate_profile: &(&1.type != "dasp.v1.update")
       )
 
     assert {:error, %DASP.Error{code: :profile}} = Client.read_updates(c, session(), 0)
@@ -270,7 +270,7 @@ defmodule DASP.ClientTest do
       c =
         client(fn wire, _ ->
           {:ok, json} = reply(wire, "page-two")
-          {:ok, json |> Jason.decode!() |> change.() |> Jason.encode!()}
+          {:ok, json |> JSON.decode!() |> change.() |> JSON.encode!()}
         end)
 
       assert {:error, _} = Client.read_updates(c, session(), 0)
@@ -291,7 +291,7 @@ defmodule DASP.ClientTest do
                Checkpoint.apply_updates(start, page.data["events"], &reduce/2, &profile/1)
 
       assert Map.take(saved, ["cursor", "state"]) == consumer["expected"]
-      restored = saved |> Jason.encode!() |> Jason.decode!()
+      restored = saved |> JSON.encode!() |> JSON.decode!()
 
       assert {:ok, ^restored} =
                Checkpoint.apply_updates(restored, page.data["events"], &reduce/2, &profile/1)

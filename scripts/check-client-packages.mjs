@@ -34,16 +34,16 @@ try {
   run(join(root, 'clients/typescript/node_modules/.bin/tsc'),
     ['--noEmit', '--strict', '--module', 'NodeNext', '--target', 'ES2022', 'consumer.ts'], ts);
 
-  const hexArchive = join(out, 'dasp_client-' + meta.version + '.tar');
+  const hexArchive = join(out, 'dasp_ex-' + meta.version + '.tar');
   run('mix', ['hex.build', '--output', hexArchive], join(root, 'clients/elixir'));
-  const outer = join(temp, 'hex'), unpacked = join(temp, 'dasp_client'), ex = join(temp, 'elixir');
+  const outer = join(temp, 'hex'), unpacked = join(temp, 'dasp_ex'), ex = join(temp, 'elixir');
   for (const dir of [outer, unpacked, ex]) await mkdir(dir);
   run('tar', ['-xf', hexArchive, '-C', outer], temp);
   run('tar', ['-xzf', join(outer, 'contents.tar.gz'), '-C', unpacked], temp);
   await writeFile(join(ex, 'mix.exs'), [
     'defmodule PackageCheck.MixProject do',
     '  use Mix.Project',
-    '  def project, do: [app: :package_check, version: "0.0.0", deps: [{:dasp_client, path: "../dasp_client"}]]',
+    '  def project, do: [app: :package_check, version: "0.0.0", deps: [{:dasp_ex, path: "../dasp_ex"}]]',
     '  def application, do: [extra_applications: [:crypto]]',
     'end'
   ].join('\n'));

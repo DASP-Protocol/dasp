@@ -23,6 +23,7 @@ clients/typescript/*.tgz
 /website/protocol/
 /website/clients/
 /website/project/
+/website/about/
 /website/conformance/
 /website/reference/
 /website/source/

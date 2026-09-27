@@ -2,6 +2,18 @@
 
 Experimental `@dasp-protocol/client`, version `0.1.0-draft.1`, for DASP `draft-01`. Node.js 22 or later; ESM. No npm release or browser support claim is made. The project license is pending.
 
+## Run the recorded example
+
+From the repository root:
+
+```sh
+cd clients/typescript
+npm ci
+npm run example
+```
+
+See [recorded.mjs](examples/recorded.mjs). It exercises the client with a local reply adapter. It does not provide a server or a network binding. See the [shared client guide](../README.md) for test coverage and limits.
+
 ## Install a review archive
 
 Build from the repository root:
@@ -86,11 +98,3 @@ On restart, load the saved checkpoint instead of creating a new one. Open the sa
 The reducer must be pure. A failed batch returns no new checkpoint. Duplicate evidence is retained in the checkpoint; it can grow with history. An old update with no retained evidence raises `missing_evidence`. Recover a trusted view or stop. Do not discard evidence and assume old records match.
 
 Errors use `DASPError.code`: `invalid_json`, `invalid_event`, `configuration`, `transport`, `timeout`, `correlation`, `remote_failure`, `profile`, `replay`, `checkpoint`, `gap`, `changed_update`, or `missing_evidence`. A remote failure keeps the server error in `detail`. Transport failures and timeouts leave admission unresolved.
-
-## Run the recorded example
-
-```sh
-npm run example
-```
-
-See [recorded.mjs](examples/recorded.mjs). It exercises the client with a local reply adapter. It does not provide a server or a network binding. See the [shared client guide](../README.md) for test coverage and limits.

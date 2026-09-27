@@ -1,35 +1,20 @@
 # Durable Actor Session Protocol
 
-DASP is an open, language-independent server protocol for controlling durable actors through shared sessions. It defines command admission, saved outcomes, ordered updates, and recovery using CloudEvents messages.
-
-For agent builders connecting applications, tools, and automation to durable actors.
+DASP defines the contract between an actor host and its clients: commands, saved outcomes, and recovery across connections. Use it to connect an interface, tool, or test driver to the same durable actor session.
 
 **Status: draft-01, a working review draft.** The core can change. Experimental Elixir and TypeScript client packages are available in this repository. No transport binding or production profile is released.
 
 The [Elixir client](clients/elixir/README.md) is built on [Jido Signal](https://github.com/agentjido/jido_signal). This is an implementation dependency; the DASP specification and TypeScript client remain independent of Jido.
 
-[Read the guide](https://dasp-protocol.github.io/dasp/guide/) · [Specification](https://dasp-protocol.github.io/dasp/specification/) · [Conformance](https://dasp-protocol.github.io/dasp/conformance/)
+[Read the guide](https://dasp-protocol.github.io/dasp/guide/) · [Specification](https://dasp-protocol.github.io/dasp/specification/) · [Conformance](https://dasp-protocol.github.io/dasp/specification/conformance/)
 
-## What DASP defines
+## Start here
 
-- A stable identity for commands and explicit admission decisions.
-- Saved outcomes that distinguish completion, failure, cancellation, and uncertainty.
-- Ordered session updates and recovery from a saved cursor.
-- Shared sessions that more than one authorized client can use.
-- Generic message shapes, with application data defined by profiles.
+1. [How DASP works](docs/guide/README.md): five operations and the replies they produce.
+2. [Follow a command](docs/build/walkthrough.md): inspect real message shapes, a lost receipt, and recovery.
+3. [Add DASP to your project](docs/build/README.md): client, host, and profile responsibilities.
 
-The core does not require chat, turns, a model provider, an actor runtime, or a storage engine. CloudEvents supplies the envelope; DASP supplies the session behavior.
-
-## Find your path
-
-| Purpose | Start here |
-| --- | --- |
-| Understand the protocol | [Guide](docs/guide/README.md) |
-| Use DASP in a project | [Build guide](docs/build/README.md) |
-| Implement the contract | [Specification](docs/specification/README.md) |
-| Inspect test coverage | [Conformance suite](conformance/README.md) |
-| Find schemas and examples | [Reference](docs/reference/README.md) |
-| Propose a change | [Contributing](CONTRIBUTING.md) |
+[Specification](docs/specification/README.md) · [Protocol comparisons](docs/guide/faq.md) · [Conformance](conformance/README.md)
 
 ## Work on this repository
 

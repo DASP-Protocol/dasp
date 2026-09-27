@@ -7,15 +7,23 @@ defmodule DASP.JSON do
     if byte_size(text) > 1_048_576 or not String.valid?(text),
       do: fail(:invalid_json, "Invalid UTF-8 or message exceeds 1048576 bytes.")
 
-    case Jason.decode(text, objects: :ordered_objects, floats: :decimals) do
-      {:ok, value} ->
-        decoded = convert(value, 0)
-        raw_update_limits!(value, object_sizes(text), [])
-        decoded
+    {value, _, rest} =
+      :json.decode(text, nil, %{
+        object_finish: fn pairs, acc -> {{:object, Enum.reverse(pairs)}, acc} end,
+        integer: &number!/1,
+        float: &number!/1,
+        null: nil
+      })
 
-      {:error, _} ->
-        fail(:invalid_json, "Invalid JSON.")
-    end
+    if not Regex.match?(~r/\A[ \t\r\n]*\z/, rest),
+      do: fail(:invalid_json, "Trailing JSON data.")
+
+    decoded = convert(value, 0)
+    raw_update_limits!(value, object_sizes(text), [])
+    decoded
+  rescue
+    error in DASP.Error -> reraise error, __STACKTRACE__
+    _ -> fail(:invalid_json, "Invalid JSON.")
   end
 
   def decode!(_), do: fail(:invalid_json, "Expected UTF-8 JSON bytes.")
@@ -41,14 +49,14 @@ defmodule DASP.JSON do
     Enum.reverse(sizes)
   end
 
-  defp raw_update_limits!(%Jason.OrderedObject{values: pairs}, sizes, path) do
+  defp raw_update_limits!({:object, pairs}, sizes, path) do
     [size | rest] =
       Enum.reduce(pairs, sizes, fn {key, child}, acc ->
         raw_update_limits!(child, acc, path ++ [key])
       end)
 
     if (path == [] or match?(["data", "events", _], path)) and
-         List.keyfind(pairs, "type", 0) == {"type", "dasp.update.v1"} and size > 65_536,
+         List.keyfind(pairs, "type", 0) == {"type", "dasp.v1.update"} and size > 65_536,
        do: fail(:invalid_event, "Update exceeds 65536 bytes.")
 
     rest
@@ -65,47 +73,20 @@ defmodule DASP.JSON do
 
   def encode!(value) do
     check!(value, 0)
-    text = Jason.encode!(value)
+    text = JSON.encode!(value)
     if byte_size(text) > 1_048_576, do: fail(:invalid_json, "Message exceeds 1048576 bytes.")
     text
   end
 
   defp convert(_, depth) when depth > 32, do: fail(:invalid_json, "JSON nesting limit exceeded.")
 
-  defp convert(%Jason.OrderedObject{values: pairs}, depth) do
+  defp convert({:object, pairs}, depth) do
     if length(pairs) > 1024, do: fail(:invalid_json, "Object exceeds 1024 members.")
 
     Enum.reduce(pairs, %{}, fn {key, value}, acc ->
       if Map.has_key?(acc, key), do: fail(:invalid_json, "Duplicate JSON object key.")
       Map.put(acc, key, convert(value, depth + 1))
     end)
-  end
-
-  defp convert(%Decimal{coef: coef, exp: exp, sign: sign}, _depth) when is_integer(coef) do
-    digits = Integer.to_string(coef)
-
-    value =
-      cond do
-        coef == 0 ->
-          0
-
-        exp > 16 or exp < -byte_size(digits) ->
-          fail(:invalid_json, "Number is outside the portable integer range.")
-
-        exp < 0 ->
-          divisor = Integer.pow(10, -exp)
-
-          if rem(coef, divisor) != 0,
-            do: fail(:invalid_json, "Fractions must use profile strings.")
-
-          div(coef, divisor) * sign
-
-        true ->
-          coef * Integer.pow(10, exp) * sign
-      end
-
-    check!(value, 0)
-    value
   end
 
   defp convert(list, depth) when is_list(list) do
@@ -116,6 +97,42 @@ defmodule DASP.JSON do
   defp convert(value, depth) do
     check!(value, depth)
     value
+  end
+
+  # Decode decimal and exponent syntax exactly, before any float conversion.
+  # Bound exponent work by the input length and portable integer range.
+  defp number!(token) do
+    [mantissa | exponent] = String.split(token, ~r/[eE]/, parts: 2)
+    sign = if String.starts_with?(mantissa, "-"), do: -1, else: 1
+    [whole | fraction] = mantissa |> String.trim_leading("-") |> String.split(".", parts: 2)
+    fraction = List.first(fraction) || ""
+    digits = String.trim_leading(whole <> fraction, "0")
+
+    if digits == "" do
+      0
+    else
+      exponent = List.first(exponent) || "0"
+
+      exponent_digits =
+        exponent
+        |> String.trim_leading("+")
+        |> String.trim_leading("-")
+        |> String.trim_leading("0")
+
+      if byte_size(exponent_digits) > 7,
+        do: fail(:invalid_json, "Number is outside the portable integer range.")
+
+      power = String.to_integer(exponent) - byte_size(fraction)
+      significant = String.trim_trailing(digits, "0")
+      power = power + byte_size(digits) - byte_size(significant)
+
+      if power < 0 or byte_size(significant) + power > 16,
+        do: fail(:invalid_json, "Number is outside the portable integer range.")
+
+      value = sign * String.to_integer(significant) * Integer.pow(10, power)
+      check!(value, 0)
+      value
+    end
   end
 
   def check!(_, depth) when depth > 32, do: fail(:invalid_json, "JSON nesting limit exceeded.")

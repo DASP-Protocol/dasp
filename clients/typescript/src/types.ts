@@ -36,7 +36,7 @@ export interface Data {
 }
 export type Kind = keyof Data;
 export type Event<K extends Kind = Kind> = K extends Kind ? {
-  specversion: "1.0"; id: string; source: string; type: `dasp.${K}.v1`;
+  specversion: "1.0"; id: string; source: string; type: `dasp.v1.${K}`;
   datacontenttype: "application/json"; data: Data[K];
   subject?: string; time?: string; dataschema?: string;
   [extension: string]: unknown;

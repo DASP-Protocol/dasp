@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile, cp, rm } from 'node:fs/promises';
 import path from 'node:path';
-import { pages, pageOptions, artifacts, aliases, generatedDirectories } from './site-map.mjs';
+import { pages, pageOptions, artifacts, aliases, sourceRedirects, generatedDirectories } from './site-map.mjs';
 
 const repository = 'https://github.com/DASP-Protocol/dasp/blob/main/';
 // Only these dedicated generated directories are removed. Authored theme/brand files are preserved.
@@ -16,13 +16,18 @@ for (const [source, destination] of Object.entries(pages)) {
   text = text.replace(/\]\(([^)]+)\)/g, (match, target) => {
     if (/^(https?:|mailto:|#)/.test(target)) return match;
     const [file, fragment] = target.split('#');
-    const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(source), file));
+    const original = path.posix.normalize(path.posix.join(path.posix.dirname(source), file));
+    const resolved = sourceRedirects[original] || original;
     let link;
     if (pages[resolved]) link = '/' + pages[resolved].replace(/index\.md$/, '').replace(/\.md$/, '.html');
     else if (artifacts[resolved]) link = '/' + artifacts[resolved];
     else link = repository + resolved;
     return `](${link}${fragment ? '#' + fragment : ''})`;
   });
+  // Explain complete CloudEvents, not partial payload or schema examples.
+  text = text.replace(/```json\n([\s\S]*?)```/g, (block, body) =>
+    /"specversion"\s*:/.test(body) && /"type"\s*:/.test(body)
+      ? '<CloudEventsHelp />\n\n' + block : block);
   const paragraph = text.split('\n\n').find(p => !p.startsWith('#') && !p.startsWith('**') && !p.startsWith('Requirement')) || 'DASP protocol documentation.';
   const description = paragraph.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*`]/g, '').replace(/\s+/g, ' ').slice(0, 180);
   const output = path.join('website', destination);

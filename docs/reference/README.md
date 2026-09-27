@@ -1,11 +1,12 @@
-# Technical reference
+# Reference
 
-Use these pages to locate protocol artifacts. The [specification](../specification/README.md) defines behavior. This index adds no requirements.
+Find the exact artifact you need.
 
-- [Schemas](schemas.md): structural contracts, identifiers, and downloads.
-- [Examples](examples.md): complete events, failure vectors, and a recovery trace.
-- [Glossary](glossary.md): terms used across the contract.
-- [Message catalog](../specification/messages.md): fields, directions, replies, and errors.
-- [Requirement coverage](../../conformance/README.md): executed checks and runtime gaps.
+| Page | Use it to |
+| --- | --- |
+| [Schemas and downloads](schemas.md) | Get the core schema, profile schema, and checksums |
+| [Message examples and traces](examples.md) | Inspect complete CloudEvents and recovery fixtures |
+| [Counter profile](../specification/example.md) | See a small application contract |
+| [Glossary](glossary.md) | Check a term |
 
-All examples target draft-01. Schema validation alone does not prove that a host or client implements its behavior.
+For an explanation, [follow a command](../build/walkthrough.md). For required behavior, use the [specification](../specification/README.md).

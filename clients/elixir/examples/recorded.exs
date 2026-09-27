@@ -5,12 +5,12 @@
     host_source: "urn:example:host:one",
     validate_profile: fn
       %Jido.Signal{
-        type: "dasp.command.v1",
+        type: "dasp.v1.command",
         data: %{"name" => "counter.add", "input" => %{"amount" => amount} = input}
       } ->
         is_integer(amount) and map_size(input) == 1
 
-      %Jido.Signal{type: "dasp.receipt.v1"} ->
+      %Jido.Signal{type: "dasp.v1.receipt"} ->
         true
 
       _ ->
@@ -23,7 +23,7 @@
         "specversion" => "1.0",
         "id" => "recorded-receipt",
         "source" => "urn:example:host:one",
-        "type" => "dasp.receipt.v1",
+        "type" => "dasp.v1.receipt",
         "datacontenttype" => "application/json",
         "requestid" => request.extensions["requestid"],
         "data" => %{

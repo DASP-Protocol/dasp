@@ -5,7 +5,7 @@ const host = 'urn:example:host:one';
 const web = 'urn:example:client:web';
 const cli = 'urn:example:client:cli';
 function event(type, id, source, data, requestid) {
-  return { specversion: '1.0', id, source, type: `dasp.${type}.v1`, datacontenttype: 'application/json', ...(requestid ? { requestid } : {}), data };
+  return { specversion: '1.0', id, source, type: `dasp.v1.${type}`, datacontenttype: 'application/json', ...(requestid ? { requestid } : {}), data };
 }
 const intent = { session_id: session, command_id: command, name: 'dependency.update', input: { repository: 'example/service', package: 'example-lib', target_version: '2.4.0' } };
 const submit = event('command', 'request-event-1', web, intent, 'attempt-1');

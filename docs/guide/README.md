@@ -1,41 +1,39 @@
-# What is DASP?
+# How DASP works
 
-DASP is the **Durable Actor Session Protocol**. It is an open, language-independent server protocol for controlling durable actors through shared sessions. It defines command admission, saved outcomes, ordered updates, and recovery using CloudEvents messages.
+The connection drops. The work may still be running.
 
-## Why a session matters
+DASP gives a client a way to return, check the result, and read what it missed. A TUI, web app, or test driver can use the same actor session.
 
-An actor can continue work after its client disconnects. The client needs to know which command was accepted, which result was saved, and which updates it missed. A second client needs the same facts without taking ownership of the first connection.
+## Five operations
 
-DASP gives the client and host a common contract for these questions. A connection carries messages. A session keeps the identity and saved history for the work.
+<CommandOverview />
 
-## Who it serves
+An **actor** performs the work. A **host** manages its sessions and saved records. A **session** ties one actor and application profile to an ordered history.
 
-DASP is for agent builders connecting interfaces, tools, and automation to durable actors. It also supports other actors that perform application work. The actor can be a workflow, device controller, or agent. Its protocol identity does not name an in-memory process.
+## Acceptance and completion
 
-## The boundary
+A receipt says the command was accepted, already accepted, or rejected. Acceptance means the host saved the intent. It does not mean the work finished.
 
-| Layer | Responsibility |
-| --- | --- |
-| CloudEvents | Event identity, source, type, and metadata |
-| DASP core | Sessions, command admission, saved outcomes, updates, and recovery |
-| Application profile | Commands, inputs, outputs, state, completion, and domain errors |
-| Transport binding | Connection setup, selection, authentication, routing, and delivery |
-| Host implementation | Actor execution, scheduling, and storage |
+A saved outcome records one result: **completed**, **failed**, **cancelled**, or **uncertain**. An outcome read can also report that the command is pending.
 
-The core does not require chat or turns. A profile can define them when the application needs them.
+## Saved facts and temporary progress
 
-## What the guarantees mean
+**Updates** are saved facts: acceptance, application events, and final outcomes. Each update has a sequence number. A client saves its last applied position, called a **cursor**, with its state.
 
-An accepted receipt is evidence of saved admission. An outcome is evidence of what the host can establish about execution. Progress is temporary. A failure to establish external effects remains explicit as an uncertain outcome.
+**Progress** reports activity. It can be lost. A **view** gives the saved application state at a specific cursor.
 
-Equal command retries do not create a second admission. This does not promise exactly-once external effects. Those effects need application-level controls.
+[Follow a command](../build/walkthrough.md) to inspect the messages, lose a receipt, and retry the same command.
 
-More than one authorized client can read a session and submit profile commands. Each client saves its own applied cursor. Presence, membership roles, and shared editing need further contracts.
+## Where it fits
+
+Use DASP when work must survive client connections and more than one client needs the same record. Examples include an agent controlled by a TUI, an operator watching automated work, or a workflow reporting saved results.
+
+Your application defines its commands and completion rules in a **profile**. A **binding** defines transport and authentication. DASP supplies the common session behavior.
+
+For a single tool call or an editor integration, another protocol may already fit. [Compare DASP with A2A, ACP, MCP, and other protocols](faq.md).
 
 ## Current state
 
-Draft-01 contains core requirements, JSON Schemas, examples, and artifact checks. It is open for technical review and can change. No production binding, host, or client package is released.
+DASP is a working draft with experimental Elixir and TypeScript clients. No production binding or host is released. It does not guarantee exactly-once external effects.
 
-Continue with [core concepts](concepts.md), [use cases](use-cases.md), or [the build guide](../build/README.md).
-
-For short answers about protocol fit, read [DASP and other protocols](faq.md).
+[Start building](../build/README.md) or learn [why DASP uses CloudEvents](cloudevents.md).

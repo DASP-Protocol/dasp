@@ -5,17 +5,17 @@ const client = new Client({
   source: "urn:example:client:one",
   hostSource: "urn:example:host:one",
   validateProfile: event => {
-    if (event.type === "dasp.command.v1") {
+    if (event.type === "dasp.v1.command") {
       return event.data.name === "counter.add" && Number.isSafeInteger(event.data.input.amount) &&
         Object.keys(event.data.input).length === 1;
     }
-    return event.type === "dasp.receipt.v1";
+    return event.type === "dasp.v1.receipt";
   },
   transport: async wire => {
     const request = decode(wire);
     return encode({
       specversion: "1.0", id: "recorded-receipt", source: "urn:example:host:one",
-      type: "dasp.receipt.v1", datacontenttype: "application/json", requestid: request.requestid,
+      type: "dasp.v1.receipt", datacontenttype: "application/json", requestid: request.requestid,
       data: { session_id: request.data.session_id, command_id: request.data.command_id,
         disposition: "accepted", admission_sequence: 1, error: null }
     });

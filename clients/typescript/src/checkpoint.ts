@@ -15,7 +15,7 @@ export interface Checkpoint {
 /** Call only after authenticating and validating the view and selected profile. */
 export function checkpointFromView(view: Event<"view">, validateProfile: ProfileValidator): Checkpoint {
   const event = decode(encode(view));
-  if (event.type !== "dasp.view.v1") throw new DASPError("checkpoint", "A view is required.");
+  if (event.type !== "dasp.v1.view") throw new DASPError("checkpoint", "A view is required.");
   checkProfile(validateProfile, event);
   const { session_id, actor_id, profile, cursor, state } = event.data;
   return { session: { session_id, actor_id, profile }, hostSource: event.source, cursor, state, evidence: {} };
@@ -42,7 +42,7 @@ export function applyUpdates(
   const next = structuredClone(checkpoint);
   for (const input of events) {
     const event = decode(encode(input));
-    if (event.type !== "dasp.update.v1" || event.source !== next.hostSource || event.data.session_id !== next.session.session_id) {
+    if (event.type !== "dasp.v1.update" || event.source !== next.hostSource || event.data.session_id !== next.session.session_id) {
       throw new DASPError("checkpoint", "Expected an update from the checkpoint session and host.");
     }
     checkProfile(validateProfile, event);

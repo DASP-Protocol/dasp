@@ -1,4 +1,4 @@
-# Model and lifecycle
+# Sessions and command lifecycle
 
 ## Actor and host {#dasp-model-001}
 

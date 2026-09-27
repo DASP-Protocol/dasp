@@ -8,7 +8,7 @@ defmodule DASP.SignalTest do
       "specversion" => "1.0",
       "id" => "event-arbitrary-id",
       "source" => "urn:client:one",
-      "type" => "dasp.command.v1",
+      "type" => "dasp.v1.command",
       "datacontenttype" => "application/json",
       "requestid" => "attempt-1",
       "data" => %{
@@ -32,15 +32,44 @@ defmodule DASP.SignalTest do
         "dataschema" => "urn:schema:command"
       })
 
-    assert {:ok, %Signal{} = signal} = Wire.decode(Jason.encode!(event))
-    assert signal.specversion == "1.0.2"
+    assert {:ok, %Signal{} = signal} = Wire.decode(JSON.encode!(event))
+    assert signal.specversion == "1.0"
     assert signal.id == event["id"]
     assert signal.extensions["requestid"] == "attempt-1"
     assert signal.extensions["extensions"] == "opaque-value"
     assert signal.extensions["traceflag"] == false
     assert {:ok, encoded} = Wire.encode(signal)
-    assert Jason.decode!(encoded) == event
+    assert JSON.decode!(encoded) == event
     assert {:ok, ^event} = Wire.to_map(signal)
+  end
+
+  test "RFC 3339 timestamps retain valid lowercase and leap-second spellings" do
+    for time <- ["2026-09-25t20:00:00z", "2016-12-31T23:59:60Z", "2017-01-01T00:59:60.5+01:00"] do
+      event = Map.put(command(), "time", time)
+      assert {:ok, signal} = Wire.to_signal(event)
+      assert signal.time == time
+      assert {:ok, encoded} = Wire.encode(signal)
+      assert JSON.decode!(encoded) == event
+    end
+
+    for time <- [
+          "2026-02-31T20:00:00Z",
+          "2026-09-25T20:00:00+25:00",
+          "2016-12-31T22:59:60Z",
+          "2016-12-31T23:59:61Z",
+          "2026-09-25T24:00:00Z"
+        ] do
+      assert {:error, %DASP.Error{}} = Wire.to_signal(Map.put(command(), "time", time))
+    end
+  end
+
+  test "URI attributes reject malformed percent escapes" do
+    for key <- ["source", "dataschema"],
+        uri <- ["urn:a%zz", "https://example.com/%", "urn:a%0"] do
+      assert {:error, %DASP.Error{}} = Wire.to_signal(Map.put(command(), key, uri))
+    end
+
+    assert {:ok, _} = Wire.to_signal(Map.put(command(), "source", "https://example.com/a%20b"))
   end
 
   test "decoding does not invent a timestamp or require a Jido-generated event ID" do
@@ -48,22 +77,23 @@ defmodule DASP.SignalTest do
     assert signal.time == nil
     assert signal.id == "event-arbitrary-id"
     assert {:ok, encoded} = Wire.encode(signal)
-    refute Map.has_key?(Jason.decode!(encoded), "time")
+    refute Map.has_key?(JSON.decode!(encoded), "time")
   end
 
   test "native Jido signals encode as DASP CloudEvents 1.0" do
     data = command()["data"]
 
     signal =
-      Signal.new!("dasp.command.v1", data,
+      Signal.new!("dasp.v1.command", data,
         source: "urn:client:one",
+        datacontenttype: "application/json",
         extensions: %{"requestid" => "attempt-native"}
       )
 
     assert {:ok, wire} = Wire.encode(signal)
 
     assert %{"specversion" => "1.0", "requestid" => "attempt-native", "data" => ^data} =
-             Jason.decode!(wire)
+             JSON.decode!(wire)
 
     assert {:ok, decoded} = Wire.decode(wire)
     assert decoded == signal
@@ -77,13 +107,13 @@ defmodule DASP.SignalTest do
           %{signal | extensions: Map.put(signal.extensions, "custom", %{"nested" => true})},
           %{signal | extensions: %{requestid: "atom-key"}},
           %{signal | specversion: "2.0"},
-          %{signal | jido_dispatch: {:pid, [target: self()]}}
+          %{signal | data_base64?: true}
         ] do
       assert {:error, %DASP.Error{}} = Wire.encode(changed)
     end
 
     assert {:error, _} =
-             command() |> Map.put("specversion", "1.0.2") |> Jason.encode!() |> Wire.decode()
+             command() |> Map.put("specversion", "1.0.2") |> JSON.encode!() |> Wire.decode()
   end
 
   test "client callbacks and replies use signals, while the transport uses DASP JSON" do
@@ -98,12 +128,12 @@ defmodule DASP.SignalTest do
           true
         end,
         transport: fn wire, _ ->
-          request = Jason.decode!(wire)
+          request = JSON.decode!(wire)
           send(parent, {:request, request})
 
           signal =
             Signal.new!(
-              "dasp.receipt.v1",
+              "dasp.v1.receipt",
               %{
                 "session_id" => "session-1",
                 "command_id" => "command-1",
@@ -112,6 +142,7 @@ defmodule DASP.SignalTest do
                 "error" => nil
               },
               source: "urn:host:one",
+              datacontenttype: "application/json",
               extensions: %{"requestid" => request["requestid"]}
             )
 
@@ -125,14 +156,14 @@ defmodule DASP.SignalTest do
       "profile" => %{"id" => "urn:counter", "version" => "1"}
     }
 
-    assert {:ok, %Signal{type: "dasp.receipt.v1"}} =
+    assert {:ok, %Signal{type: "dasp.v1.receipt"}} =
              Client.submit(client, session, Map.drop(command()["data"], ["session_id"]))
 
     assert_receive {:request, %{"specversion" => "1.0"} = request}
     assert Signal.ID.valid?(request["id"])
     assert Signal.ID.valid?(request["requestid"])
-    assert_receive {:validated, %Signal{type: "dasp.command.v1"}}
-    assert_receive {:validated, %Signal{type: "dasp.receipt.v1"}}
+    assert_receive {:validated, %Signal{type: "dasp.v1.command"}}
+    assert_receive {:validated, %Signal{type: "dasp.v1.receipt"}}
   end
 
   test "signal recovery preserves portable checkpoint evidence" do
@@ -141,7 +172,7 @@ defmodule DASP.SignalTest do
         "specversion" => "1.0",
         "id" => "view-1",
         "source" => "urn:host:one",
-        "type" => "dasp.view.v1",
+        "type" => "dasp.v1.view",
         "datacontenttype" => "application/json",
         "requestid" => "view-attempt",
         "data" => %{
@@ -157,7 +188,7 @@ defmodule DASP.SignalTest do
       "specversion" => "1.0",
       "id" => "update-1",
       "source" => "urn:host:one",
-      "type" => "dasp.update.v1",
+      "type" => "dasp.v1.update",
       "datacontenttype" => "application/json",
       "data" => %{
         "session_id" => "session-1",
@@ -173,7 +204,7 @@ defmodule DASP.SignalTest do
     reducer = fn _state, %Signal{data: data} -> data["payload"]["data"] end
     {:ok, checkpoint} = Checkpoint.from_view(view, validator)
     assert {:ok, saved} = Checkpoint.apply_updates(checkpoint, [update], reducer, validator)
-    restored = saved |> Jason.encode!() |> Jason.decode!()
+    restored = saved |> JSON.encode!() |> JSON.decode!()
     assert restored["state"] == %{"value" => 3}
     assert restored["evidence"]["1"]["id"] == event["id"]
     assert {:ok, ^restored} = Checkpoint.apply_updates(restored, [event], reducer, validator)
