@@ -8,6 +8,8 @@ export default defineConfig({
   lastUpdated: true,
   scrollOffset: { selector: '.draft-ribbon', padding: 128 },
   head: [
+    ['script', { async: '', src: 'https://plausible.io/js/pa-Lp3jx0aSJRXiNVrJAMd3l.js' }],
+    ['script', {}, 'window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()'],
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/dasp/brand/dasp-favicon.svg' }],
     ['link', { rel: 'icon', sizes: '32x32', type: 'image/png', href: '/dasp/brand/dasp-icon-32.png' }],
     ['link', { rel: 'alternate icon', href: '/dasp/brand/dasp-favicon.ico' }],
