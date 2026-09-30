@@ -43,7 +43,7 @@ Then inspect the [counter example](example.md) and [conformance coverage](../../
 
 ## First WebSocket delivery contract
 
-[WebSocket live delivery](websocket-live-delivery.md) defines subscriptions through session open, fixed-boundary replay, resync, and connection-close stop. It adds no core operation or field. A complete production binding still needs authenticated setup, discovery, exact timeouts, and runtime conformance evidence.
+[WebSocket live delivery](websocket-live-delivery.md) defines subscriptions through session open, fixed-boundary replay, resync, and connection-close stop. It adds no core operation or field. The minimum binding uses a configured secure endpoint, trusted host identity, and one exact contract selection. Normal operation needs no periodic history polling. Automatic discovery is outside this scope. A complete production binding still needs exact authenticated setup, shared limit fields and values, health checks and deadlines, and runtime conformance evidence.
 
 ## Conformance
 
