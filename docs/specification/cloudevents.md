@@ -51,6 +51,8 @@ CloudEvents attribute names use lowercase ASCII letters and digits. DASP's exten
 
 Context attributes use the CloudEvents type system. In particular, context integers are signed 32-bit values. DASP keeps its larger sequence values inside `data`, not integer extension attributes.
 
+The optional [proof-of-authority contract](proof-of-authority.md#dasp-auth-002) defines `daspauthority` as a required string extension only when that contract is selected. Its evidence is outside profile input and retry equality. A generic core schema pass does not establish required authority support. Unselected optional-extension behavior remains unchanged.
+
 Core `data` objects are closed. Unknown core fields are invalid. Profile payloads are validated against the selected profile. JSON object key order is irrelevant; array order and string content are significant. Duplicate JSON object keys, invalid UTF-8, and non-finite numbers MUST be rejected before schema validation.
 
 Draft-01 uses JSON integers in the safe range −9,007,199,254,740,991 through 9,007,199,254,740,991. Fractions and larger exact quantities MUST use profile-defined strings. Payloads can otherwise contain objects, arrays, strings, booleans, and null. This is a DASP portability choice, not a CloudEvents limitation.

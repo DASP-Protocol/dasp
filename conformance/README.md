@@ -10,8 +10,9 @@ DASP currently has artifact checks and separate client package tests. There is n
 | --- | --- | --- |
 | Core artifacts | All 14 event types, invalid vectors, profile payloads, and recorded recovery | Behavior of a running host |
 | WebSocket delivery transcripts | Recorded capture/confirmation order, retained and conflicting opens, fixed replay pages, late cancelled pages/failures, and open timeout | Running subscriptions, real commit races, queue bounds, liveness, or permissions |
-| Proposed encrypted carrier artifacts | Carrier/header shapes, raw header integer tokens, Unicode restrictions, duplicate header keys, canonical base64url, selected byte bounds, and matching metadata | Outer wire parsing, cryptography, key confirmation, setup, peer trust, or runtime encrypted delivery |
-| Elixir and TypeScript clients | JSON parsing, core validation, reply checks, deadlines, retries, replay bounds, and checkpoints | Persistent storage or a live binding |
+| Encrypted carrier artifacts | Carrier/header shapes, raw header integer tokens, Unicode restrictions, duplicate header keys, canonical base64url, selected byte bounds, and matching metadata | Outer wire parsing, cryptography, key confirmation, setup, peer trust, or runtime encrypted delivery |
+| Authority artifacts | Closed grant/selection schemas, original-byte parsing, Ed25519 vectors with one Node implementation, scope examples, recorded retries/budgets, and serial commit orders | Independent cryptographic agreement, current trust administration, actual concurrency, crash safety, or encrypted exchanges |
+| Elixir and TypeScript clients | JSON parsing, core validation, reply checks, deadlines, retries, checkpoints, duplex dispatch, and shared live-recovery cases | Persistent storage, a WebSocket connection adapter, encryption, authority enforcement, or a complete live binding |
 | Host and binding behavior | Written runtime cases only | Admission atomicity, concurrent retries, restart, stale-worker control, authorization, or power-loss safety |
 
 The artifact report and requirement index below cover recorded fixtures. Client package tests run separately and do not count as host evidence.

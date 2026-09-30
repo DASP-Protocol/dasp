@@ -34,6 +34,6 @@ For a single tool call or an editor integration, another protocol may already fi
 
 ## Current state
 
-DASP is a working draft with experimental Elixir and TypeScript clients. No production binding or host is released. It does not guarantee exactly-once external effects.
+DASP is a working draft with experimental Elixir and TypeScript clients. Its [capability overview](../specification/capabilities.md) connects core recovery, live delivery, optional encryption, and reusable authority grants. No production binding or host is released. It does not guarantee exactly-once external effects.
 
 [Start building](../build/README.md) or learn [why DASP uses CloudEvents](cloudevents.md).

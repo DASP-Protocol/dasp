@@ -8,6 +8,10 @@
     "conformance/fixtures/websocket-delivery-traces.json": "2e7c27d97fcc1da5cd51e165a6060574d3a8ee720145fa67f29d2afa83cfdb8a",
     "specification/draft-01/bindings/encrypted-carrier.schema.json": "d72acb7e1f59acdab4b9691b624e00dafc456385012362e70c6bb9746f8fe0e1",
     "conformance/fixtures/encrypted-carriers.json": "9c7a085b7ad9d0ab1a97d884fb53688e1f8ae57a173992554853227ba0cb03cb",
-    "conformance/fixtures/encrypted-header-vectors.json": "d57f4d35c3df798dbf5ec3451213e956f6c8093beabc0005c3769b9d91f45178"
+    "conformance/fixtures/encrypted-header-vectors.json": "d57f4d35c3df798dbf5ec3451213e956f6c8093beabc0005c3769b9d91f45178",
+    "specification/draft-01/bindings/authority-grant.schema.json": "114179c59addb180bc22a6f5b7b56eee1322ef1082205b62cbe7a9d4d48cabaf",
+    "specification/draft-01/examples/counter-authority.schema.json": "e68e254255f5acfaff36f9313f3084d88ba7147566148bb8c28f2e3f4b1d6867",
+    "conformance/fixtures/authority-grants.json": "d90b3917ec46cbbf99472cfc58e74653d2f9c84ee14da6503f3490e67a0dfd9f",
+    "conformance/fixtures/authority-traces.json": "e38ea15c9db4774cfb296b0775c0bf51560081fa5456e49acaa0abce8a22f7e2"
   }
 }

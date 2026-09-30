@@ -1,0 +1,675 @@
+{
+  "scope": "Recorded admission decisions only. Sequences count admissions in these pending-command examples. No host or concurrent execution.",
+  "scenarios": [
+    {
+      "id": "standing-across-sessions-and-expiry",
+      "steps": [
+        {
+          "id": "first",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c1",
+            "name": "counter.add",
+            "input": {
+              "amount": 3
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 1
+          }
+        },
+        {
+          "id": "second",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c2",
+            "name": "counter.add",
+            "input": {
+              "amount": 4
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 2
+          }
+        },
+        {
+          "id": "other-session",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter-two",
+            "command_id": "c3",
+            "name": "counter.add",
+            "input": {
+              "amount": 5
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 1
+          }
+        },
+        {
+          "id": "expired-new",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c4",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "now": 1790816400
+        },
+        {
+          "id": "lost-receipt",
+          "grant": "recover",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c2",
+            "name": "counter.add",
+            "input": {
+              "amount": 4
+            }
+          },
+          "expected": {
+            "disposition": "duplicate",
+            "sequence": 2
+          },
+          "now": 1790816401
+        },
+        {
+          "id": "revoked-equal",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c2",
+            "name": "counter.add",
+            "input": {
+              "amount": 4
+            }
+          },
+          "expected": {
+            "disposition": "duplicate",
+            "sequence": 2
+          },
+          "revoked": true
+        },
+        {
+          "id": "renewed-equal",
+          "grant": "renewed",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c2",
+            "name": "counter.add",
+            "input": {
+              "amount": 4
+            }
+          },
+          "expected": {
+            "disposition": "duplicate",
+            "sequence": 2
+          },
+          "now": 1790816401
+        },
+        {
+          "id": "changed-input",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c2",
+            "name": "counter.add",
+            "input": {
+              "amount": 5
+            }
+          },
+          "expected": {
+            "error": "conflict"
+          }
+        },
+        {
+          "id": "changed-session",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter-two",
+            "command_id": "c2",
+            "name": "counter.add",
+            "input": {
+              "amount": 4
+            }
+          },
+          "expected": {
+            "error": "conflict"
+          }
+        },
+        {
+          "id": "denied-recovery",
+          "grant": "recover",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c2",
+            "name": "counter.add",
+            "input": {
+              "amount": 4
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "can_recover": false
+        },
+        {
+          "id": "status-outage-equal",
+          "grant": "recover",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c2",
+            "name": "counter.add",
+            "input": {
+              "amount": 4
+            }
+          },
+          "expected": {
+            "disposition": "duplicate",
+            "sequence": 2
+          },
+          "status": "unavailable"
+        },
+        {
+          "id": "changed-known-grant",
+          "grant": "changed-known-id",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "c5",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          }
+        }
+      ],
+      "expected_uses": {
+        "standing": 3
+      }
+    },
+    {
+      "id": "scope-and-current-authority",
+      "steps": [
+        {
+          "id": "lower",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "a",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 1
+          }
+        },
+        {
+          "id": "upper",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "b",
+            "name": "counter.add",
+            "input": {
+              "amount": 100
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 2
+          }
+        },
+        {
+          "id": "too-high",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "bad-high",
+            "name": "counter.add",
+            "input": {
+              "amount": 101
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          }
+        },
+        {
+          "id": "too-low",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "bad-low",
+            "name": "counter.add",
+            "input": {
+              "amount": 0
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          }
+        },
+        {
+          "id": "session-outside-list",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-third",
+            "command_id": "c",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          }
+        },
+        {
+          "id": "future-matching-session",
+          "grant": "actor-profile",
+          "command": {
+            "session_id": "session-third",
+            "command_id": "d",
+            "name": "counter.add",
+            "input": {
+              "amount": 2
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 1
+          }
+        },
+        {
+          "id": "wrong-actor",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "e",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "actor": "other-actor"
+        },
+        {
+          "id": "wrong-agent",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "f",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "agent": "urn:example:agent:other"
+        },
+        {
+          "id": "wrong-audience",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "g",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "authority": "urn:example:host:other"
+        },
+        {
+          "id": "before-window",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "h",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "now": 1790787599
+        },
+        {
+          "id": "revoked-new",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "i",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "revoked": true
+        },
+        {
+          "id": "status-unavailable",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "j",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "unavailable"
+          },
+          "status": "unavailable"
+        },
+        {
+          "id": "time-unavailable",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "k",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "unavailable"
+          },
+          "now": null
+        },
+        {
+          "id": "recover-missing",
+          "grant": "recover",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "l",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          }
+        },
+        {
+          "id": "no-submit",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "m",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "can_submit": false
+        },
+        {
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "issuer-has-no-authority",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "id": "issuer-has-no-authority",
+          "issuer_allowed": false
+        },
+        {
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "wrong-profile",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          },
+          "id": "wrong-profile",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "2"
+          }
+        },
+        {
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "new-test",
+            "name": "counter.other",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "error": "unsupported_command"
+          },
+          "id": "unlisted-command"
+        },
+        {
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "bad-high",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 3
+          },
+          "id": "reuse-rejected-id"
+        }
+      ],
+      "expected_uses": {
+        "standing": 3,
+        "actor-profile": 1
+      }
+    },
+    {
+      "id": "shared-budget-no-retry-charge",
+      "steps": [
+        {
+          "id": "one",
+          "grant": "budget",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "q1",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 1
+          }
+        },
+        {
+          "id": "two",
+          "grant": "budget",
+          "command": {
+            "session_id": "session-counter-two",
+            "command_id": "q2",
+            "name": "counter.add",
+            "input": {
+              "amount": 2
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 1
+          }
+        },
+        {
+          "id": "exhausted",
+          "grant": "budget",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "q3",
+            "name": "counter.add",
+            "input": {
+              "amount": 3
+            }
+          },
+          "expected": {
+            "error": "limit_exceeded"
+          }
+        },
+        {
+          "id": "retry-one",
+          "grant": "budget",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "q1",
+            "name": "counter.add",
+            "input": {
+              "amount": 1
+            }
+          },
+          "expected": {
+            "disposition": "duplicate",
+            "sequence": 1
+          }
+        },
+        {
+          "id": "retry-other-grant",
+          "grant": "renewed",
+          "command": {
+            "session_id": "session-counter-two",
+            "command_id": "q2",
+            "name": "counter.add",
+            "input": {
+              "amount": 2
+            }
+          },
+          "expected": {
+            "disposition": "duplicate",
+            "sequence": 1
+          }
+        }
+      ],
+      "expected_uses": {
+        "budget": 2
+      }
+    },
+    {
+      "id": "direct-optional",
+      "kind": "command",
+      "steps": [
+        {
+          "id": "no-standing-fallback",
+          "grant": "standing",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "direct-1",
+            "name": "counter.add",
+            "input": {
+              "amount": 3
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          }
+        },
+        {
+          "id": "exact",
+          "grant": "direct",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "direct-1",
+            "name": "counter.add",
+            "input": {
+              "amount": 3
+            }
+          },
+          "expected": {
+            "disposition": "accepted",
+            "sequence": 1
+          }
+        },
+        {
+          "id": "exact-retry",
+          "grant": "recover",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "direct-1",
+            "name": "counter.add",
+            "input": {
+              "amount": 3
+            }
+          },
+          "expected": {
+            "disposition": "duplicate",
+            "sequence": 1
+          }
+        },
+        {
+          "id": "another-id",
+          "grant": "direct",
+          "command": {
+            "session_id": "session-counter",
+            "command_id": "direct-2",
+            "name": "counter.add",
+            "input": {
+              "amount": 3
+            }
+          },
+          "expected": {
+            "error": "not_found"
+          }
+        }
+      ],
+      "expected_uses": {
+        "direct": 1
+      }
+    }
+  ]
+}

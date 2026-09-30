@@ -20,6 +20,8 @@ Select the exact core and profile versions before accepting application work. Th
 
 DASP does not require HTTP, WebSocket, or a broker. No production binding is released. Choosing a transport is only the first step; clients and hosts must agree on its behavior.
 
+The first [WebSocket delivery contract](../specification/websocket-live-delivery.md) starts observation through session open and recovers through saved replay. Optional [encryption](../specification/payload-encryption.md) protects the complete core event. Optional [proof of authority](../specification/proof-of-authority.md) carries signed grants outside profile input. Select and authenticate required capabilities before sending work. See [protocol capabilities](../specification/capabilities.md) for implementation status and release requirements.
+
 ## Keep the common guarantees
 
 A profile cannot redefine acceptance as completion. A binding cannot discard command identity or skip saved events during recovery.

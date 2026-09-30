@@ -8,6 +8,9 @@
 
 ## Unreleased — review preparation
 
+- Define WebSocket live delivery through session open, fixed-boundary replay, resync, and connection-close stop. Add matching recovery and duplex dispatch code to both clients.
+- Add optional encrypted-delivery rules and reusable proof-of-authority grants to the draft. Preserve core message shapes, retry equality, and saved history. Record incomplete setup and security evidence as release requirements.
+- Add a protocol capability overview that connects the core, binding contracts, clients, and conformance evidence.
 - Base the Elixir client on Jido Signal 2.3. Return signals from client calls and pass signals to profile validators and reducers. Preserve the DASP wire format with an explicit codec.
 - Keep TypeScript's Node type definitions on the minimum supported Node 22 version.
 

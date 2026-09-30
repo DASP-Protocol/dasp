@@ -8,6 +8,8 @@ The [Elixir client](clients/elixir/README.md) is built on [Jido Signal](https://
 
 [Read the guide](https://dasp-protocol.github.io/dasp/guide/) · [Specification](https://dasp-protocol.github.io/dasp/specification/) · [Conformance](https://dasp-protocol.github.io/dasp/specification/conformance/)
 
+The draft combines durable command recovery, WebSocket live delivery, optional payload encryption, and reusable signed authority grants. See [protocol capabilities](docs/specification/capabilities.md) for their responsibilities, current evidence, and remaining release work.
+
 ## Start here
 
 1. [How DASP works](docs/guide/README.md): five operations and the replies they produce.

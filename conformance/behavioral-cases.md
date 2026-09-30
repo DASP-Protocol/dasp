@@ -4,6 +4,42 @@
 
 Each case uses a fresh isolated authority, session, and effect recorder. After the assertion, stop test processes and remove only that case's temporary storage. Record the core, binding, profile, and implementation versions. Bindings must supply concrete connection and fault controls before these cases can run.
 
+## RUN-AUTHORITY-ADMISSION: Atomic admission and budgets
+
+Requirements: **DASP-AUTH-003**, **DASP-AUTH-005**, **DASP-AUTH-007**. Status: not executed.
+
+- Setup: One trusted issuer and agent, two permitted sessions, and reusable grants with no budget and with a budget of 100 admissions. Use multiple host replicas sharing one authority.
+- Actions and failure: Submit many distinct commands, concurrent equal commands under different grants, and 101 distinct commands across both sessions. Lose receipts. Stop each replica before and after grant/use/budget/admission writes, commit, dispatch, and effects. Restart; retry equal intent with `recover`, renewed grants, and current delivery keys. End one session while the shared grant remains usable.
+- Expected result: One admission and use per distinct accepted command. Equal retries preserve the original sequence and evidence and charge nothing. At most 100 new admissions use the bounded grant; the unbounded grant has no implicit one-use limit. No orphan charge, lost shared evidence, refund, or reset occurs. Unknown effects follow core uncertainty rules. Rejected work reserves no IDs or budget.
+- Cleanup: Stop isolated replicas and remove only their stores and effect records.
+
+## RUN-AUTHORITY-STATUS: Time, revocation, and current recovery/read permission
+
+Requirements: **DASP-AUTH-005**, **DASP-AUTH-006**, **DASP-AUTH-007**. Status: not executed.
+
+- Setup: An admitted command, a grant about to expire, independent recovery/read rights, and queued live and direct output.
+- Actions and failure: Cross expiry during verification and commit. Revoke grant, issuer key, agent key, submit permission, recovery permission, and read permission separately. Make time or status unavailable. Race revocation with admission and final release. Keep signature verification cached. Repeat after key replacement and fresh setup.
+- Expected result: No new admission under invalid current authority. A valid current recovery policy permits equal retries after grant expiry/revocation or grant-status outage. Unavailable current authentication or recovery permission reveals no record. Read access is independent and checked at release. Revocation closes affected attached connections without a protected head. No admission/outcome/history is rewritten and no implicit cancellation occurs.
+- Cleanup: Close connections and remove this case's identities, stores, and queued output.
+
+## RUN-AUTHORITY-BINDING: Required extension and encrypted composition
+
+Requirements: **DASP-AUTH-002**, **DASP-AUTH-004**, **DASP-AUTH-007**, **DASP-AUTH-008**. Status: not executed.
+
+- Setup: Complete authenticated plain and encrypted bindings selecting the same authority contract, scope schema, command rules, and limits.
+- Actions and failure: Strip or change selection; omit the extension; send it on another type; send grant references or a wrapper; exceed each selected raw/decoded limit; rotate delivery keys. Attempt protected work on an unselected connection or with a weaker selected proof kind. Reject an authenticated command grant, then send the next connection record. Lose receipts and reconnect. Replay and push while read permission changes.
+- Expected result: Unsupported or changed required selection fails before core traffic. Full evidence stays inside the encrypted core event. No plaintext fallback, new carrier field, wrapper, or skipped record is accepted. A rejected command consumes its authenticated connection record but no admission budget. Fresh ciphertext preserves retry equality and saved event identities. Live recovery uses fixed `H` and current reader rights.
+- Cleanup: Close test connections and remove their isolated stores. Record setup, encryption, and authority coverage separately.
+
+## RUN-AUTHORITY-TRUST: Independent proof bytes and scope enforcement
+
+Requirements: **DASP-AUTH-001**, **DASP-AUTH-003**, **DASP-AUTH-004**, **DASP-AUTH-008**. Status: not executed.
+
+- Setup: Two independent strict parsers/signature implementations and an issuer registry with purpose and scope restrictions. Use both session selectors and the optional direct mode.
+- Actions and failure: Alter every signed field. Test untrusted/self-supplied/replaced keys, noncanonical Ed25519 public points/signatures, alternate base64 encodings, duplicate escaped keys, UTF-8, number rounding, and exact bounds. Use another agent, audience, actor, profile, session, command, or input resource. Attempt further delegation. Supply changed bytes under a known grant ID. Require direct approval, then submit only standing evidence.
+- Expected result: Independent implementations agree on accepted bytes and signature failures. Exact configured trust and all scope restrictions are enforced before new work. Explicitly permitted sessions and many commands reuse the same standing evidence. Direct scope binds the complete target. No field or resource restriction is ignored; no grant proves human review.
+- Cleanup: Remove only test keys, registry entries, and isolated application resources.
+
 ## RUN-ADMISSION: Crash during admission
 
 Requirement: **DASP-CORE-004**. Status: not executed.

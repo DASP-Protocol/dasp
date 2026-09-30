@@ -594,7 +594,7 @@
       "id": "DASP-ENC-001",
       "document": "docs/specification/payload-encryption.md",
       "anchor": "dasp-enc-001",
-      "title": "Proposed encrypted binding: Reader boundary and selection",
+      "title": "Optional encrypted binding: Reader boundary and selection",
       "evidence": "not-executed",
       "artifactCases": [],
       "runtime": "not-executed",
@@ -607,7 +607,7 @@
       "id": "DASP-ENC-002",
       "document": "docs/specification/payload-encryption.md",
       "anchor": "dasp-enc-002",
-      "title": "Proposed encrypted binding: Carrier and protected header",
+      "title": "Optional encrypted binding: Carrier and protected header",
       "evidence": "artifact-partial",
       "artifactCases": [
         "ART-ENCRYPTED-SHAPES"
@@ -623,7 +623,7 @@
       "id": "DASP-ENC-003",
       "document": "docs/specification/payload-encryption.md",
       "anchor": "dasp-enc-003",
-      "title": "Proposed encrypted binding: Encryption, signatures, and record order",
+      "title": "Optional encrypted binding: Encryption, signatures, and record order",
       "evidence": "not-executed",
       "artifactCases": [],
       "runtime": "not-executed",
@@ -637,7 +637,7 @@
       "id": "DASP-ENC-004",
       "document": "docs/specification/payload-encryption.md",
       "anchor": "dasp-enc-004",
-      "title": "Proposed encrypted binding: Core validation and recovery",
+      "title": "Optional encrypted binding: Core validation and recovery",
       "evidence": "not-executed",
       "artifactCases": [],
       "runtime": "not-executed",
@@ -650,7 +650,7 @@
       "id": "DASP-ENC-005",
       "document": "docs/specification/payload-encryption.md",
       "anchor": "dasp-enc-005",
-      "title": "Proposed encrypted binding: Keys, permission, and storage",
+      "title": "Optional encrypted binding: Keys, permission, and storage",
       "evidence": "not-executed",
       "artifactCases": [],
       "runtime": "not-executed",
@@ -664,7 +664,7 @@
       "id": "DASP-ENC-006",
       "document": "docs/specification/payload-encryption.md",
       "anchor": "dasp-enc-006",
-      "title": "Proposed encrypted binding: Separate outer and inner limits",
+      "title": "Optional encrypted binding: Separate outer and inner limits",
       "evidence": "artifact-partial",
       "artifactCases": [
         "ART-ENCRYPTED-SHAPES"
@@ -673,6 +673,118 @@
       "runtimeCases": [
         "RUN-ENCRYPTION-AUTH",
         "RUN-ENCRYPTION-LIMITS"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-001",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-001",
+      "title": "Optional proof of authority: Roles and trust",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-TRUST"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-002",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-002",
+      "title": "Optional proof of authority: Required selection and carriage",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-BINDING"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-003",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-003",
+      "title": "Optional proof of authority: Closed grant shapes and work scope",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-TRUST"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-004",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-004",
+      "title": "Optional proof of authority: Exact proof bytes and limits",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-TRUST"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-005",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-005",
+      "title": "Optional proof of authority: Admission, retries, and budgets",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-ADMISSION"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-006",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-006",
+      "title": "Optional proof of authority: Time, revocation, reads, and failures",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-STATUS"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-007",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-007",
+      "title": "Optional proof of authority: Audit and encrypted delivery",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-BINDING"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-008",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-008",
+      "title": "Optional proof of authority: Examples, checks, and release requirements",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-TRUST"
       ]
     }
   ]

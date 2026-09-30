@@ -2,11 +2,11 @@
 
 **Status: draft-01. Working review draft; not a released interoperability contract.**
 
-Use this section to implement the contract. For an explanation with messages, start with [Follow a command](../build/walkthrough.md).
+Start with the [protocol capabilities](capabilities.md) for a combined view of the core, live delivery, encryption, authority, and clients. Use this section to implement the contract. For an explanation with messages, start with [Follow a command](../build/walkthrough.md).
 
 ## Scope and authority
 
-The model, envelope, message definitions, recovery rules, profile and binding requirements, and security/version rules are normative for this draft. The designated [JSON Schema](../../specification/draft-01/envelope.schema.json) defines structural constraints. Prose defines behavior and cross-message rules. Both must agree; a conflict is a specification defect.
+The model, envelope, message definitions, recovery rules, profile and binding requirements, and security/version rules are normative for this draft. The live-delivery and optional encryption and authority requirements apply when their contracts are selected. The designated [JSON Schema](../../specification/draft-01/envelope.schema.json) defines structural constraints. Prose defines behavior and cross-message rules. Both must agree; a conflict is a specification defect.
 
 Guides, diagrams, examples, and design questions are informative. A proposal does not add a core operation. Tests provide evidence only for the cases they execute; they cannot override a requirement.
 
@@ -48,6 +48,8 @@ Then inspect the [counter example](example.md) and [conformance coverage](../../
 ## Optional binding rules
 
 [Encrypted CloudEvent delivery](payload-encryption.md) defines optional carrier, key, and recovery rules within the unreleased draft. Issue #5 tracks the work needed for a complete binding. These rules do not change the core message set. Its accepted design scope permits the executing host to read payloads, requires recovery history or attachment refusal, accepts the static reader-key compromise limit, and uses configured trusted keys and the defined setup phases. Exact setup, shared limits, health checks, and independent security evidence remain incomplete. The requirement index records artifact evidence and unexecuted runtime cases without claiming a complete interoperable binding.
+
+[Proof of authority](proof-of-authority.md) defines reusable standing grants carried in a required, selected CloudEvents extension. It keeps profile input, core shapes, semantic retry equality, and encrypted carrier shapes unchanged. Each new admission records its grant use and optional budget charge. Equal authorized retries remain recovery of saved intent. The signed artifacts and recorded decisions do not establish a secure complete binding or a durable host.
 
 ## Conformance
 
