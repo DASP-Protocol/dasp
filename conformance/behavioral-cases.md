@@ -123,7 +123,7 @@ Requirements: **DASP-WS-001**, **DASP-PROFILE-002**, **DASP-CORE-011**. Status: 
 
 ## RUN-ENCRYPTION-VECTORS: Independent encrypted record vectors
 
-Requirements: **DASP-ENC-001**, **DASP-ENC-002**, **DASP-ENC-003**. Status: not executed; proposed binding only.
+Requirements: **DASP-ENC-001**, **DASP-ENC-002**, **DASP-ENC-003**. Status: not executed; optional binding rules in the unreleased draft.
 
 - Setup: Two independent maintained HPKE implementations, Ed25519 implementations, pinned test keys, and exact agreed setup and record bytes. Do not use the synthetic carrier fixture as a cryptographic vector.
 - Actions and failure: Exchange exact setup messages and records in both directions using controlled test-only randomness. Check setup transcript bytes, signing and reader-key proof inputs, mutual confirmation, encapsulation, ciphertext, pure Ed25519 signatures, protected bytes, HPKE info, and outer metadata. Change each authenticated setup field, signed record field, encapsulation, tag, and signature independently. Test the pinned point/signature acceptance policy, invalid registered keys, all-zero X25519 secrets, and maximum info length. Run raw integer and Unicode negatives with both independent parsers and real signatures.

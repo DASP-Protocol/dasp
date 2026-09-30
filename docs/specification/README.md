@@ -45,9 +45,9 @@ Then inspect the [counter example](example.md) and [conformance coverage](../../
 
 [WebSocket live delivery](websocket-live-delivery.md) defines subscriptions through session open, fixed-boundary replay, resync, and connection-close stop. It adds no core operation or field. The minimum binding uses a configured secure endpoint, trusted host identity, and one exact contract selection. Normal operation needs no periodic history polling. Automatic discovery is outside this scope. A complete production binding still needs exact authenticated setup, shared limit fields and values, health checks and deadlines, and runtime conformance evidence.
 
-## Proposed binding work
+## Optional binding rules
 
-[Encrypted CloudEvent delivery](payload-encryption.md) defines candidate carrier, key, and recovery rules for issue #5. It is separate from the active core contract. Its accepted design scope permits the executing host to read payloads, requires recovery history or attachment refusal, accepts the static reader-key compromise limit, and uses configured trusted keys and the defined setup phases. Exact setup, shared limits, health checks, and independent security evidence remain incomplete. The requirement index records artifact evidence and unexecuted runtime cases without claiming an accepted complete binding.
+[Encrypted CloudEvent delivery](payload-encryption.md) defines optional carrier, key, and recovery rules within the unreleased draft. Issue #5 tracks the work needed for a complete binding. These rules do not change the core message set. Its accepted design scope permits the executing host to read payloads, requires recovery history or attachment refusal, accepts the static reader-key compromise limit, and uses configured trusted keys and the defined setup phases. Exact setup, shared limits, health checks, and independent security evidence remain incomplete. The requirement index records artifact evidence and unexecuted runtime cases without claiming a complete interoperable binding.
 
 ## Conformance
 
