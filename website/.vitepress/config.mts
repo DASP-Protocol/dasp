@@ -79,7 +79,8 @@ export default defineConfig({
         { text: 'WebSocket live delivery', link: '/specification/websocket-live-delivery' },
         { text: 'Security and compatibility', link: '/specification/security-and-versioning' }
       ]}, { text: 'Binding proposals', items: [
-        { text: 'Encrypted CloudEvent delivery', link: '/specification/payload-encryption' }
+        { text: 'Encrypted CloudEvent delivery', link: '/specification/payload-encryption' },
+        { text: 'Proof of authority', link: '/specification/proof-of-authority' }
       ]}, { text: 'Conformance', items: [
         { text: 'What is tested', link: '/specification/conformance/' },
         { text: 'Run the checks', link: '/specification/conformance/running-checks' },

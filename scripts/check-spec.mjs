@@ -6,6 +6,7 @@ import addFormats from 'ajv-formats';
 import { checkTrace } from '../conformance/check-trace.mjs';
 import { checkLiveTrace } from '../conformance/check-live-trace.mjs';
 import { checkEncryptedArtifacts } from '../conformance/check-encrypted-carrier.mjs';
+import { checkAuthorityArtifacts } from '../conformance/check-authority.mjs';
 
 const read = path => JSON.parse(readFileSync(path));
 const schema = read('specification/draft-01/envelope.schema.json');
@@ -150,12 +151,16 @@ let encryptedCounts;
 check('ART-ENCRYPTED-SHAPES', 'Proposed encrypted carrier shapes, encodings, byte bounds, and metadata agree; no cryptography executed', () => {
   encryptedCounts = checkEncryptedArtifacts(ajv, validate);
 });
+let authorityCounts;
+check('ART-AUTHORITY', 'Signed grant vectors, strict bytes, scopes, and recorded admission/budget decisions; no host or binding execution', () => {
+  authorityCounts = checkAuthorityArtifacts(ajv, validate, counterProfile);
+});
 const report = {
   core: 'draft-01', suite: 'draft-01-artifacts-1',
-  scope: 'Recorded artifacts only; no cryptographic, host, client, binding, authorization, or durability execution.',
-  counts: { validEvents: events.length, invalidEvents: negatives.length, recordedTraceEvents: trace.steps.length, ...liveCounts, ...encryptedCounts },
+  scope: 'Recorded artifacts and authority signatures with one Node crypto implementation. No HPKE, host, client, binding, current-permission, concurrent-store, or durability execution.',
+  counts: { validEvents: events.length, invalidEvents: negatives.length, recordedTraceEvents: trace.steps.length, ...liveCounts, ...encryptedCounts, ...authorityCounts },
   results, runtime: { status: 'not-executed' }
 };
 mkdirSync('dist', { recursive: true });
 writeFileSync('dist/conformance-report.json', JSON.stringify(report, null, 2) + '\n');
-console.log(`DASP artifacts: ${events.length} valid events, ${negatives.length} rejected vectors, ${trace.steps.length} recorded trace events; ${liveCounts.liveScenarios} live-delivery transcripts with ${liveCounts.liveTraceSteps} steps. ${encryptedCounts.validCarriers} synthetic carrier shapes and ${encryptedCounts.invalidCarriers} rejected carrier vectors; ${encryptedCounts.validProtectedHeaders} valid and ${encryptedCounts.invalidProtectedHeaders} rejected raw headers. ${results.length} case groups passed. Cryptography and runtime cases: not executed.`);
+console.log(`DASP artifacts: ${events.length} valid events, ${negatives.length} rejected vectors, ${trace.steps.length} recorded trace events; ${liveCounts.liveScenarios} live-delivery transcripts with ${liveCounts.liveTraceSteps} steps. ${encryptedCounts.validCarriers} synthetic carrier shapes and ${encryptedCounts.invalidCarriers} rejected carrier vectors; ${encryptedCounts.validProtectedHeaders} valid and ${encryptedCounts.invalidProtectedHeaders} rejected raw headers. ${results.length} case groups passed. Authority: ${authorityCounts.authoritySignedGrants} signed grants, ${authorityCounts.authorityRejectedVectors} rejected vectors, ${authorityCounts.authorityTraceSteps} recorded steps, ${authorityCounts.authorityCommitOrders} serial commit orders. HPKE and runtime cases: not executed.`);

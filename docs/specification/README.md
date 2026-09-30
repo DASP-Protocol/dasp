@@ -49,6 +49,8 @@ Then inspect the [counter example](example.md) and [conformance coverage](../../
 
 [Encrypted CloudEvent delivery](payload-encryption.md) defines candidate carrier, key, and recovery rules for issue #5. It is separate from the active core contract. Its accepted design scope permits the executing host to read payloads, requires recovery history or attachment refusal, accepts the static reader-key compromise limit, and uses configured trusted keys and the defined setup phases. Exact setup, shared limits, health checks, and independent security evidence remain incomplete. The requirement index records artifact evidence and unexecuted runtime cases without claiming an accepted complete binding.
 
+[Proof of authority](proof-of-authority.md) proposes reusable standing grants carried in a required, selected CloudEvents extension. It keeps profile input, core shapes, semantic retry equality, and encrypted carrier shapes unchanged. Each new admission records its grant use and optional budget charge. Equal authorized retries remain recovery of saved intent. The signed artifacts and recorded decisions do not establish a secure complete binding or a durable host.
+
 ## Conformance
 
 Read [what is tested](../../conformance/README.md), [run the checks](../../conformance/running-checks.md), and inspect the [runtime test cases](../../conformance/behavioral-cases.md). Passing the artifact suite alone does not establish host conformance.

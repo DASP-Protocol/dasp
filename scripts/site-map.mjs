@@ -17,6 +17,7 @@ export const pages = {
   'docs/specification/profiles-and-bindings.md': 'specification/profiles-and-bindings.md',
   'docs/specification/websocket-live-delivery.md': 'specification/websocket-live-delivery.md',
   'docs/specification/security-and-versioning.md': 'specification/security-and-versioning.md',
+  'docs/specification/proof-of-authority.md': 'specification/proof-of-authority.md',
   'docs/specification/payload-encryption.md': 'specification/payload-encryption.md',
   'docs/specification/example.md': 'reference/counter.md',
   'conformance/README.md': 'specification/conformance/index.md',
@@ -37,6 +38,10 @@ export const pageOptions = {
   'docs/build/walkthrough.md': { aside: false, pageClass: 'walkthrough-page' }
 };
 export const artifacts = {
+  'conformance/fixtures/authority-traces.json': 'fixtures/authority-traces.json',
+  'conformance/fixtures/authority-grants.json': 'fixtures/authority-grants.json',
+  'specification/draft-01/examples/counter-authority.schema.json': 'schemas/draft-01/examples/counter-authority.schema.json',
+  'specification/draft-01/bindings/authority-grant.schema.json': 'schemas/draft-01/bindings/authority-grant.schema.json',
   'specification/draft-01/envelope.schema.json': 'schemas/draft-01/envelope.schema.json',
   'specification/draft-01/bindings/encrypted-carrier.schema.json': 'schemas/draft-01/bindings/encrypted-carrier.schema.json',
   'specification/draft-01/examples/counter.json': 'schemas/draft-01/examples/counter.json',

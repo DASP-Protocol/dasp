@@ -1,0 +1,770 @@
+{
+  "scope": "Signed artifacts with public test keys. One Node crypto implementation; no host, binding setup, concurrency, persistence, or encrypted exchange.",
+  "public_key_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+  "selection": {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+    "profile": {
+      "id": "urn:example:dasp:counter",
+      "version": "1"
+    },
+    "scope_schema": "https://dasp-protocol.github.io/dasp/schemas/draft-01/examples/counter-authority.schema.json",
+    "commands": [
+      {
+        "name": "counter.add",
+        "kind": "standing"
+      }
+    ],
+    "grant_bytes": 16384
+  },
+  "grants": [
+    {
+      "id": "standing",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002507b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "_aQ-hXoG_PYqokOKKa-ZDRApDNBNmbTxhX9QSuSarxxcdXnV3rTrj37E4V9VmSHcLJRKOnUcu0pA4-jOkm-sDw",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19fQ._aQ-hXoG_PYqokOKKa-ZDRApDNBNmbTxhX9QSuSarxxcdXnV3rTrj37E4V9VmSHcLJRKOnUcu0pA4-jOkm-sDw"
+    },
+    {
+      "id": "actor-profile",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-all-matching",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "actor-profile"
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-all-matching\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"actor-profile\"},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002277b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d616c6c2d6d61746368696e67222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226163746f722d70726f66696c65227d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "Jv_x7cFAp4-RXyUv71qQ1JkOrmnCALez1FAr4ShLA9gUZaaWGLTIFwiJ-hUNsu0u8DjmrW2lXgY3dMte4p_EDQ",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1hbGwtbWF0Y2hpbmciLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoiYWN0b3ItcHJvZmlsZSJ9LCJjb21tYW5kcyI6W3sibmFtZSI6ImNvdW50ZXIuYWRkIiwiaW5wdXRfc2NvcGUiOnsiYW1vdW50X21pbiI6MSwiYW1vdW50X21heCI6MTAwfX1dfX0.Jv_x7cFAp4-RXyUv71qQ1JkOrmnCALez1FAr4ShLA9gUZaaWGLTIFwiJ-hUNsu0u8DjmrW2lXgY3dMte4p_EDQ"
+    },
+    {
+      "id": "budget",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-budget",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        },
+        "max_admissions": 2
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-budget\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]},\"max_admissions\":2}",
+      "message_hex": "646173702070726f6f66206f6620617574686f72697479000000025d7b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d627564676574222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d2c226d61785f61646d697373696f6e73223a327d",
+      "signature": "omjmQZ7Vslep78t_R_pT1YlzXUVrs5lgDpHtHUQJGJvHcPxvP81VJzPdl62ujWfnWQ7Bk-r4PMpFjGsobDu_Dg",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1idWRnZXQiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19LCJtYXhfYWRtaXNzaW9ucyI6Mn0.omjmQZ7Vslep78t_R_pT1YlzXUVrs5lgDpHtHUQJGJvHcPxvP81VJzPdl62ujWfnWQ7Bk-r4PMpFjGsobDu_Dg"
+    },
+    {
+      "id": "renewed",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-renewed",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790845200,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-renewed\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790845200,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f72697479000000024b7b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d72656e65776564222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303834353230302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "viCT8UBzZbUrowZNqhJuPoFNdqLSjl8Uke4YjcSmDsEEtOfP_sZtTt3pBLmt7bson_3sKk_V74rRyT16S7YhAg",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1yZW5ld2VkIiwiaXNzdWVyIjoidXJuOmV4YW1wbGU6cHJpbmNpcGFsOm9wZXJhdGlvbnMiLCJzaWduaW5nX2tleSI6Im9wZXJhdGlvbnMtc2lnbmluZy0xIiwiYWdlbnQiOiJ1cm46ZXhhbXBsZTphZ2VudDpjb3VudGVyLXdvcmtlciIsImF1dGhvcml0eSI6InVybjpleGFtcGxlOmhvc3Q6bGFiIiwibm90X2JlZm9yZSI6MTc5MDc4NzYwMCwiZXhwaXJlc19hdCI6MTc5MDg0NTIwMCwic2NvcGUiOnsiYWN0b3JfaWQiOiJjb3VudGVyLW1haW4iLCJwcm9maWxlIjp7ImlkIjoidXJuOmV4YW1wbGU6ZGFzcDpjb3VudGVyIiwidmVyc2lvbiI6IjEifSwic2Vzc2lvbnMiOnsibW9kZSI6Imxpc3RlZCIsImlkcyI6WyJzZXNzaW9uLWNvdW50ZXIiLCJzZXNzaW9uLWNvdW50ZXItdHdvIl19LCJjb21tYW5kcyI6W3sibmFtZSI6ImNvdW50ZXIuYWRkIiwiaW5wdXRfc2NvcGUiOnsiYW1vdW50X21pbiI6MSwiYW1vdW50X21heCI6MTAwfX1dfX0.viCT8UBzZbUrowZNqhJuPoFNdqLSjl8Uke4YjcSmDsEEtOfP_sZtTt3pBLmt7bson_3sKk_V74rRyT16S7YhAg"
+    },
+    {
+      "id": "changed-known-id",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790845200,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790845200,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002507b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303834353230302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "OgTeq6XDywpCMB74ajISa1YqpT6zig3ghozUHFgDv84bNHAisK-R8rOiqwZwN-a8wC1Rb2Z1lLG9sv9Bcu2BDw",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODQ1MjAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19fQ.OgTeq6XDywpCMB74ajISa1YqpT6zig3ghozUHFgDv84bNHAisK-R8rOiqwZwN-a8wC1Rb2Z1lLG9sv9Bcu2BDw"
+    },
+    {
+      "id": "direct",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "command",
+        "grant_id": "grant-direct",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "target": {
+          "session_id": "session-counter",
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "command_id": "direct-1",
+          "name": "counter.add",
+          "input": {
+            "amount": 3
+          }
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"command\",\"grant_id\":\"grant-direct\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"target\":{\"session_id\":\"session-counter\",\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"command_id\":\"direct-1\",\"name\":\"counter.add\",\"input\":{\"amount\":3}}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f72697479000000020a7b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a22636f6d6d616e64222c226772616e745f6964223a226772616e742d646972656374222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c22746172676574223a7b2273657373696f6e5f6964223a2273657373696f6e2d636f756e746572222c226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c22636f6d6d616e645f6964223a226469726563742d31222c226e616d65223a22636f756e7465722e616464222c22696e707574223a7b22616d6f756e74223a337d7d7d",
+      "signature": "Vg1tZIoADt-PIG-O6GLxlzsAPYQjJJGdiPwDJGjO5jKb28X0MSBn4OErQjVRdLki8XUDcwzo5CSJq9aoY8UXCw",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6ImNvbW1hbmQiLCJncmFudF9pZCI6ImdyYW50LWRpcmVjdCIsImlzc3VlciI6InVybjpleGFtcGxlOnByaW5jaXBhbDpvcGVyYXRpb25zIiwic2lnbmluZ19rZXkiOiJvcGVyYXRpb25zLXNpZ25pbmctMSIsImFnZW50IjoidXJuOmV4YW1wbGU6YWdlbnQ6Y291bnRlci13b3JrZXIiLCJhdXRob3JpdHkiOiJ1cm46ZXhhbXBsZTpob3N0OmxhYiIsIm5vdF9iZWZvcmUiOjE3OTA3ODc2MDAsImV4cGlyZXNfYXQiOjE3OTA4MTY0MDAsInRhcmdldCI6eyJzZXNzaW9uX2lkIjoic2Vzc2lvbi1jb3VudGVyIiwiYWN0b3JfaWQiOiJjb3VudGVyLW1haW4iLCJwcm9maWxlIjp7ImlkIjoidXJuOmV4YW1wbGU6ZGFzcDpjb3VudGVyIiwidmVyc2lvbiI6IjEifSwiY29tbWFuZF9pZCI6ImRpcmVjdC0xIiwibmFtZSI6ImNvdW50ZXIuYWRkIiwiaW5wdXQiOnsiYW1vdW50IjozfX19.Vg1tZIoADt-PIG-O6GLxlzsAPYQjJJGdiPwDJGjO5jKb28X0MSBn4OErQjVRdLki8XUDcwzo5CSJq9aoY8UXCw"
+    },
+    {
+      "id": "reordered",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-reordered",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]},\"expires_at\":1790816400,\"not_before\":1790787600,\"authority\":\"urn:example:host:lab\",\"agent\":\"urn:example:agent:counter-worker\",\"signing_key\":\"operations-signing-1\",\"issuer\":\"urn:example:principal:operations\",\"grant_id\":\"grant-reordered\",\"kind\":\"standing\",\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\"}",
+      "message_hex": "646173702070726f6f66206f6620617574686f72697479000000024d7b2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d2c22657870697265735f6174223a313739303831363430302c226e6f745f6265666f7265223a313739303738373630302c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c226772616e745f6964223a226772616e742d72656f726465726564222c226b696e64223a227374616e64696e67222c22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479227d",
+      "signature": "1HKkRW5xXwyipo3ej2SFcQyjFG-9ywYA-9GcYvkHZSI_I3IStuseXUxmsyrZp69mfVGHj_vUzZVr_s00TMh3Cg",
+      "extension": "eyJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19LCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJhdXRob3JpdHkiOiJ1cm46ZXhhbXBsZTpob3N0OmxhYiIsImFnZW50IjoidXJuOmV4YW1wbGU6YWdlbnQ6Y291bnRlci13b3JrZXIiLCJzaWduaW5nX2tleSI6Im9wZXJhdGlvbnMtc2lnbmluZy0xIiwiaXNzdWVyIjoidXJuOmV4YW1wbGU6cHJpbmNpcGFsOm9wZXJhdGlvbnMiLCJncmFudF9pZCI6ImdyYW50LXJlb3JkZXJlZCIsImtpbmQiOiJzdGFuZGluZyIsImNvbnRyYWN0IjoiaHR0cHM6Ly9kYXNwLXByb3RvY29sLmdpdGh1Yi5pby9kYXNwL2NvbnRyYWN0cy9wcm9vZi1vZi1hdXRob3JpdHkifQ.1HKkRW5xXwyipo3ej2SFcQyjFG-9ywYA-9GcYvkHZSI_I3IStuseXUxmsyrZp69mfVGHj_vUzZVr_s00TMh3Cg"
+    }
+  ],
+  "invalid_grants": [
+    {
+      "id": "invalid-unknown-field",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        },
+        "delegate": true
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]},\"delegate\":true}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002607b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d2c2264656c6567617465223a747275657d",
+      "signature": "JcTyPYFMjsIZsCyzuck9F8CCqoXUGx2DRXBg9D7il6PythzuxzUXTs4MLmCvIpRKwbqNAdkHQT6iabwu6cbPBA",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19LCJkZWxlZ2F0ZSI6dHJ1ZX0.JcTyPYFMjsIZsCyzuck9F8CCqoXUGx2DRXBg9D7il6PythzuxzUXTs4MLmCvIpRKwbqNAdkHQT6iabwu6cbPBA"
+    },
+    {
+      "id": "invalid-empty-session-list",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": []
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002297b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b5d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "4vtJNwtn2b5Mz2DfIeDGDGiGVmeqdv_ts3RFLXUkuPxA87q0W4cZ9VPmtxDkyxQWMxXi9-zbm0HmxrLhj8YRDQ",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19fQ.4vtJNwtn2b5Mz2DfIeDGDGiGVmeqdv_ts3RFLXUkuPxA87q0W4cZ9VPmtxDkyxQWMxXi9-zbm0HmxrLhj8YRDQ"
+    },
+    {
+      "id": "invalid-duplicate-session",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two",
+              "session-counter"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\",\"session-counter\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002627b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f222c2273657373696f6e2d636f756e746572225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "Hf5VK_9DZTrAQC-5P1V3Glk4NO_RAXDEaMDBRjz_qiakyU9OiY0cnR4r0nwEfBbakEng6qAzICc9GINWEE3WDA",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iLCJzZXNzaW9uLWNvdW50ZXIiXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19fQ.Hf5VK_9DZTrAQC-5P1V3Glk4NO_RAXDEaMDBRjz_qiakyU9OiY0cnR4r0nwEfBbakEng6qAzICc9GINWEE3WDA"
+    },
+    {
+      "id": "invalid-unknown-session-mode",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "all"
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"all\"},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f72697479000000021d7b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a22616c6c227d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "qFf05ve1Sg2hgm_Py728IUaM7fjVrcoKsfYKiq3zoocz9ek-lKMB8UWNuPXA9FEBZQf-A5RgsqKovgC_GxSeDg",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoiYWxsIn0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19fQ.qFf05ve1Sg2hgm_Py728IUaM7fjVrcoKsfYKiq3zoocz9ek-lKMB8UWNuPXA9FEBZQf-A5RgsqKovgC_GxSeDg"
+    },
+    {
+      "id": "invalid-unknown-input-rule",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100,
+                "other": 1
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100,\"other\":1}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f72697479000000025a7b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130302c226f74686572223a317d7d5d7d7d",
+      "signature": "oN2Xd0zBd6jwzbUt45MVyJlUp1jwqqd9EQ8-smu_SXuSX2r_QYF7d6rjWPF-Eqh3E0No-ZF-4bM_iIm0cenwAA",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDAsIm90aGVyIjoxfX1dfX0.oN2Xd0zBd6jwzbUt45MVyJlUp1jwqqd9EQ8-smu_SXuSX2r_QYF7d6rjWPF-Eqh3E0No-ZF-4bM_iIm0cenwAA"
+    },
+    {
+      "id": "invalid-inverted-range",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 101,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":101,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002527b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a3130312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "SYu56yvciEBEVe7rI5nOhukRFkcWqiNXYE_RVUiYT399OPO957XqqdkUYoVOSJdXh2E9MG_8VsgkIOAiWd8iDw",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxMDEsImFtb3VudF9tYXgiOjEwMH19XX19.SYu56yvciEBEVe7rI5nOhukRFkcWqiNXYE_RVUiYT399OPO957XqqdkUYoVOSJdXh2E9MG_8VsgkIOAiWd8iDw"
+    },
+    {
+      "id": "invalid-zero-budget",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        },
+        "max_admissions": 0
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]},\"max_admissions\":0}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002637b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d2c226d61785f61646d697373696f6e73223a307d",
+      "signature": "5AnCtp-2u4X0kiglLRWv9EPU-Mo2Hhoir6YwxUgkaWLFgHMAeDYIPE9hXal_MmOwPilhlPPTyI2fjgUvz0vnDA",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19LCJtYXhfYWRtaXNzaW9ucyI6MH0.5AnCtp-2u4X0kiglLRWv9EPU-Mo2Hhoir6YwxUgkaWLFgHMAeDYIPE9hXal_MmOwPilhlPPTyI2fjgUvz0vnDA"
+    },
+    {
+      "id": "invalid-duplicate-command",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            },
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}},{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002977b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d2c7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "maRlPIooc8ouu7TjfLq6zEoCTaU83StvNVNwOnM43_wYVOR3P1bS1JPwv1It9tYY9PQwa1v8z7fyWO6AKJScDQ",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fSx7Im5hbWUiOiJjb3VudGVyLmFkZCIsImlucHV0X3Njb3BlIjp7ImFtb3VudF9taW4iOjEsImFtb3VudF9tYXgiOjEwMH19XX19.maRlPIooc8ouu7TjfLq6zEoCTaU83StvNVNwOnM43_wYVOR3P1bS1JPwv1It9tYY9PQwa1v8z7fyWO6AKJScDQ"
+    },
+    {
+      "id": "invalid-wrong-profile",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "2"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"2\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002507b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2232227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "MfEGz9ZJ7ocuU85cyZUh-wuARdt9hhu8Jmpa4s_Cz0wqY5qgq9E2gf1lnckE5FVr2tOWcrshZYLZfKaCkfZZCA",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMiJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19fQ.MfEGz9ZJ7ocuU85cyZUh-wuARdt9hhu8Jmpa4s_Cz0wqY5qgq9E2gf1lnckE5FVr2tOWcrshZYLZfKaCkfZZCA"
+    },
+    {
+      "id": "invalid-invalid-window",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790816400,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        }
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790816400,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]}}",
+      "message_hex": "646173702070726f6f66206f6620617574686f7269747900000002507b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303831363430302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d7d",
+      "signature": "AI-jINxz8tgtAu65HKB2Gw-hXaDg492ZPo-l1H4t_wChqJTYO8Q7ZjZ-LoXGCjso1nN3FbWrPdvtVtEsxov7Cg",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwODE2NDAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19fQ.AI-jINxz8tgtAu65HKB2Gw-hXaDg492ZPo-l1H4t_wChqJTYO8Q7ZjZ-LoXGCjso1nN3FbWrPdvtVtEsxov7Cg"
+    },
+    {
+      "id": "invalid-delegation-chain",
+      "statement": {
+        "contract": "https://dasp-protocol.github.io/dasp/contracts/proof-of-authority",
+        "kind": "standing",
+        "grant_id": "grant-counter-work",
+        "issuer": "urn:example:principal:operations",
+        "signing_key": "operations-signing-1",
+        "agent": "urn:example:agent:counter-worker",
+        "authority": "urn:example:host:lab",
+        "not_before": 1790787600,
+        "expires_at": 1790816400,
+        "scope": {
+          "actor_id": "counter-main",
+          "profile": {
+            "id": "urn:example:dasp:counter",
+            "version": "1"
+          },
+          "sessions": {
+            "mode": "listed",
+            "ids": [
+              "session-counter",
+              "session-counter-two"
+            ]
+          },
+          "commands": [
+            {
+              "name": "counter.add",
+              "input_scope": {
+                "amount_min": 1,
+                "amount_max": 100
+              }
+            }
+          ]
+        },
+        "parents": []
+      },
+      "bytes": "{\"contract\":\"https://dasp-protocol.github.io/dasp/contracts/proof-of-authority\",\"kind\":\"standing\",\"grant_id\":\"grant-counter-work\",\"issuer\":\"urn:example:principal:operations\",\"signing_key\":\"operations-signing-1\",\"agent\":\"urn:example:agent:counter-worker\",\"authority\":\"urn:example:host:lab\",\"not_before\":1790787600,\"expires_at\":1790816400,\"scope\":{\"actor_id\":\"counter-main\",\"profile\":{\"id\":\"urn:example:dasp:counter\",\"version\":\"1\"},\"sessions\":{\"mode\":\"listed\",\"ids\":[\"session-counter\",\"session-counter-two\"]},\"commands\":[{\"name\":\"counter.add\",\"input_scope\":{\"amount_min\":1,\"amount_max\":100}}]},\"parents\":[]}",
+      "message_hex": "646173702070726f6f66206f6620617574686f72697479000000025d7b22636f6e7472616374223a2268747470733a2f2f646173702d70726f746f636f6c2e6769746875622e696f2f646173702f636f6e7472616374732f70726f6f662d6f662d617574686f72697479222c226b696e64223a227374616e64696e67222c226772616e745f6964223a226772616e742d636f756e7465722d776f726b222c22697373756572223a2275726e3a6578616d706c653a7072696e636970616c3a6f7065726174696f6e73222c227369676e696e675f6b6579223a226f7065726174696f6e732d7369676e696e672d31222c226167656e74223a2275726e3a6578616d706c653a6167656e743a636f756e7465722d776f726b6572222c22617574686f72697479223a2275726e3a6578616d706c653a686f73743a6c6162222c226e6f745f6265666f7265223a313739303738373630302c22657870697265735f6174223a313739303831363430302c2273636f7065223a7b226163746f725f6964223a22636f756e7465722d6d61696e222c2270726f66696c65223a7b226964223a2275726e3a6578616d706c653a646173703a636f756e746572222c2276657273696f6e223a2231227d2c2273657373696f6e73223a7b226d6f6465223a226c6973746564222c22696473223a5b2273657373696f6e2d636f756e746572222c2273657373696f6e2d636f756e7465722d74776f225d7d2c22636f6d6d616e6473223a5b7b226e616d65223a22636f756e7465722e616464222c22696e7075745f73636f7065223a7b22616d6f756e745f6d696e223a312c22616d6f756e745f6d6178223a3130307d7d5d7d2c22706172656e7473223a5b5d7d",
+      "signature": "lSqvYFhfi1vevda50GAzKb5ZB6idbjFFZ7wXgGL6A45PUaracMuP-KGfJkkUd2aX7v3fZSC66kRZnWGjz9QxAg",
+      "extension": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19LCJwYXJlbnRzIjpbXX0.lSqvYFhfi1vevda50GAzKb5ZB6idbjFFZ7wXgGL6A45PUaracMuP-KGfJkkUd2aX7v3fZSC66kRZnWGjz9QxAg"
+    }
+  ],
+  "command": {
+    "specversion": "1.0",
+    "id": "event-authority-1",
+    "source": "urn:example:client:one",
+    "type": "dasp.v1.command",
+    "datacontenttype": "application/json",
+    "requestid": "attempt-1",
+    "daspauthority": "eyJjb250cmFjdCI6Imh0dHBzOi8vZGFzcC1wcm90b2NvbC5naXRodWIuaW8vZGFzcC9jb250cmFjdHMvcHJvb2Ytb2YtYXV0aG9yaXR5Iiwia2luZCI6InN0YW5kaW5nIiwiZ3JhbnRfaWQiOiJncmFudC1jb3VudGVyLXdvcmsiLCJpc3N1ZXIiOiJ1cm46ZXhhbXBsZTpwcmluY2lwYWw6b3BlcmF0aW9ucyIsInNpZ25pbmdfa2V5Ijoib3BlcmF0aW9ucy1zaWduaW5nLTEiLCJhZ2VudCI6InVybjpleGFtcGxlOmFnZW50OmNvdW50ZXItd29ya2VyIiwiYXV0aG9yaXR5IjoidXJuOmV4YW1wbGU6aG9zdDpsYWIiLCJub3RfYmVmb3JlIjoxNzkwNzg3NjAwLCJleHBpcmVzX2F0IjoxNzkwODE2NDAwLCJzY29wZSI6eyJhY3Rvcl9pZCI6ImNvdW50ZXItbWFpbiIsInByb2ZpbGUiOnsiaWQiOiJ1cm46ZXhhbXBsZTpkYXNwOmNvdW50ZXIiLCJ2ZXJzaW9uIjoiMSJ9LCJzZXNzaW9ucyI6eyJtb2RlIjoibGlzdGVkIiwiaWRzIjpbInNlc3Npb24tY291bnRlciIsInNlc3Npb24tY291bnRlci10d28iXX0sImNvbW1hbmRzIjpbeyJuYW1lIjoiY291bnRlci5hZGQiLCJpbnB1dF9zY29wZSI6eyJhbW91bnRfbWluIjoxLCJhbW91bnRfbWF4IjoxMDB9fV19fQ._aQ-hXoG_PYqokOKKa-ZDRApDNBNmbTxhX9QSuSarxxcdXnV3rTrj37E4V9VmSHcLJRKOnUcu0pA4-jOkm-sDw",
+    "data": {
+      "session_id": "session-counter",
+      "command_id": "command-add-1",
+      "name": "counter.add",
+      "input": {
+        "amount": 3
+      }
+    }
+  }
+}

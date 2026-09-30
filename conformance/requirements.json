@@ -674,6 +674,118 @@
         "RUN-ENCRYPTION-AUTH",
         "RUN-ENCRYPTION-LIMITS"
       ]
+    },
+    {
+      "id": "DASP-AUTH-001",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-001",
+      "title": "Proposed proof of authority: Roles and trust",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-TRUST"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-002",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-002",
+      "title": "Proposed proof of authority: Required selection and carriage",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-BINDING"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-003",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-003",
+      "title": "Proposed proof of authority: Closed grant shapes and work scope",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-TRUST"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-004",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-004",
+      "title": "Proposed proof of authority: Exact proof bytes and limits",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-TRUST"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-005",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-005",
+      "title": "Proposed proof of authority: Admission, retries, and budgets",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-ADMISSION"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-006",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-006",
+      "title": "Proposed proof of authority: Time, revocation, reads, and failures",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-STATUS"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-007",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-007",
+      "title": "Proposed proof of authority: Audit and encrypted delivery",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-BINDING"
+      ]
+    },
+    {
+      "id": "DASP-AUTH-008",
+      "document": "docs/specification/proof-of-authority.md",
+      "anchor": "dasp-auth-008",
+      "title": "Proposed proof of authority: Examples, checks, and review gates",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-AUTHORITY"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTHORITY-TRUST"
+      ]
     }
   ]
 }
