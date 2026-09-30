@@ -108,15 +108,15 @@ Requirements: **DASP-WS-001**, **DASP-WS-002**. Status: not executed.
 Requirements: **DASP-WS-004**, **DASP-WS-005**, **DASP-WS-006**, **DASP-PROFILE-003**. Status: not executed.
 
 - Setup: Two sessions on one connection and two clients with different applied cursors.
-- Actions and failure: Interleave session output and request replies. Resync one attachment, then close the connection. Reconnect clients and replay from their own saved positions. Exercise the binding's selected liveness deadlines.
-- Expected result: Resource and request checks route each reply correctly. Resync affects one session unless the connection closes. Close stops both attachments and discards unsent output without cancelling commands or deleting history. Clients recover independently. A host delivery position is not a client cursor. Liveness uses no periodic history polling.
+- Actions and failure: Interleave session output and request replies. Resync one attachment, then close the connection. Reconnect clients and replay from their own saved positions. Exercise the binding's selected host-health deadlines; keep the transport open while withholding authenticated host responses.
+- Expected result: Resource and request checks route each reply correctly. Resync affects one session unless the connection closes. Close stops both attachments and discards unsent output without cancelling commands or deleting history. Clients recover independently. A host delivery position is not a client cursor. A missed host-health deadline closes the connection; reconnection requires fresh authenticated setup and recovery from the saved applied cursor. Health checks use no periodic history polling and never advance a cursor.
 - Cleanup: stop this case's processes and remove its isolated host records and client checkpoints.
 
 ## RUN-LIVE-POLLING: Required live selection and polling-only bindings
 
 Requirements: **DASP-WS-001**, **DASP-PROFILE-002**, **DASP-CORE-011**. Status: not executed.
 
-- Setup: A required-live WebSocket selection and a separately selected polling-only binding.
-- Actions and failure: Select required live delivery on a host that cannot provide it. Then use the polling-only binding to discover and replay saved facts.
-- Expected result: Unsupported required live delivery fails before session creation. The separate polling-only binding requires no live attachment or handoff and preserves core replay, identity, cursor, and authorization rules.
+- Setup: A configured secure endpoint, trusted host identity, one required-live WebSocket contract, declared receive limits, and a separately selected polling-only binding. Exact setup bytes remain complete-binding work.
+- Actions and failure: Connect without automatic discovery. Select required live delivery on a host that cannot provide it. Substitute a contract or required feature; propose shared limits outside either peer's requirements, change selected values before confirmation, and attempt a core operation before mutual confirmation. Exercise local work-limit refusal or close. Then use the polling-only binding to discover and replay saved facts.
+- Expected result: The configured endpoint still requires host authentication. Unsupported required live delivery, contract substitution, infeasible limits, or failed confirmation cannot create a session. Both peers confirm the exact shared selection. Local controls remain bounded and cannot silently lose required saved facts. The separate polling-only binding requires no live attachment or handoff and preserves core replay, identity, cursor, and authorization rules.
 - Cleanup: stop this case's processes and remove its isolated sessions and checkpoints.

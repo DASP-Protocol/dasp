@@ -4,13 +4,19 @@ These rules define the delivery part of the selected first WebSocket binding. Su
 
 Normal live delivery requires no periodic history polling. Replay reads recover saved facts. Other bindings can use polling only. The core keeps five requests and fourteen message types. No core field, extension, message, or protocol version is added.
 
-This delivery contract is part of the unreleased draft. A complete binding still needs endpoint selection, authenticated setup, discovery, framing before core selection, timeout values, and a tested durability declaration under [DASP-PROFILE-002](profiles-and-bindings.md#dasp-profile-002). These rules alone do not establish released interoperability. [Issue #4](https://github.com/DASP-Protocol/dasp/issues/4) tracks this change.
+This delivery contract is part of the unreleased draft. The first binding uses a configured secure endpoint and one exact contract selection. Automatic discovery is outside this minimum binding. A complete binding still needs exact authenticated setup, framing before core selection, shared limit fields and values, health checks and deadlines, and a tested durability declaration under [DASP-PROFILE-002](profiles-and-bindings.md#dasp-profile-002). These rules alone do not establish released interoperability. [Issue #4](https://github.com/DASP-Protocol/dasp/issues/4) tracks this change.
 
 ## Selection and framing {#dasp-ws-001}
 
 Requirement group **DASP-WS-001**.
 
 The selected WebSocket binding MUST declare these live-delivery rules before session creation. A host that cannot supply required live delivery MUST fail selection. Authentication and selection MUST complete before core requests are accepted. Limits MUST be advertised under [DASP-ENV-004](cloudevents.md#dasp-env-004), including bounded host output queues and client recovery buffers.
+
+The client MUST use a configured `wss://` endpoint and a trusted host-authority identity. The endpoint address MUST NOT replace authentication of that authority. The first binding does not require automatic discovery. Endpoint configuration and trusted identity administration are deployment concerns.
+
+The client MUST request one exact core, profile, and binding contract with its required features and receive limits. The host MUST accept that contract or refuse setup; it MUST NOT select a different contract or remove a required feature. The host MUST propose concrete shared limits within the contract's bounds and both peers' declared requirements. The client MUST confirm the exact selected values or refuse setup. No core operation is permitted before both peers authenticate and confirm the selection. These requirements define selection behavior, not setup message bytes.
+
+The complete binding MUST define each shared limit's field name, unit, allowed range, direction or scope, and exceeded-limit behavior. It MUST distinguish these shared values from local controls, such as connection-rate and parser-work limits. Each implementation MUST keep local work and memory bounded. Local controls need not be sent to the peer unless the binding makes them part of selection. Local control failures MUST follow the binding's refusal, resync, or close rules; they cannot silently discard required saved facts.
 
 One WebSocket text message MUST carry one complete structured JSON CloudEvent. Requests and direct replies retain `requestid`; push events route through their existing `session_id`. Reply type, request context, and resource identity MUST be checked before a reply is accepted. A frame acknowledgment is not evidence of admission, completion, or application of an update.
 
@@ -58,7 +64,9 @@ Requirement group **DASP-WS-005**.
 
 A client-requested close stops every attachment on that connection. The client MUST stop accepting live data when it starts the close. The host MUST stop delivery and discard unsent connection output when it receives the close. Already released output can arrive during closure; the close handshake confirms connection closure, not its application. Connection failure has the same attachment end. Neither close nor failure cancels admitted commands or deletes history.
 
-The complete binding MUST define connection liveness checks, deadlines, and close behavior. They need no periodic history read. A later saved sequence reveals a gap. If a client silently discards the final event and no later event arrives, sequence checks alone cannot detect that loss immediately. Reconnect still recovers from the saved applied cursor. Do not claim immediate loss detection from this contract or infer an application acknowledgment protocol.
+The complete binding MUST define authenticated host health checks, deadlines, and close behavior at the binding layer. These checks MUST NOT require periodic history reads or add core commands. A peer that detects connection failure or expiration of its selected host-health deadline MUST close the connection. A client that reconnects MUST complete fresh authenticated setup and recover from its saved applied cursor. Health checks cannot establish application of a saved event or advance a cursor.
+
+A later saved sequence reveals a gap. If a client silently discards the final event and no later event arrives, sequence checks alone cannot detect that loss immediately. Reconnect still recovers from the saved applied cursor. Do not claim immediate event-loss detection from health checks or infer an application acknowledgment protocol. Exact health-check messages and deadline values remain complete-binding work.
 
 There is no separate stop operation for one session. A client that needs separate stop boundaries can use separate connections. Several sessions can still share a connection.
 
