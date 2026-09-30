@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://dasp-protocol.github.io/dasp/schemas/draft-01/bindings/encrypted-carrier.schema.json",
   "title": "Proposed DASP encrypted binding carrier",
-  "description": "Proposed structural shapes only. Setup, authentication, duplicate-key rejection, decoded byte bounds, context, and cryptography require separate validation. This schema is not a core message schema.",
+  "description": "Proposed structural shapes only. Exact integer tokens, Unicode character restrictions, duplicate-key rejection, decoded byte bounds, selected context, setup, and cryptography require separate validation. This schema is not a core message schema.",
   "type": "object",
   "properties": {
     "specversion": {
@@ -124,7 +124,8 @@
         "record": {
           "type": "integer",
           "minimum": 1,
-          "maximum": 9007199254740991
+          "maximum": 9007199254740991,
+          "description": "Original JSON token must match [1-9][0-9]* and be at most 9007199254740991. Fractions, exponents, signs, leading zeros, and parser-rounded values are rejected before conversion."
         },
         "envelope": {
           "type": "object",

@@ -41,6 +41,10 @@ DASP uses [CloudEvents 1.0.2](https://github.com/cloudevents/spec/blob/v1.0.2/cl
 
 Then inspect the [counter example](example.md) and [conformance coverage](../../conformance/README.md). Use the source commit with `draft-01` when citing this evolving draft. See [release preparation](../project/releases.md) for fixed-artifact packaging.
 
+## First WebSocket delivery contract
+
+[WebSocket live delivery](websocket-live-delivery.md) defines subscriptions through session open, fixed-boundary replay, resync, and connection-close stop. It adds no core operation or field. A complete production binding still needs authenticated setup, discovery, exact timeouts, and runtime conformance evidence.
+
 ## Proposed binding work
 
 [Encrypted CloudEvent delivery](payload-encryption.md) defines candidate carrier, key, and recovery rules for issue #5. It is separate from the active core contract. Its setup contract and reader-policy decisions remain open. The requirement index records its artifact evidence and unexecuted runtime cases without claiming an accepted binding.

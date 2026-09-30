@@ -1,0 +1,190 @@
+{
+  "scope": "Raw protected-header artifact vectors only; carriers use synthetic ciphertext and signatures that are not cryptographically valid. These cases test no handshake, outer wire parser, cryptography, or connection state.",
+  "valid": [
+    {
+      "id": "record-one",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-ten",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":10,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-maximum",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":9007199254740991,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "reordered-header",
+      "header": "{\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"},\"record\":1,\"direction\":\"client-to-host\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"recipient_kid\":\"host-reader\",\"sender_kid\":\"client-a-sign\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"authority\":\"urn:example:host:one\",\"binding\":\"urn:example:binding:websocket-encrypted\"}"
+    },
+    {
+      "id": "escaped-equivalent-envelope-id",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"\\u0064elivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "valid-surrogate-pair-id",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-\\ud800\\udead\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}",
+      "metadata": {
+        "id": "delivery-\ud800\udead"
+      }
+    },
+    {
+      "id": "multibyte-id",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-\\u65e5\\u672c\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}",
+      "metadata": {
+        "id": "delivery-\u65e5\u672c"
+      }
+    },
+    {
+      "id": "valid-scalar-key-id",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"sign-\\ud800\\udead\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "trailing-json-whitespace",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}} \n\t\r"
+    }
+  ],
+  "invalid": [
+    {
+      "id": "record-fraction-rounds-to-one",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1.0000000000000001,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-fraction-rounds-to-maximum",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":9007199254740991.1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-zero",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":0,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-negative",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":-1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-above-maximum",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":9007199254740992,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-fraction",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1.5,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-decimal-integer",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1.0,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-exponent",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1e0,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-leading-zero",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":01,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-boolean",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":true,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-null",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":null,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "record-string",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":\"1\",\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "duplicate-record",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"record\":2,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "duplicate-escaped-record-key",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"rec\\u006frd\":2,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "duplicate-envelope-id",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "id-c0-control",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery\\n42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}",
+      "metadata": {
+        "id": "delivery\n42"
+      }
+    },
+    {
+      "id": "id-c1-control",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery\\u0085\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}",
+      "metadata": {
+        "id": "delivery\u0085"
+      }
+    },
+    {
+      "id": "id-noncharacter-ffff",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery\\uffff\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}",
+      "metadata": {
+        "id": "delivery\uffff"
+      }
+    },
+    {
+      "id": "id-noncharacter-fdd0",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery\\ufdd0\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}",
+      "metadata": {
+        "id": "delivery\ufdd0"
+      }
+    },
+    {
+      "id": "id-noncharacter-plane-one",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery\\ud83f\\udffe\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}",
+      "metadata": {
+        "id": "delivery\ud83f\udffe"
+      }
+    },
+    {
+      "id": "id-lone-high-surrogate",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery\\ud800\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}",
+      "metadata": {
+        "id": "delivery\ud800"
+      }
+    },
+    {
+      "id": "id-lone-low-surrogate",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery\\udead\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}",
+      "metadata": {
+        "id": "delivery\udead"
+      }
+    },
+    {
+      "id": "key-id-lone-surrogate",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"key-\\udead\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "key-id-control",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"key\\n\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "unknown-field",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"},\"extra\":\"field\"}"
+    },
+    {
+      "id": "prototype-field",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"},\"__proto__\":\"field\"}"
+    },
+    {
+      "id": "trailing-json-data",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}{}"
+    },
+    {
+      "id": "trailing-comma",
+      "header": "{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"},}"
+    },
+    {
+      "id": "header-bom",
+      "header": "\ufeff{\"binding\":\"urn:example:binding:websocket-encrypted\",\"authority\":\"urn:example:host:one\",\"suite\":\"HPKE-0-0020-0001-0003-Ed25519\",\"sender_kid\":\"client-a-sign\",\"recipient_kid\":\"host-reader\",\"client_challenge\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"host_challenge\":\"ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8\",\"direction\":\"client-to-host\",\"record\":1,\"envelope\":{\"specversion\":\"1.0\",\"id\":\"delivery-42\",\"source\":\"urn:example:client:one\",\"type\":\"dasp.encrypted\",\"datacontenttype\":\"application/json\"}}"
+    },
+    {
+      "id": "invalid-utf8",
+      "headerHex": "ff"
+    }
+  ]
+}

@@ -144,7 +144,8 @@
         "ART-SHAPES",
         "ART-NEGATIVE",
         "ART-RELATIONS",
-        "ART-TRACE"
+        "ART-TRACE",
+        "ART-LIVE-TRACE"
       ],
       "runtime": "not-executed",
       "runtimeCases": []
@@ -204,7 +205,8 @@
         "ART-SHAPES",
         "ART-NEGATIVE",
         "ART-RELATIONS",
-        "ART-TRACE"
+        "ART-TRACE",
+        "ART-LIVE-TRACE"
       ],
       "runtime": "not-executed",
       "runtimeCases": []
@@ -219,7 +221,8 @@
         "ART-SHAPES",
         "ART-NEGATIVE",
         "ART-RELATIONS",
-        "ART-TRACE"
+        "ART-TRACE",
+        "ART-LIVE-TRACE"
       ],
       "runtime": "not-executed",
       "runtimeCases": []
@@ -249,7 +252,8 @@
         "ART-SHAPES",
         "ART-NEGATIVE",
         "ART-RELATIONS",
-        "ART-TRACE"
+        "ART-TRACE",
+        "ART-LIVE-TRACE"
       ],
       "runtime": "not-executed",
       "runtimeCases": []
@@ -289,7 +293,10 @@
       "evidence": "not-executed",
       "artifactCases": [],
       "runtime": "not-executed",
-      "runtimeCases": []
+      "runtimeCases": [
+        "RUN-LIVE-OPEN",
+        "RUN-LIVE-POLLING"
+      ]
     },
     {
       "id": "DASP-PROFILE-003",
@@ -301,7 +308,9 @@
         "ART-TRACE"
       ],
       "runtime": "not-executed",
-      "runtimeCases": []
+      "runtimeCases": [
+        "RUN-LIVE-SCOPE"
+      ]
     },
     {
       "id": "DASP-PROFILE-004",
@@ -470,10 +479,14 @@
       "title": "Connection recovery",
       "evidence": "artifact-partial",
       "artifactCases": [
-        "ART-TRACE"
+        "ART-TRACE",
+        "ART-LIVE-TRACE"
       ],
       "runtime": "not-executed",
-      "runtimeCases": []
+      "runtimeCases": [
+        "RUN-REPLAY",
+        "RUN-LIVE-POLLING"
+      ]
     },
     {
       "id": "DASP-CORE-012",
@@ -485,6 +498,96 @@
       "runtime": "not-executed",
       "runtimeCases": [
         "RUN-RESTART"
+      ]
+    },
+    {
+      "id": "DASP-WS-001",
+      "document": "docs/specification/websocket-live-delivery.md",
+      "anchor": "dasp-ws-001",
+      "title": "WebSocket delivery: Selection and framing",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-LIVE-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-LIVE-OPEN",
+        "RUN-LIVE-POLLING"
+      ]
+    },
+    {
+      "id": "DASP-WS-002",
+      "document": "docs/specification/websocket-live-delivery.md",
+      "anchor": "dasp-ws-002",
+      "title": "WebSocket delivery: Open, confirmation, and repeat",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-LIVE-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-LIVE-OPEN",
+        "RUN-REPLAY"
+      ]
+    },
+    {
+      "id": "DASP-WS-003",
+      "document": "docs/specification/websocket-live-delivery.md",
+      "anchor": "dasp-ws-003",
+      "title": "WebSocket delivery: Fixed-boundary replay",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-LIVE-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-REPLAY",
+        "RUN-CURSOR"
+      ]
+    },
+    {
+      "id": "DASP-WS-004",
+      "document": "docs/specification/websocket-live-delivery.md",
+      "anchor": "dasp-ws-004",
+      "title": "WebSocket delivery: Overflow, resync, and restart",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-LIVE-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-REPLAY",
+        "RUN-LIVE-SCOPE",
+        "RUN-ENCRYPTION-ORDER"
+      ]
+    },
+    {
+      "id": "DASP-WS-005",
+      "document": "docs/specification/websocket-live-delivery.md",
+      "anchor": "dasp-ws-005",
+      "title": "WebSocket delivery: Connection close and liveness",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-LIVE-TRACE"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-DISCONNECT",
+        "RUN-LIVE-SCOPE"
+      ]
+    },
+    {
+      "id": "DASP-WS-006",
+      "document": "docs/specification/websocket-live-delivery.md",
+      "anchor": "dasp-ws-006",
+      "title": "WebSocket delivery: Permission and session scope",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-AUTH",
+        "RUN-LIVE-SCOPE",
+        "RUN-ENCRYPTION-ORDER"
       ]
     },
     {
@@ -525,7 +628,8 @@
       "runtime": "not-executed",
       "runtimeCases": [
         "RUN-ENCRYPTION-VECTORS",
-        "RUN-ENCRYPTION-AUTH"
+        "RUN-ENCRYPTION-AUTH",
+        "RUN-ENCRYPTION-ORDER"
       ]
     },
     {
@@ -537,7 +641,8 @@
       "artifactCases": [],
       "runtime": "not-executed",
       "runtimeCases": [
-        "RUN-ENCRYPTION-RECOVERY"
+        "RUN-ENCRYPTION-RECOVERY",
+        "RUN-ENCRYPTION-ORDER"
       ]
     },
     {
@@ -550,7 +655,8 @@
       "runtime": "not-executed",
       "runtimeCases": [
         "RUN-ENCRYPTION-AUTH",
-        "RUN-ENCRYPTION-RECOVERY"
+        "RUN-ENCRYPTION-RECOVERY",
+        "RUN-ENCRYPTION-ORDER"
       ]
     },
     {

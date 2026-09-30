@@ -93,7 +93,7 @@ await saveAtomically(next);
 checkpoint = next;
 ```
 
-On restart, load the saved checkpoint instead of creating a new one. Open the same session and recover unresolved commands. Continue reading until `page.data.next === page.data.head`. The adapter defines the safe transition to a live stream.
+On restart, load the saved checkpoint instead of creating a new one. Open the same session and recover unresolved commands. For a polling-only binding, continue reading under its paging policy until `page.data.next === page.data.head`. For the [first WebSocket binding](../../docs/specification/websocket-live-delivery.md#dasp-ws-003), confirm the new attachment and retain its fixed head `H`. Buffer live events, replay through `H`, then apply the buffer in sequence. A newer page head does not move `H`. For example, saved cursor 3, `H = 6`, and page 4–6 with head 7 require one recovery read, then buffered event 7. An equal open of a retained attachment does not restart replay. The adapter must implement this transition.
 
 The reducer must be pure. A failed batch returns no new checkpoint. Duplicate evidence is retained in the checkpoint; it can grow with history. An old update with no retained evidence raises `missing_evidence`. Recover a trusted view or stop. Do not discard evidence and assume old records match.
 
