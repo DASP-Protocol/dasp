@@ -18,7 +18,7 @@ The client MUST request one exact core, profile, and binding contract with its r
 
 The complete binding MUST define each shared limit's field name, unit, allowed range, direction or scope, and exceeded-limit behavior. It MUST distinguish these shared values from local controls, such as connection-rate and parser-work limits. Each implementation MUST keep local work and memory bounded. Local controls need not be sent to the peer unless the binding makes them part of selection. Local control failures MUST follow the binding's refusal, resync, or close rules; they cannot silently discard required saved facts.
 
-One WebSocket text message MUST carry one complete structured JSON CloudEvent. Requests and direct replies retain `requestid`; push events route through their existing `session_id`. Reply type, request context, and resource identity MUST be checked before a reply is accepted. A frame acknowledgment is not evidence of admission, completion, or application of an update.
+One WebSocket text message MUST carry one complete structured JSON CloudEvent. Requests and direct replies retain `requestid`; push events route through their existing `session_id`. Reply type, request context, and resource identity MUST be checked before a reply is accepted. If [encrypted delivery](payload-encryption.md) is selected, each logical event uses one carrier. Authenticate and decrypt that carrier before applying these correlation, routing, replay, and cursor rules. Its outer bounds apply to the WebSocket message; core bounds apply to the decrypted event. A transport acknowledgment is not evidence of admission, completion, or application of an update.
 
 ## Open, confirmation, and repeat {#dasp-ws-002}
 

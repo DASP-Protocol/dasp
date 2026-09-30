@@ -557,7 +557,8 @@
       "runtime": "not-executed",
       "runtimeCases": [
         "RUN-REPLAY",
-        "RUN-LIVE-SCOPE"
+        "RUN-LIVE-SCOPE",
+        "RUN-ENCRYPTION-ORDER"
       ]
     },
     {
@@ -585,7 +586,93 @@
       "runtime": "not-executed",
       "runtimeCases": [
         "RUN-AUTH",
-        "RUN-LIVE-SCOPE"
+        "RUN-LIVE-SCOPE",
+        "RUN-ENCRYPTION-ORDER"
+      ]
+    },
+    {
+      "id": "DASP-ENC-001",
+      "document": "docs/specification/payload-encryption.md",
+      "anchor": "dasp-enc-001",
+      "title": "Proposed encrypted binding: Reader boundary and selection",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-ENCRYPTION-VECTORS",
+        "RUN-ENCRYPTION-AUTH"
+      ]
+    },
+    {
+      "id": "DASP-ENC-002",
+      "document": "docs/specification/payload-encryption.md",
+      "anchor": "dasp-enc-002",
+      "title": "Proposed encrypted binding: Carrier and protected header",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-ENCRYPTED-SHAPES"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-ENCRYPTION-VECTORS",
+        "RUN-ENCRYPTION-AUTH",
+        "RUN-ENCRYPTION-LIMITS"
+      ]
+    },
+    {
+      "id": "DASP-ENC-003",
+      "document": "docs/specification/payload-encryption.md",
+      "anchor": "dasp-enc-003",
+      "title": "Proposed encrypted binding: Encryption, signatures, and record order",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-ENCRYPTION-VECTORS",
+        "RUN-ENCRYPTION-AUTH",
+        "RUN-ENCRYPTION-ORDER"
+      ]
+    },
+    {
+      "id": "DASP-ENC-004",
+      "document": "docs/specification/payload-encryption.md",
+      "anchor": "dasp-enc-004",
+      "title": "Proposed encrypted binding: Core validation and recovery",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-ENCRYPTION-RECOVERY",
+        "RUN-ENCRYPTION-ORDER"
+      ]
+    },
+    {
+      "id": "DASP-ENC-005",
+      "document": "docs/specification/payload-encryption.md",
+      "anchor": "dasp-enc-005",
+      "title": "Proposed encrypted binding: Keys, permission, and storage",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-ENCRYPTION-AUTH",
+        "RUN-ENCRYPTION-RECOVERY",
+        "RUN-ENCRYPTION-ORDER"
+      ]
+    },
+    {
+      "id": "DASP-ENC-006",
+      "document": "docs/specification/payload-encryption.md",
+      "anchor": "dasp-enc-006",
+      "title": "Proposed encrypted binding: Separate outer and inner limits",
+      "evidence": "artifact-partial",
+      "artifactCases": [
+        "ART-ENCRYPTED-SHAPES"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-ENCRYPTION-AUTH",
+        "RUN-ENCRYPTION-LIMITS"
       ]
     }
   ]
