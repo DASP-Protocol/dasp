@@ -40,6 +40,35 @@ These are DASP behavior requirements. CloudEvents envelopes alone do not provide
 
 The core guarantees no second admission for an equal retry. It does not guarantee exactly-once external effects. Hosts need application-level effect keys, transactional resources, or reconciliation to make stronger claims.
 
+### Failure boundaries
+
+This table applies DASP-CORE-003 through 009. Each row assumes current permission to recover the command. The host uses saved evidence, not the last message the client received.
+
+| Failure boundary | Required recovery evidence | Permitted recovery action |
+| --- | --- | --- |
+| Before saved admission | An authoritative check establishes that no admission exists. | Validate and authorize a new admission. No earlier attempt may have dispatched unrecorded work. |
+| After saved admission, before dispatch | Original command identity, complete retry data, and admission update; evidence that dispatch did not start. | Return the original admission for an equal retry. Start work from that admission only when safe. |
+| After dispatch, before effects are established | Original admission and available ownership and effect evidence. | Reconcile before dispatch. Save `uncertain` if effects cannot be established; prevent unsafe repeat execution. |
+| After external effects, before saved outcome | Original admission and evidence of the profile's execution and cleanup boundary. | Save the outcome that the evidence supports. An observed effect alone does not prove completion. Use `uncertain` when required effects or cleanup cannot be established. |
+| After saved outcome, before reply | One immutable terminal outcome and its saved update, with their original identity and sequence. | Return the saved outcome and replay its original update. Do not execute again. |
+| After a receipt or outcome reply | Original saved admission, outcome if settled, and history; the client's own saved checkpoint. | A lost reply or acknowledgment changes no saved command fact. Recover the command and client state from their respective records. |
+
+An unavailable store is not evidence that an admission is absent. Missing dispatch evidence is not proof that dispatch did not occur. Store loss follows the [authority continuity rule](#dasp-core-012). When [proof of authority](proof-of-authority.md#dasp-auth-005) is selected, admission recovery also preserves its saved grant use and budget charge. Fresh connection keys do not create fresh command intent.
+
+### What each signal proves
+
+The [command lifecycle](model.md#dasp-model-003) has separate admission and settlement states.
+
+| Signal or record | What it establishes | What it does not establish |
+| --- | --- | --- |
+| Transport acknowledgment | Only the transport boundary defined by the binding. | Saved admission, execution, settlement, or saved client state. |
+| Accepted or duplicate receipt | One saved admission at the original admission sequence. | Current execution state or completion. |
+| Rejected receipt | This attempt did not create an admission. A conflict can refer to an existing admitted ID. | Execution failure of previously admitted work. |
+| Saved terminal outcome | What the host can establish within the profile's completion and cleanup scope. | Exactly-once effects outside that scope or application by any client. |
+| Saved applied cursor | This client's saved state includes the required facts through that cursor. | Another client's position or permission to delete host history. |
+
+Connection loss does not add a lifecycle transition. No application acknowledgment operation is required by these rules.
+
 ## Ordered facts
 
 <a id="dasp-core-009"></a>
@@ -48,11 +77,13 @@ The core guarantees no second admission for an equal retry. It does not guarante
 
 <a id="dasp-core-010"></a>
 
-**DASP-CORE-010:** The client MUST apply sequence `cursor + 1` before advancing. It MUST save the applied cursor with its application state. Delivery acknowledgment is not proof of application.
+**DASP-CORE-010:** The client MUST apply sequence `cursor + 1` before advancing. It MUST save the applied cursor, application state, and retained duplicate-comparison evidence as one recoverable checkpoint. Delivery acknowledgment is not proof of application.
 
 An identical update at an already applied sequence is a duplicate. A changed identity or data for the same session and sequence is a protocol violation. A client that no longer retains enough evidence to compare a duplicate MUST NOT apply it again or assume its contents match; it must recover a trusted saved projection or stop.
 
 A gap requires replay. Malformed, unsupported, or unknown saved events stop cursor advancement. Clients MUST NOT skip them because a later event is readable.
+
+For example, a client moves from cursor 8 to 9 by applying event 9. After a failed save, recovery uses the complete checkpoint at 8 or 9. Cursor 9 with state 8 would skip an unapplied fact. State 9 with cursor 8 could apply the fact again. Retained comparison evidence belongs to the same checkpoint; missing evidence still requires a trusted projection or a stop.
 
 ## Connection recovery {#dasp-core-011}
 
@@ -73,6 +104,8 @@ The [first WebSocket delivery contract](websocket-live-delivery.md) attaches thr
 Requirement group **DASP-CORE-012**.
 
 Draft-01 retains all saved updates, outcomes, and retry records for the entire session lifetime. Pruning and snapshot-only recovery are not specified. Capacity exhaustion MUST reject new work rather than silently delete retry evidence.
+
+A capacity refusal does not cancel admitted work or shorten its history. Storage failure alone is not a terminal outcome. The host can report a terminal outcome only after saving it under DASP-CORE-006 through 009.
 
 A durable host MUST preserve these records across a host process restart. It MUST declare the tested durability boundary, including whether power loss and storage failures are covered. A volatile demo cannot advertise durable session conformance.
 

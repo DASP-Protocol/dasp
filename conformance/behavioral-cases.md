@@ -40,22 +40,22 @@ Requirements: **DASP-AUTH-001**, **DASP-AUTH-003**, **DASP-AUTH-004**, **DASP-AU
 - Expected result: Independent implementations agree on accepted bytes and signature failures. Exact configured trust and all scope restrictions are enforced before new work. Explicitly permitted sessions and many commands reuse the same standing evidence. Direct scope binds the complete target. No field or resource restriction is ignored; no grant proves human review.
 - Cleanup: Remove only test keys, registry entries, and isolated application resources.
 
-## RUN-ADMISSION: Crash during admission
+## RUN-ADMISSION: Crash at command boundaries
 
-Requirement: **DASP-CORE-004**. Status: not executed.
+Requirements: **DASP-CORE-003**, **DASP-CORE-004**, **DASP-CORE-006**, **DASP-CORE-007**, **DASP-CORE-008**, **DASP-CORE-009**. Status: not executed.
 
-- Setup: An authorized fresh command and an empty persistent session.
-- Actions and failure: Stop the host at each save/dispatch boundary, then restart and retry the same intent.
-- Expected result: No accepted receipt exists without its saved admission. No unrecorded command is dispatched. An equal retry returns one admission sequence.
+- Setup: An authorized fresh command, an empty persistent session, and an external effect recorder that survives host restart. Expose fault points before admission commit, after admission commit, after dispatch, after the external effect, after outcome commit, and after receipt or outcome reply release. Include each admission and outcome write when the host uses separate stores. Run each point with fresh case storage.
+- Actions and failure: Stop the host at each point. Retain the store and effect recorder; restart under the same authority. Retry equal intent with a new request ID. Read the outcome and replay all saved events. Run the external-effect point with conclusive effect evidence and with that evidence unavailable to the host. When authority proof is selected, also inspect its admission-use and budget records.
+- Expected result: Before admission commit, there is no dispatch or visible acceptance. After commit, every equal retry identifies the original admission sequence. There is no second admission or grant charge. Proven undispatched work can start from its saved admission. After dispatch, recovery uses effect evidence; unresolved effects require saved uncertainty and no unsafe repeat. After outcome commit or outcome reply release, read and replay return the original terminal value, identity, and sequence. A receipt alone does not establish settlement. No terminal reply precedes its saved fact. Record actual dispatch and effect counts separately from admission counts.
 - Cleanup: stop this case's processes and remove its isolated test storage and effect records.
 
 ## RUN-RETRY: Concurrent equal retries
 
-Requirement: **DASP-CORE-003**. Status: not executed.
+Requirements: **DASP-CORE-002**, **DASP-CORE-003**, **DASP-CORE-004**. Status: not executed.
 
-- Setup: Two authorized connections, one unused command ID, and identical input.
-- Actions and failure: Submit both attempts at the same time; lose one receipt, then retry.
-- Expected result: One admission update and one execution decision exist. Both accepted/duplicate receipts identify the same admission.
+- Setup: A profile with two supported command names, two authorized sessions, at least three connections, and sufficient capacity. Start each run with one unused command ID and valid input for every competing intent.
+- Actions and failure: Submit two equal attempts at the same time; lose one receipt, then retry. In separate fresh runs, race equal attempts with an authorized changed input, command name, or session under the same unused ID. Restart and retry each variant. Use a barrier at the admission decision to establish actual overlap.
+- Expected result: Equal attempts converge on one admission sequence. In each changed-intent race, exactly one intent wins admission; all other intents conflict. Equal retries of the winner return its original sequence, including after restart. No losing intent dispatches, appends an admission, or changes the winner's saved retry data. A serial ordering evaluator alone does not pass this case.
 - Cleanup: stop this case's processes and remove its isolated test storage and effect records.
 
 ## RUN-CONFLICT: Changed command identity
@@ -69,11 +69,11 @@ Requirement: **DASP-CORE-002**. Status: not executed.
 
 ## RUN-DISCONNECT: Lost connection
 
-Requirements: **DASP-CORE-005**, **DASP-WS-005**. Status: not executed.
+Requirements: **DASP-CORE-005**, **DASP-CORE-008**, **DASP-WS-005**. Status: not executed.
 
 - Setup: An admitted command whose receipt has not reached the client.
-- Actions and failure: Drop the connection, reconnect, and retry equal intent. Close an active connection with delivery queued.
-- Expected result: The disconnect does not cancel work. The host returns the original admission and saved outcome when settled. Close stops connection attachments without deleting history; output released earlier does not imply application.
+- Actions and failure: Drop the connection, reconnect, and retry equal intent. Close an active connection with delivery queued. In a separate run, report transport receipt but stop before application admission.
+- Expected result: The disconnect does not cancel admitted work. The host returns the original admission and saved outcome when settled. Transport receipt alone produces no accepted or settled application result. Close stops connection attachments without deleting history; output released earlier does not imply application.
 - Cleanup: stop this case's processes and remove its isolated test storage and effect records.
 
 ## RUN-OUTCOME: Stale completion
@@ -108,8 +108,8 @@ Requirements: **DASP-CORE-009**, **DASP-CORE-011**, **DASP-WS-002**, **DASP-WS-0
 Requirements: **DASP-CORE-010**, **DASP-WS-003**. Status: not executed.
 
 - Setup: A client applies updates and persists a projection.
-- Actions and failure: Stop the client between application and persistence; restart, replay equal and changed duplicates, remove duplicate-comparison evidence, and present a gap or unknown event. Reopen with a host head below the saved cursor.
-- Expected result: State and cursor recover together. Equal duplicates are not applied twice. Changed duplicates fail; missing evidence requires a trusted projection or a stop. The client never advances past a gap or unsupported saved event. A lower host head fails continuity without resetting the cursor.
+- Actions and failure: Stop the client before and after each state, cursor, comparison-evidence, and checkpoint-commit write. Restart, replay equal and changed duplicates, remove comparison evidence, and present a gap or unknown event. Deliver a transport acknowledgment or transport gap signal without the missing saved fact. Reopen with a host head below the saved cursor.
+- Expected result: State, cursor, and retained evidence recover as the complete old or new checkpoint, never a mixture. Equal duplicates are not applied twice. Changed duplicates fail; missing evidence requires a trusted projection or a stop. Transport signals cannot advance the applied cursor. The client never advances past a gap or unsupported saved event. A lower host head fails continuity without resetting the cursor.
 - Cleanup: stop this case's processes and remove its isolated test storage and effect records.
 
 ## RUN-AUTH: Permission revocation
@@ -123,20 +123,29 @@ Requirements: **DASP-SEC-001**, **DASP-WS-006**. Status: not executed.
 
 ## RUN-RESTART: Persistent history
 
-Requirement: **DASP-CORE-012**. Status: not executed.
+Requirements: **DASP-MODEL-001**, **DASP-CORE-009**, **DASP-CORE-012**. Status: not executed.
 
 - Setup: A saved session, command record, terminal outcome, and client cursor.
-- Actions and failure: Restart the host process and reconnect both clients.
-- Expected result: Session identity, retry meaning, outcome, and event history survive. Any stronger claimed failure boundary is tested separately.
+- Actions and failure: Restart the host process, replace a worker, and reconnect both clients. Save another update. In isolated negative runs, make the store unreadable, remove it, or restore a stale copy that lacks acknowledged admissions or outcomes. Attempt recovery with the original authority and session identity.
+- Expected result: Within the declared durability boundary, session identity, retry meaning, outcome, and event history survive. The next update continues the session sequence across worker and connection replacement. An unreadable store cannot be treated as an empty store. A lost or incomplete store cannot establish continuity under the same authority and session identity. No new admission is based on presumed absence of a lost record. Any stronger claimed failure boundary is tested separately.
 - Cleanup: stop this case's processes and remove its isolated test storage and effect records.
+
+## RUN-CAPACITY: Admission and retained storage
+
+Requirements: **DASP-CORE-004**, **DASP-CORE-006**, **DASP-CORE-012**, **DASP-ENV-004**, **DASP-WS-004**. Status: not executed.
+
+- Setup: A host with a declared finite storage limit, readable saved history, and one pending admitted command. Record how the implementation preserves space or otherwise handles required facts for admitted work. Use two authorized clients with different saved cursors.
+- Actions and failure: Reach the admission capacity limit. Submit fresh work, retry an admitted command, read its outcome, and replay from both cursors. Attempt to settle the pending command. Separately fail its outcome write, then restore storage and restart. Overflow one client's live queue while the other reads history.
+- Expected result: Unsupported fresh work is rejected before admission and dispatch. Capacity refusal preserves retry evidence, outcomes, and complete history. Reads and equal retries still work when the store remains readable. Failed outcome writes produce no false settled reply or published terminal update. Recovery uses saved admission and effect evidence after storage returns. A slow client's resync or close does not prune history or change the other client's cursor. No test assumes that a storage outage permits reads.
+- Cleanup: Stop the isolated host and clients. Remove only this case's stores, checkpoints, and effect recorder.
 
 ## RUN-LIVE-OPEN: Open confirmation and repeated setup
 
 Requirements: **DASP-WS-001**, **DASP-WS-002**. Status: not executed.
 
 - Setup: A selected WebSocket binding and a saved session with active delivery.
-- Actions and failure: Race commits with the first open. Repeat equal opens during replay and live use; deliver retained-stream pushes before and after the reply, including advancement beyond its captured head. Open a conflicting tuple. Resync before and after a pending open's host decision and confirmation. Delay an open reply past timeout and attempt recovery.
-- Expected result: A new attachment covers every commit above its captured head and confirms before its pushes or progress. Equal opens keep one attachment, its queued events, recovery target, and next push position; advancement beyond an equal-open reply does not fail continuity. A new attachment below the saved applied cursor still fails continuity. Conflicts preserve the old tuple and attachment. Open replies and resync follow state-transition order. Resync before a pending successful open reply makes that reply a new attachment confirmation. At most one open is pending per session; timeout requires connection close before a new attempt.
+- Actions and failure: Race commits with the first open. Complete a command immediately after confirmation and release all its saved pushes before its receipt. Repeat equal opens during replay and live use; deliver retained-stream pushes before and after the reply, including advancement beyond its captured head. Open a conflicting tuple. Resync before and after a pending open's host decision and confirmation. Delay an open reply past timeout and attempt recovery.
+- Expected result: A new attachment covers every commit above its captured head and confirms before its pushes or progress. Immediate completion is applied in saved sequence order while its receipt remains pending; the receipt does not advance a cursor. Equal opens keep one attachment, its queued events, recovery target, and next push position; advancement beyond an equal-open reply does not fail continuity. A new attachment below the saved applied cursor still fails continuity. Conflicts preserve the old tuple and attachment. Open replies and resync follow state-transition order. Resync before a pending successful open reply makes that reply a new attachment confirmation. At most one open is pending per session; timeout requires connection close before a new attempt.
 - Cleanup: stop this case's processes and remove its isolated sessions and captured output.
 
 ## RUN-LIVE-SCOPE: Several sessions and clients
@@ -144,17 +153,17 @@ Requirements: **DASP-WS-001**, **DASP-WS-002**. Status: not executed.
 Requirements: **DASP-WS-004**, **DASP-WS-005**, **DASP-WS-006**, **DASP-PROFILE-003**. Status: not executed.
 
 - Setup: Two sessions on one connection and two clients with different applied cursors.
-- Actions and failure: Interleave session output and request replies. Resync one attachment, then close the connection. Reconnect clients and replay from their own saved positions. Exercise the binding's selected host-health deadlines; keep the transport open while withholding authenticated host responses.
+- Actions and failure: Interleave session output and request replies. Make one client slow enough to overflow its queue while the other reads. Resync one attachment, then close the connection. Reconnect clients and replay from their own saved positions. Exercise the binding's selected host-health deadlines; keep the transport open while withholding authenticated host responses.
 - Expected result: Resource and request checks route each reply correctly. Resync affects one session unless the connection closes. Close stops both attachments and discards unsent output without cancelling commands or deleting history. Clients recover independently. A host delivery position is not a client cursor. A missed host-health deadline closes the connection; reconnection requires fresh authenticated setup and recovery from the saved applied cursor. Health checks use no periodic history polling and never advance a cursor.
 - Cleanup: stop this case's processes and remove its isolated host records and client checkpoints.
 
 ## RUN-LIVE-POLLING: Required live selection and polling-only bindings
 
-Requirements: **DASP-WS-001**, **DASP-PROFILE-002**, **DASP-CORE-011**. Status: not executed.
+Requirements: **DASP-WS-001**, **DASP-PROFILE-001**, **DASP-PROFILE-002**, **DASP-MODEL-002**, **DASP-CORE-001**, **DASP-CORE-011**. Status: not executed.
 
 - Setup: A configured secure endpoint, trusted host identity, one required-live WebSocket contract, declared receive limits, and a separately selected polling-only binding. Exact setup bytes remain complete-binding work.
-- Actions and failure: Connect without automatic discovery. Select required live delivery on a host that cannot provide it. Substitute a contract or required feature; propose shared limits outside either peer's requirements, change selected values before confirmation, and attempt a core operation before mutual confirmation. Exercise local work-limit refusal or close. Then use the polling-only binding to discover and replay saved facts.
-- Expected result: The configured endpoint still requires host authentication. Unsupported required live delivery, contract substitution, infeasible limits, or failed confirmation cannot create a session. Both peers confirm the exact shared selection. Local controls remain bounded and cannot silently lose required saved facts. The separate polling-only binding requires no live attachment or handoff and preserves core replay, identity, cursor, and authorization rules.
+- Actions and failure: Connect without automatic discovery. Select required live delivery on a host that cannot provide it. Substitute a contract or required feature; propose shared limits outside either peer's requirements, change selected values before confirmation, and attempt a core operation before mutual confirmation. Request an unsupported profile, change the profile on an existing session, and submit an unsupported command. Exercise local work-limit refusal or close. Then use the polling-only binding to discover and replay saved facts.
+- Expected result: The configured endpoint still requires host authentication. Unsupported required live delivery, contract substitution, infeasible limits, or failed confirmation cannot create a session. Unsupported profiles create no session; changed profiles conflict without altering the saved tuple; unsupported commands create no admission. Both peers confirm the exact shared selection. Local controls remain bounded and cannot silently lose required saved facts. The separate polling-only binding requires no live attachment or handoff and preserves core replay, identity, cursor, and authorization rules.
 - Cleanup: stop this case's processes and remove its isolated sessions and checkpoints.
 
 ## RUN-ENCRYPTION-VECTORS: Independent encrypted record vectors

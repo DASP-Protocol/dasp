@@ -10,7 +10,9 @@
       "evidence": "not-executed",
       "artifactCases": [],
       "runtime": "not-executed",
-      "runtimeCases": []
+      "runtimeCases": [
+        "RUN-RESTART"
+      ]
     },
     {
       "id": "DASP-MODEL-002",
@@ -22,7 +24,9 @@
         "ART-TRACE"
       ],
       "runtime": "not-executed",
-      "runtimeCases": []
+      "runtimeCases": [
+        "RUN-LIVE-POLLING"
+      ]
     },
     {
       "id": "DASP-MODEL-003",
@@ -102,7 +106,9 @@
         "ART-EXTENSIONS"
       ],
       "runtime": "not-executed",
-      "runtimeCases": []
+      "runtimeCases": [
+        "RUN-CAPACITY"
+      ]
     },
     {
       "id": "DASP-MSG-001",
@@ -283,7 +289,9 @@
         "ART-PROFILE"
       ],
       "runtime": "not-executed",
-      "runtimeCases": []
+      "runtimeCases": [
+        "RUN-LIVE-POLLING"
+      ]
     },
     {
       "id": "DASP-PROFILE-002",
@@ -352,7 +360,9 @@
       "evidence": "not-executed",
       "artifactCases": [],
       "runtime": "not-executed",
-      "runtimeCases": []
+      "runtimeCases": [
+        "RUN-LIVE-POLLING"
+      ]
     },
     {
       "id": "DASP-CORE-002",
@@ -363,7 +373,8 @@
       "artifactCases": [],
       "runtime": "not-executed",
       "runtimeCases": [
-        "RUN-CONFLICT"
+        "RUN-CONFLICT",
+        "RUN-RETRY"
       ]
     },
     {
@@ -375,7 +386,8 @@
       "artifactCases": [],
       "runtime": "not-executed",
       "runtimeCases": [
-        "RUN-RETRY"
+        "RUN-RETRY",
+        "RUN-ADMISSION"
       ]
     },
     {
@@ -389,7 +401,9 @@
       ],
       "runtime": "not-executed",
       "runtimeCases": [
-        "RUN-ADMISSION"
+        "RUN-ADMISSION",
+        "RUN-RETRY",
+        "RUN-CAPACITY"
       ]
     },
     {
@@ -416,7 +430,9 @@
       ],
       "runtime": "not-executed",
       "runtimeCases": [
-        "RUN-OUTCOME"
+        "RUN-OUTCOME",
+        "RUN-ADMISSION",
+        "RUN-CAPACITY"
       ]
     },
     {
@@ -428,7 +444,8 @@
       "artifactCases": [],
       "runtime": "not-executed",
       "runtimeCases": [
-        "RUN-UNCERTAIN"
+        "RUN-UNCERTAIN",
+        "RUN-ADMISSION"
       ]
     },
     {
@@ -441,7 +458,10 @@
         "ART-SHAPES"
       ],
       "runtime": "not-executed",
-      "runtimeCases": []
+      "runtimeCases": [
+        "RUN-ADMISSION",
+        "RUN-DISCONNECT"
+      ]
     },
     {
       "id": "DASP-CORE-009",
@@ -455,7 +475,9 @@
       ],
       "runtime": "not-executed",
       "runtimeCases": [
-        "RUN-REPLAY"
+        "RUN-REPLAY",
+        "RUN-ADMISSION",
+        "RUN-RESTART"
       ]
     },
     {
@@ -497,7 +519,8 @@
       "artifactCases": [],
       "runtime": "not-executed",
       "runtimeCases": [
-        "RUN-RESTART"
+        "RUN-RESTART",
+        "RUN-CAPACITY"
       ]
     },
     {
@@ -558,7 +581,8 @@
       "runtimeCases": [
         "RUN-REPLAY",
         "RUN-LIVE-SCOPE",
-        "RUN-ENCRYPTION-ORDER"
+        "RUN-ENCRYPTION-ORDER",
+        "RUN-CAPACITY"
       ]
     },
     {
