@@ -78,7 +78,7 @@ export default defineConfig({
         { text: 'Profiles and bindings', link: '/specification/profiles-and-bindings' },
         { text: 'WebSocket live delivery', link: '/specification/websocket-live-delivery' },
         { text: 'Security and compatibility', link: '/specification/security-and-versioning' }
-      ]}, { text: 'Binding proposals', items: [
+      ]}, { text: 'Optional binding contracts', items: [
         { text: 'Encrypted CloudEvent delivery', link: '/specification/payload-encryption' },
         { text: 'Proof of authority', link: '/specification/proof-of-authority' }
       ]}, { text: 'Conformance', items: [

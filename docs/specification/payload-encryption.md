@@ -1,10 +1,10 @@
 # Encrypted CloudEvent delivery
 
-**Status: proposed binding rules for review in [issue #5](https://github.com/DASP-Protocol/dasp/issues/5). Design scope accepted; exact setup and security evidence incomplete. Not an accepted complete interoperability contract.**
+**Status: optional binding rules in draft-01. Exact setup and security evidence remain incomplete. [Issue #5](https://github.com/DASP-Protocol/dasp/issues/5) tracks this work. No complete binding interoperability is claimed.**
 
-The proposed binding uses the same CloudEvents envelope for plain and encrypted delivery. One `dasp.encrypted` carrier contains an encrypted original DASP CloudEvent. The binding decrypts it once, then passes the original message to normal core validation. Five core requests and fourteen core message types remain unchanged. The carrier is an additional binding wire type.
+The encrypted binding uses the same CloudEvents envelope for plain and encrypted delivery. One `dasp.encrypted` carrier contains an encrypted original DASP CloudEvent. The binding decrypts it once, then passes the original message to normal core validation. Five core requests and fourteen core message types remain unchanged. The carrier is an additional binding wire type.
 
-The requirements below apply only if this proposal is accepted and selected as part of a complete binding. They do not make encryption a required core feature. DASP remains unreleased; this proposal adds no protocol version. The design decisions below fix the minimum scope. Exact authenticated setup bytes, shared limit fields and values, health checks and deadlines, and independent security evidence remain [review gates](#review-gates).
+The requirements below apply when encrypted delivery is selected as part of a complete binding. Encryption is optional in the core and required on a connection that selects it. DASP remains unreleased; these rules add no protocol version. The design decisions below fix the minimum scope. Exact authenticated setup bytes, shared limit fields and values, health checks and deadlines, and independent security evidence remain [release requirements](#release-requirements).
 
 ## Reader boundary and selection {#dasp-enc-001}
 
@@ -100,7 +100,7 @@ All four byte fields and both challenges MUST use canonical unpadded [base64url]
 
 Requirement group **DASP-ENC-003**.
 
-Use the single proposed suite: [HPKE](https://www.rfc-editor.org/rfc/rfc9180.html) Base mode `0`, DHKEM(X25519, HKDF-SHA256) `0x0020`, HKDF-SHA256 `0x0001`, and ChaCha20-Poly1305 `0x0003`. Use independent [Ed25519](https://www.rfc-editor.org/rfc/rfc8032.html) signing keys. Ed25519 signatures do not encrypt content. HPKE Base mode does not authenticate the sender by itself.
+Use the single selected suite: [HPKE](https://www.rfc-editor.org/rfc/rfc9180.html) Base mode `0`, DHKEM(X25519, HKDF-SHA256) `0x0020`, HKDF-SHA256 `0x0001`, and ChaCha20-Poly1305 `0x0003`. Use independent [Ed25519](https://www.rfc-editor.org/rfc/rfc8032.html) signing keys. Ed25519 signatures do not encrypt content. HPKE Base mode does not authenticate the sender by itself.
 
 The sender MUST use a fresh HPKE encapsulation for each delivery, with an operating-system cryptographic random source. Use HPKE's single-shot `SealBase(pkR, info, AAD, plaintext)` and `OpenBase(E, skR, info, AAD, C)` with one encryption per context. The HPKE internal sequence starts at zero; the DASP connection record is a separate counter. The plaintext MUST be one complete structured core CloudEvent encoded as UTF-8 JSON without a byte order mark. Use the exact following inputs, where `||` means byte concatenation:
 
@@ -181,7 +181,7 @@ Requirement group **DASP-ENC-006**.
 
 The binding MUST advertise equal or tighter values before session creation. Shared values MUST form part of the authenticated selection. The complete binding MUST name each shared limit field and define its unit, range, direction or scope, and exceeded-limit behavior. The host selects concrete permitted values; the client MUST confirm them or refuse setup. Byte counts below use bytes, page bounds use entry counts, and operational deadlines MUST use an explicitly defined duration unit. No unspecified shared default may be inferred:
 
-| Value | Proposed maximum |
+| Value | Maximum |
 | --- | --- |
 | Encoded outer CloudEvent | 1,410,000 UTF-8 bytes |
 | Outer metadata serialized without `data` | 768 UTF-8 bytes |
@@ -207,15 +207,15 @@ Client A submits `counter.add`, command ID `cmd-add-3`, with `amount: 3`. The ho
 
 A requests replay after its last applied cursor. The host encrypts the page for A's current key. Client B can request its own page under its own key if current policy permits it. Both pages contain the same original saved facts. Each client keeps its own state and applied cursor. Key changes do not change the saved outcome or execute the command again.
 
-## Review gates
+## Release requirements
 
 The accepted design scope covers host-readable execution and history, required recovery history or attachment refusal, the static reader-key compromise limit, configured endpoints and trusted records, exact contract selection, and the setup flow above. Reader grants and key administration remain deployment concerns within those rules.
 
-This proposal is not ready to merge as an interoperable binding until the PR records:
+These rules are part of the unreleased draft. Before a complete interoperable binding can be released, its specification and evidence must include:
 
 1. A complete authenticated setup and key-confirmation contract with exact messages, transcript bytes, proof inputs, and completion and timeout rules.
 2. Exact shared limit fields and values, authenticated health-check framing and record-order rules, and failure and recovery behavior. Verify that local controls cannot weaken required history or release rules.
 3. Two independent cryptographic implementations and vectors, pinned implementation versions and key-import/negative-verification behavior, and independent expert security review of the complete binding. Include pure Ed25519 point/signature acceptance and HPKE X25519 invalid-key/all-zero-secret behavior; do not infer agreement from library names.
 4. Executed runtime evidence for trusted setup, record order, release/revocation, retries, encrypted live delivery, replay, and failure recovery.
 
-The schema and [artifact checks](../../conformance/running-checks.md) cover structure and encoding only. The [runtime cases](../../conformance/behavioral-cases.md#run-encryption-auth-encrypted-delivery-and-setup) remain unexecuted. Full APH authorization, a host that must not read commands, and a ratchet protocol require separate scope decisions.
+The schema and [artifact checks](../../conformance/running-checks.md) cover structure and encoding only. The [runtime cases](../../conformance/behavioral-cases.md#run-encryption-auth-encrypted-delivery-and-setup) remain unexecuted. A host that must not read commands and a ratchet protocol require separate scope decisions.

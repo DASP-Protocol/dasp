@@ -179,6 +179,9 @@ defmodule DASP.Client do
         {^tag, ^parent, {:ok, text}} when is_binary(text) ->
           text
 
+        {^tag, ^parent, {:error, %DASP.Error{} = error}} ->
+          raise error
+
         {^tag, ^parent, {:error, reason}} ->
           fail(:transport, "Transport failed. Command admission may still have occurred.", reason)
 
