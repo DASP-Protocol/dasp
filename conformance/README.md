@@ -9,6 +9,7 @@ DASP currently has artifact checks and separate client package tests. There is n
 | Check | Runs today | Does not establish |
 | --- | --- | --- |
 | Core artifacts | All 14 event types, invalid vectors, profile payloads, and recorded recovery | Behavior of a running host |
+| Proposed encrypted carrier artifacts | Separate carrier/header shapes, canonical base64url, selected byte bounds, and matching outer metadata | Cryptography, duplicate-key parsing, key confirmation, setup, peer trust, or runtime encrypted delivery |
 | Elixir and TypeScript clients | JSON parsing, core validation, reply checks, deadlines, retries, replay bounds, and checkpoints | Persistent storage or a live binding |
 | Host and binding behavior | Written runtime cases only | Admission atomicity, concurrent retries, restart, stale-worker control, authorization, or power-loss safety |
 

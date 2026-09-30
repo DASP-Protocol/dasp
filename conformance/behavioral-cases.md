@@ -93,3 +93,39 @@ Requirement: **DASP-CORE-012**. Status: not executed.
 - Actions and failure: Restart the host process and reconnect both clients.
 - Expected result: Session identity, retry meaning, outcome, and event history survive. Any stronger claimed failure boundary is tested separately.
 - Cleanup: stop this case's processes and remove its isolated test storage and effect records.
+
+## RUN-ENCRYPTION-VECTORS: Independent encrypted record vectors
+
+Requirements: **DASP-ENC-002**, **DASP-ENC-003**. Status: not executed; proposed binding only.
+
+- Setup: Two independent maintained HPKE implementations, Ed25519 implementations, pinned test keys, and exact agreed setup and record bytes. Do not use the synthetic carrier fixture as a cryptographic vector.
+- Actions and failure: Exchange records in both directions. Check shared encapsulation, ciphertext, signatures, protected-byte inputs, and outer metadata. Change each signed field, encapsulation, tag, and signature independently.
+- Expected result: Both implementations agree on positive vectors and reject tampered records. Parsing and re-encoding protected JSON is not a substitute for verification of original bytes. Shape validation alone does not pass this case.
+- Cleanup: remove only the test keys, captured records, and temporary storage for this case.
+
+## RUN-ENCRYPTION-AUTH: Encrypted delivery and setup
+
+Requirements: **DASP-ENC-001**, **DASP-ENC-002**, **DASP-ENC-003**, **DASP-ENC-005**. Status: not executed; blocked by the complete setup contract.
+
+- Setup: A complete selected encrypted WebSocket binding, a trusted host and client, a relay, and isolated permission and key registries.
+- Actions and failure: Submit before setup completes; substitute a peer key; strip required encryption; replay old challenges and old connection records; introduce a gap or duplicate record; send plaintext or a nested carrier. Revoke access with an encrypted reply or live record already queued.
+- Expected result: Setup proves the selected peer context before any core operation. Required encryption has no plaintext fallback. Invalid context or record order closes the connection without protected error details. No work is admitted on failed setup. Revocation stops further output; it does not recall records released earlier. A valid key alone grants no permission.
+- Cleanup: stop this case's host, clients, and relay; remove its isolated registry, keys, and storage.
+
+## RUN-ENCRYPTION-RECOVERY: Retries and replay after key changes
+
+Requirements: **DASP-ENC-004**, **DASP-ENC-005**, **DASP-CORE-002**, **DASP-CORE-003**, **DASP-CORE-009**, **DASP-CORE-010**. Status: not executed.
+
+- Setup: Two permitted clients with separate keys and applied cursors, a persistent counter session, and an effect recorder.
+- Actions and failure: Submit concurrent fresh encryptions of equal input. Lose a receipt, restart, replace a key through trusted administration, and retry through fresh setup. Try changed input under the same command ID. Replay while live updates arrive. Remove old network keys and repeat replay with current keys.
+- Expected result: Equal authorized intent has one admission and one execution decision. Changed intent conflicts. Delivery ciphertext and IDs can change while saved identities, semantic data, and settled outcomes remain equal. Clients save state and cursor together, keep independent positions, and recover through the selected live-delivery contract. Missing storage keys fail continuity rather than creating an empty history under the same identity.
+- Cleanup: stop this case's processes and remove its isolated keys, effect recorder, checkpoints, and host storage.
+
+## RUN-ENCRYPTION-LIMITS: Encrypted frame and decoded input bounds
+
+Requirements: **DASP-ENC-002**, **DASP-ENC-006**, **DASP-ENV-003**, **DASP-ENV-004**. Status: not executed.
+
+- Setup: A selected encrypted binding with advertised bounds and allocation instrumentation.
+- Actions and failure: Send exact-limit and one-byte-over frames, headers, ciphertext, and decrypted core events. Include excessive whitespace, multibyte metadata, noncanonical base64url, duplicate JSON keys, invalid UTF-8, oversized saved events, nested profile containers, and overfull replay pages. Inject cryptographic library failures.
+- Expected result: The receiver bounds allocation before decoding or cryptographic work and enforces inner limits after decryption. Duplicate keys are rejected before parsing discards them. No invalid message is admitted. Failures never cause plaintext fallback or truncated saved facts. Oversized required output is rejected before its command is admitted.
+- Cleanup: stop this case's processes and remove its allocation records and isolated storage.

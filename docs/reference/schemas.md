@@ -16,3 +16,7 @@ Pin the schema bytes and their digest in your implementation. A schema URI ident
 Pin a source commit with `draft-01` while the draft is under review. See [Changes](../../CHANGELOG.md) for compatibility changes. Published release artifacts must remain fixed.
 
 The schema cannot validate message history, authorization, saved admission, or process restart. The [conformance page](../../conformance/README.md) lists those gaps.
+
+## Proposed encrypted binding artifacts
+
+The [carrier schema](../../specification/draft-01/bindings/encrypted-carrier.schema.json) defines a separate proposed binding shape. The [recorded carrier fixtures](../../conformance/fixtures/encrypted-carriers.json) use synthetic ciphertext and signatures. They demonstrate shapes and selected encoding rules, not successful encryption or authentication. These artifacts do not extend the core schema or establish interoperability. Read the [proposal and its review gates](../specification/payload-encryption.md).

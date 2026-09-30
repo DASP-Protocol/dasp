@@ -60,3 +60,5 @@ Authorization policy remains a host concern. A collaboration profile or extensio
 Requirement group **DASP-PROFILE-004**.
 
 Draft-01 does not select the first production binding. A transport implementation and its conformance vectors are required before an independently built client can claim interoperability. This is an explicit remaining release decision.
+
+The [encrypted-delivery proposal](payload-encryption.md) uses a binding carrier around the original core CloudEvent. Its outer shape has a separate schema and limits; the decrypted message retains the core's shapes and limits. The proposal is not an accepted binding and does not complete the setup or live-delivery contract.

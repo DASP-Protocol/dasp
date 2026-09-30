@@ -16,6 +16,7 @@ export const pages = {
   'docs/specification/recovery.md': 'specification/recovery.md',
   'docs/specification/profiles-and-bindings.md': 'specification/profiles-and-bindings.md',
   'docs/specification/security-and-versioning.md': 'specification/security-and-versioning.md',
+  'docs/specification/payload-encryption.md': 'specification/payload-encryption.md',
   'docs/specification/example.md': 'reference/counter.md',
   'conformance/README.md': 'specification/conformance/index.md',
   'conformance/running-checks.md': 'specification/conformance/running-checks.md',
@@ -36,10 +37,12 @@ export const pageOptions = {
 };
 export const artifacts = {
   'specification/draft-01/envelope.schema.json': 'schemas/draft-01/envelope.schema.json',
+  'specification/draft-01/bindings/encrypted-carrier.schema.json': 'schemas/draft-01/bindings/encrypted-carrier.schema.json',
   'specification/draft-01/examples/counter.json': 'schemas/draft-01/examples/counter.json',
   'specification/draft-01/examples/counter-profile.schema.json': 'schemas/draft-01/examples/counter-profile.schema.json',
   'specification/artifacts.json': 'schemas/artifacts.json',
   'conformance/fixtures/invalid-events.json': 'fixtures/invalid-events.json',
+  'conformance/fixtures/encrypted-carriers.json': 'fixtures/encrypted-carriers.json',
   'conformance/fixtures/recovery-trace.json': 'fixtures/recovery-trace.json',
   'conformance/requirements.json': 'fixtures/requirements.json',
   'conformance/report-template.json': 'fixtures/report-template.json'

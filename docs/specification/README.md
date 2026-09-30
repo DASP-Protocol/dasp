@@ -41,6 +41,10 @@ DASP uses [CloudEvents 1.0.2](https://github.com/cloudevents/spec/blob/v1.0.2/cl
 
 Then inspect the [counter example](example.md) and [conformance coverage](../../conformance/README.md). Use the source commit with `draft-01` when citing this evolving draft. See [release preparation](../project/releases.md) for fixed-artifact packaging.
 
+## Proposed binding work
+
+[Encrypted CloudEvent delivery](payload-encryption.md) defines candidate carrier, key, and recovery rules for issue #5. It is separate from the active core contract. Its setup contract and reader-policy decisions remain open. The requirement index records its artifact evidence and unexecuted runtime cases without claiming an accepted binding.
+
 ## Conformance
 
 Read [what is tested](../../conformance/README.md), [run the checks](../../conformance/running-checks.md), and inspect the [runtime test cases](../../conformance/behavioral-cases.md). Passing the artifact suite alone does not establish host conformance.

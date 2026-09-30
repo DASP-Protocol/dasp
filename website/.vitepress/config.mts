@@ -77,6 +77,8 @@ export default defineConfig({
         { text: 'Admission and recovery', link: '/specification/recovery' },
         { text: 'Profiles and bindings', link: '/specification/profiles-and-bindings' },
         { text: 'Security and compatibility', link: '/specification/security-and-versioning' }
+      ]}, { text: 'Binding proposals', items: [
+        { text: 'Encrypted CloudEvent delivery', link: '/specification/payload-encryption' }
       ]}, { text: 'Conformance', items: [
         { text: 'What is tested', link: '/specification/conformance/' },
         { text: 'Run the checks', link: '/specification/conformance/running-checks' },

@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dasp-protocol.github.io/dasp/schemas/draft-01/bindings/encrypted-carrier.schema.json",
+  "title": "Proposed DASP encrypted binding carrier",
+  "description": "Proposed structural shapes only. Setup, authentication, duplicate-key rejection, decoded byte bounds, context, and cryptography require separate validation. This schema is not a core message schema.",
+  "type": "object",
+  "properties": {
+    "specversion": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "format": "uri",
+      "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+    },
+    "type": {
+      "const": "dasp.encrypted"
+    },
+    "datacontenttype": {
+      "const": "application/json"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "protected": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "enc": {
+          "type": "string",
+          "minLength": 43,
+          "maxLength": 43,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "ciphertext": {
+          "type": "string",
+          "minLength": 22,
+          "maxLength": 1398123,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 86,
+          "maxLength": 86,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "protected",
+        "enc",
+        "ciphertext",
+        "signature"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "specversion",
+    "id",
+    "source",
+    "type",
+    "datacontenttype",
+    "data"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "protectedHeader": {
+      "type": "object",
+      "properties": {
+        "binding": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "format": "uri",
+          "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+        },
+        "authority": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "format": "uri",
+          "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+        },
+        "suite": {
+          "const": "HPKE-0-0020-0001-0003-Ed25519"
+        },
+        "sender_kid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "recipient_kid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "client_challenge": {
+          "type": "string",
+          "minLength": 43,
+          "maxLength": 43,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "host_challenge": {
+          "type": "string",
+          "minLength": 43,
+          "maxLength": 43,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "direction": {
+          "enum": [
+            "client-to-host",
+            "host-to-client"
+          ]
+        },
+        "record": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "envelope": {
+          "type": "object",
+          "properties": {
+            "specversion": {
+              "const": "1.0"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "source": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "format": "uri",
+              "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+            },
+            "type": {
+              "const": "dasp.encrypted"
+            },
+            "datacontenttype": {
+              "const": "application/json"
+            }
+          },
+          "required": [
+            "specversion",
+            "id",
+            "source",
+            "type",
+            "datacontenttype"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "binding",
+        "authority",
+        "suite",
+        "sender_kid",
+        "recipient_kid",
+        "client_challenge",
+        "host_challenge",
+        "direction",
+        "record",
+        "envelope"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
