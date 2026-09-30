@@ -1,22 +1,49 @@
 # Encrypted CloudEvent delivery
 
-**Status: proposed binding rules for review in [issue #5](https://github.com/DASP-Protocol/dasp/issues/5). Not an accepted or complete interoperability contract.**
+**Status: proposed binding rules for review in [issue #5](https://github.com/DASP-Protocol/dasp/issues/5). Design scope accepted; exact setup and security evidence incomplete. Not an accepted complete interoperability contract.**
 
 The proposed binding uses the same CloudEvents envelope for plain and encrypted delivery. One `dasp.encrypted` carrier contains an encrypted original DASP CloudEvent. The binding decrypts it once, then passes the original message to normal core validation. Five core requests and fourteen core message types remain unchanged. The carrier is an additional binding wire type.
 
-The requirements below apply only if this proposal is accepted and selected as part of a complete binding. They do not make encryption a required core feature. DASP remains unreleased; this proposal adds no protocol version. Exact authenticated setup bytes, reader policy, and independent cryptographic vectors remain [review gates](#review-gates).
+The requirements below apply only if this proposal is accepted and selected as part of a complete binding. They do not make encryption a required core feature. DASP remains unreleased; this proposal adds no protocol version. The design decisions below fix the minimum scope. Exact authenticated setup bytes, shared limit fields and values, health checks and deadlines, and independent security evidence remain [review gates](#review-gates).
 
 ## Reader boundary and selection {#dasp-enc-001}
 
 Requirement group **DASP-ENC-001**.
 
-Under the proposed boundary, the host authority can read commands and saved history. Its validation, execution, and history services belong to that authority. A relay, including one that terminates TLS, cannot read the encrypted inner message. Each permitted client receives a separate encryption of output. Network encryption does not protect readable host storage from the host.
+### Accepted design decisions
+
+| Topic | Minimum binding decision |
+| --- | --- |
+| Payload readers | The executing host authority and permitted clients can read payloads. Payload encryption protects contents from relays. Host storage needs separate protection. |
+| New readers | Host policy grants access. A permitted reader receives all history needed for recovery, or the host refuses the attachment. Future-only access is outside this minimum contract. |
+| Later reader-key compromise | The binding makes no promise that captured earlier payloads remain secret. Close affected connections and replace keys through trusted administration. |
+| Key trust | Use configured trusted records for independent signing and reader keys. Messages cannot register their own keys. The administration method is a deployment concern. |
+| Endpoint | Use a configured `wss://` address and trusted host keys. Automatic discovery is outside this minimum binding. |
+| Selection | The client requests one exact contract and encryption suite. The host accepts or refuses it. Both peers confirm the same selected settings. Required encryption cannot fall back to plain delivery. |
+| Limits and health | The binding defines shared fields, units, ranges, and failure behavior. The host selects permitted values. Local controls remain bounded. Binding health checks use no new core commands or periodic history polling. |
+
+These decisions accept the design scope and its stated limits. They do not establish a complete handshake or tested security guarantees.
+
+The host authority can read commands and saved history. Its validation, execution, and history services belong to that authority. A relay, including one that terminates TLS, cannot read the encrypted inner message under the selected trust and cryptographic assumptions. Each permitted client receives a separate encryption of output. Network encryption does not protect readable host storage from the host.
 
 The binding MUST retain TLS. It MUST select the exact core, profile, binding contract, encrypted mode, suite, limits, host authority, and registered peer keys before session creation. A required feature that is unsupported MUST fail selection. Required encryption MUST NOT fall back to plain delivery.
 
+The client MUST use the configured secure endpoint and trusted host keys. It MUST request one exact contract and the single suite defined below, with its required features and receive limits. The host MUST accept that contract or refuse setup. It MUST NOT replace the requested contract, choose another suite, or remove required encryption. The host MUST select concrete shared values within the contract's bounds and both peers' requirements. The client MUST confirm that exact selection or refuse setup. Setup failure or timeout MUST close the connection without a core reply or protected resource details. Endpoint discovery and key enrollment messages are outside this minimum binding.
+
 Each peer MUST generate a fresh 32-byte connection challenge from its operating-system cryptographic random source. It MUST NOT reuse an old challenge or substitute the peer's challenge for its own. Both peers MUST authenticate the same selection and both challenges before application traffic. The setup transcript MUST bind the selected signing and reader key bytes and IDs for both roles, authority, principal/device identity, core, profile, binding, encrypted mode, suite, and limits. Setup MUST prove possession and confirmation of the selected keys as required by the complete binding. Key resolution MUST use trusted records, not a key supplied by the relay. A relay's TLS identity alone is insufficient proof of the host's identity.
 
-**Setup remains unspecified.** The complete binding must supply exact messages, transcript bytes, key confirmation, signature inputs, failure behavior, and timeouts. The record fields below are not a handshake. No session open, command, or other core operation is permitted before setup succeeds. Do not claim interoperability from these record rules alone.
+### Required setup flow
+
+| Phase | Required behavior |
+| --- | --- |
+| 1. Client request | Request the exact contract, suite, and required limits. Identify the registered client signing and reader keys and send the fresh client challenge. |
+| 2. Host selection | Resolve the peer keys through trusted records, check their validity and permitted setup context, and return the fresh host challenge, selected host signing and reader key IDs, and exact selected settings. A registry match alone does not authenticate possession of a key. |
+| 3. Mutual confirmation | Both peers prove possession of their selected signing and reader keys and authenticate the same setup transcript, including both challenges and the selected limits. Each peer verifies the other peer's proofs and confirmation. |
+| 4. Core traffic | Only after setup succeeds, start encrypted record numbering at 1 in each direction. The client can then send `session.open` and use live delivery with saved replay. |
+
+These are ordered phases, not message names or a requirement for one message per phase. A signature made with a signing key alone MUST NOT count as proof of possession of the reader key. Each peer MUST withhold core traffic until its verification and the binding's mutual-confirmation completion rule have succeeded.
+
+**Exact setup remains unspecified.** The complete binding MUST supply closed message shapes, transcript bytes, signature and reader-key proof inputs, confirmation order and completion rules, pre-core framing, failure behavior, and timeouts. The record fields below are not a handshake. No session open, command, or other core operation is permitted before setup succeeds. Do not claim interoperability from these record rules alone.
 
 The selected first WebSocket binding requires [live subscriptions and saved replay](websocket-live-delivery.md). Encrypted selection maps each logical core event in that contract to exactly one carrier. Apply request correlation, session routing, open confirmation, fixed-boundary replay, and resync to the authenticated decrypted event. The carrier has no outer `requestid` or `session_id`. Apply encrypted outer limits to the WebSocket message and core limits to the inner event. This selection changes no delivery state rule.
 
@@ -130,7 +157,11 @@ Requirement group **DASP-ENC-005**.
 
 Trusted registration MUST bind a stable principal or host authority to separate signing and reader public keys. Register key ID, purpose, bytes, validity, and revocation state. A key ID MUST NOT be reassigned. A key supplied by a message cannot register itself. Key possession MUST NOT grant permission.
 
+The first binding MUST resolve both peers' keys through configured trusted records before setup can succeed. The host registry and client host-key configuration need not use the same storage or administration method. The binding specifies required trusted inputs and the effects of validity, replacement, and revocation. It does not require an automatic enrollment service or a registry administration wire protocol.
+
 Each client device MUST have separate keys. Output MUST be encrypted separately for each currently permitted client. New readers receive retained history only if host policy grants that access. Key replacement MUST use trusted administration, close affected connections, and complete fresh setup. A compromised previous key's signature alone cannot authorize its replacement.
+
+A peer that knows or suspects a selected key is compromised MUST stop using that key and close affected connections. Trusted administration MUST revoke the affected registration before replacement. Any replacement MUST use trusted administration and fresh setup before further traffic. These actions cannot make previously released ciphertext secret again.
 
 The minimum binding MUST grant all history needed for an authorized reader's recovery path or refuse the attachment. It MUST NOT silently filter inaccessible sequences, fabricate an applied cursor, or reset history. Future-only reader access needs an explicit initial state and access boundary outside this minimum contract. Permission policy also covers outcomes, views, and saved retry decisions, which can disclose earlier work.
 
@@ -144,7 +175,7 @@ This static-reader-key design makes no promise that old ciphertext remains secre
 
 Requirement group **DASP-ENC-006**.
 
-The binding MUST advertise equal or tighter values before session creation:
+The binding MUST advertise equal or tighter values before session creation. Shared values MUST form part of the authenticated selection. The complete binding MUST name each shared limit field and define its unit, range, direction or scope, and exceeded-limit behavior. The host selects concrete permitted values; the client MUST confirm them or refuse setup. Byte counts below use bytes, page bounds use entry counts, and operational deadlines MUST use an explicitly defined duration unit. No unspecified shared default may be inferred:
 
 | Value | Proposed maximum |
 | --- | --- |
@@ -158,13 +189,13 @@ The binding MUST advertise equal or tighter values before session creation:
 
 The outer byte cap applies to the complete WebSocket text message, including whitespace and escape expansion, not to each transport frame. The receiver MUST enforce the cumulative bound while processing fragments, before reassembly can exceed it. Decoded bounds apply before cryptographic work. It MUST apply the [core limits](cloudevents.md#dasp-env-004) again after decryption, including individual saved-event, profile-string, nesting, collection, and page bounds. Base64 expansion in the carrier has its own outer limit; it does not increase an inner core limit.
 
-This first encrypted form MUST disable WebSocket compression. The complete binding MUST set concrete connection-rate, parser depth/work, fragment/work/deadline, decoded-buffer, and queued-byte limits. The host MUST ensure required saved facts and at least one-event replay pages fit the selected inner and outer limits before admission or attachment confirmation. A tighter selection on reopen MUST fail if it cannot recover existing required facts; it cannot truncate or rewrite them. Oversized application output needs a profile-defined reference rather than truncation.
+This first encrypted form MUST disable WebSocket compression. Each implementation MUST set concrete local connection-rate, parser depth/work, fragment/work/deadline, decoded-buffer, and queued-byte limits. Local work controls need not be sent to the peer unless the binding makes them part of selection. They MUST remain bounded and follow the binding's refusal, resync, or close rules when exceeded. They cannot silently discard required saved facts. The complete binding MUST distinguish these local controls from shared receive, queue/buffer, and deadline values. The host MUST ensure required saved facts and at least one-event replay pages fit the selected inner and outer limits before admission or attachment confirmation. A tighter selection on reopen MUST fail if it cannot recover existing required facts; it cannot truncate or rewrite them. Oversized application output needs a profile-defined reference rather than truncation.
 
 Setup MUST reject a selected context whose keys, identifiers, permitted delivery-ID policy, and maximum record width cannot fit the aggregate header and metadata bounds in both directions. Individual field maxima do not imply that every combination fits. A header that fits at record 1 must also fit with the selected maximum record's width. This feasibility check occurs before any core operation.
 
 Both header and outer metadata are closed shapes. The header cap counts original `B`, including its whitespace and escapes. The outer metadata cap counts a reconstructed object without `data`, in order `specversion`, `id`, `source`, `type`, `datacontenttype`, with no whitespace. In that reconstruction, escape only double quote and reverse solidus with a reverse solidus; encode every other permitted Unicode scalar as UTF-8. This defines the count without requiring a JavaScript runtime. The actual incoming message has its separate raw bound. Original `B` remains the signature and HPKE input; reconstructed metadata is never substituted for it. Custom validation MUST check these bounds that JSON Schema cannot express.
 
-The complete binding MUST define authenticated host setup/request/idle deadlines. A relay can answer WebSocket Ping/Pong while withholding host traffic; its Pong does not establish authenticated host progress. A malicious relay can still delay, drop, or close traffic. Neither encryption nor bounded work guarantees availability.
+The complete binding MUST define setup/request/idle deadlines and authenticated host health-check messages, with exact completion and timeout rules. After setup, health checks MUST use authenticated binding controls, remain bound to the current connection, and follow the binding's defined control framing. They MUST NOT add core commands, require periodic history polling, or advance an applied cursor. Control message shapes and their relationship to carrier record numbering remain complete-binding work; the core-event-only carrier above does not implicitly define a health-check format. A relay can answer WebSocket Ping/Pong while withholding host traffic; its Pong does not establish authenticated host progress. A missed selected host-health deadline MUST close the connection. Reconnection requires fresh setup and recovery from the saved applied cursor. A malicious relay can still delay, drop, or close traffic. Neither encryption nor bounded work guarantees availability.
 
 ## Command and recovery example
 
@@ -174,12 +205,13 @@ A requests replay after its last applied cursor. The host encrypts the page for 
 
 ## Review gates
 
-This proposal is not ready to merge as an interoperable binding until the issue records:
+The accepted design scope covers host-readable execution and history, required recovery history or attachment refusal, the static reader-key compromise limit, configured endpoints and trusted records, exact contract selection, and the setup flow above. Reader grants and key administration remain deployment concerns within those rules.
 
-1. Approval of the host-readable command and history boundary.
-2. The policy for newly authorized readers and retained history.
-3. Acceptance of the stated limit after later reader-key compromise, or a revised design.
-4. A complete authenticated setup and key-confirmation contract with exact bytes and timeouts.
-5. Independent cryptographic vectors, pinned implementation versions and key-import/negative-verification behavior, and independent expert security review of the complete binding. Include pure Ed25519 point/signature acceptance and HPKE X25519 invalid-key/all-zero-secret behavior; do not infer agreement from library names.
+This proposal is not ready to merge as an interoperable binding until the PR records:
+
+1. A complete authenticated setup and key-confirmation contract with exact messages, transcript bytes, proof inputs, and completion and timeout rules.
+2. Exact shared limit fields and values, authenticated health-check framing and record-order rules, and failure and recovery behavior. Verify that local controls cannot weaken required history or release rules.
+3. Two independent cryptographic implementations and vectors, pinned implementation versions and key-import/negative-verification behavior, and independent expert security review of the complete binding. Include pure Ed25519 point/signature acceptance and HPKE X25519 invalid-key/all-zero-secret behavior; do not infer agreement from library names.
+4. Executed runtime evidence for trusted setup, record order, release/revocation, retries, encrypted live delivery, replay, and failure recovery.
 
 The schema and [artifact checks](../../conformance/running-checks.md) cover structure and encoding only. The [runtime cases](../../conformance/behavioral-cases.md#run-encryption-auth-encrypted-delivery-and-setup) remain unexecuted. Full APH authorization, a host that must not read commands, and a ratchet protocol require separate scope decisions.

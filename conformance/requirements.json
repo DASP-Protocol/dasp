@@ -599,6 +599,7 @@
       "artifactCases": [],
       "runtime": "not-executed",
       "runtimeCases": [
+        "RUN-ENCRYPTION-VECTORS",
         "RUN-ENCRYPTION-AUTH"
       ]
     },
@@ -670,6 +671,7 @@
       ],
       "runtime": "not-executed",
       "runtimeCases": [
+        "RUN-ENCRYPTION-AUTH",
         "RUN-ENCRYPTION-LIMITS"
       ]
     }
