@@ -105,7 +105,7 @@ Each client operation returns `{:ok, %Jido.Signal{}}` or `{:error, %DASP.Error{}
 :ok = MyApp.Store.save_checkpoint(next)
 ```
 
-Save state, cursor, and evidence in one transaction before acknowledging delivery. On restart, load that checkpoint, open the same session, and recover unresolved commands. Continue reading until `page.data["next"] == page.data["head"]`. The adapter defines the safe transition to a live stream.
+Save state, cursor, and evidence in one transaction before acknowledging delivery. On restart, load that checkpoint, open the same session, and recover unresolved commands. For a polling-only binding, continue reading under its paging policy until `page.data["next"] == page.data["head"]`. For the [first WebSocket binding](../../docs/specification/websocket-live-delivery.md#dasp-ws-003), confirm the new attachment and retain its fixed head `H`. Buffer live events, replay through `H`, then apply the buffer in sequence. A newer page head does not move `H`. For example, saved cursor 3, `H = 6`, and page 4–6 with head 7 require one recovery read, then buffered event 7. An equal open of a retained attachment does not restart replay. The adapter must implement this transition.
 
 The reducer must be pure. A failed batch returns no new checkpoint. Duplicate evidence stays in the checkpoint and can grow with history. Missing evidence for an old update requires a trusted view or a stop.
 

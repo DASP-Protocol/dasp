@@ -59,6 +59,8 @@ The client chooses the session ID. On first open, the host saves the identity, a
 
 A new session starts at cursor 0. Session creation itself does not consume an update sequence in this draft. Session expiry or deletion MUST NOT make the same ID available for an unrelated session.
 
+A selected binding can make successful open also attach live delivery. The [first WebSocket delivery contract](websocket-live-delivery.md#dasp-ws-002) uses `session.opened` to confirm a new attachment before its pushes. An equal open that retains an active attachment preserves its recovery boundary and delivery position; its reply does not restart recovery. The session tuple and core shapes remain unchanged.
+
 ## Command and receipt {#dasp-msg-004}
 
 Requirement group **DASP-MSG-004**.
@@ -158,7 +160,7 @@ UpdatesPage = {
 
 A view contains a profile-defined state projection that includes all saved effects through its cursor and none after it. The host MUST read the projection and cursor coherently. Clients that need every fact still require replay; a view is not permission to skip audit records or forget unresolved command IDs.
 
-An update page takes a stable high-water mark `head`. Its events start at `after + 1`, ascend contiguously, and do not exceed `head` or the requested limit. `next` is the last returned sequence, or `after` for an empty page. If `after < head`, the page MUST contain at least one event. Clients continue while `next < head`; later reads can observe a newer head. `after > head` is a cursor error.
+An update page takes a stable high-water mark `head`. Its events start at `after + 1`, ascend contiguously, and do not exceed `head` or the requested limit. `next` is the last returned sequence, or `after` for an empty page. If `after < head`, the page MUST contain at least one event. To catch up without a fixed live-recovery boundary, clients continue while `next < head`; later reads can observe a newer head. With a confirmed live attachment and fixed boundary `H`, recover through `H`, then use buffered live delivery rather than chase newer page heads. `after > head` is a cursor error.
 
 Nested events are the original saved CloudEvents. A new page has its own outer event ID and request ID. It MUST NOT replace nested event IDs with page-local identities.
 
@@ -184,6 +186,8 @@ ResyncRequired = {
 Progress has no saved sequence. It may be delayed, repeated, reordered, or lost. A nonnull command ID refers to an admitted command. Profiles define progress names and payloads. Neither progress nor a resync head advances the applied cursor.
 
 On resync, the client MUST stop treating its live stream as complete and read saved events after its own last applied cursor. The host's head is informational.
+
+The binding defines whether resync ends the attachment and how to restart it. In the [first WebSocket contract](websocket-live-delivery.md#dasp-ws-004), reopen before replay and discard late pages and failures for locally cancelled replay request IDs for that session. A pending open must finish or time out before another open is sent.
 
 ## Failure {#dasp-msg-009}
 
@@ -215,6 +219,8 @@ The tables below apply after binding selection and authentication. A failure doe
 | `outcome.read` | Current read permission and admitted command | `outcome` | None | Pending can settle; settled value remains unchanged |
 
 Push updates follow saved commits. Progress and resync notices add no saved fact. A binding defines whether live delivery exists and how it begins and recovers.
+
+In the first WebSocket binding, an authorized successful open also starts live delivery; an equal open keeps its existing attachment. Connection close stops its streams. No subscription operation or additional core field is needed.
 
 ## Core error meanings {#dasp-msg-011}
 

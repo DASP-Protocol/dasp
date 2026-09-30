@@ -76,6 +76,7 @@ export default defineConfig({
         { text: 'CloudEvents envelope', link: '/specification/cloudevents' },
         { text: 'Admission and recovery', link: '/specification/recovery' },
         { text: 'Profiles and bindings', link: '/specification/profiles-and-bindings' },
+        { text: 'WebSocket live delivery', link: '/specification/websocket-live-delivery' },
         { text: 'Security and compatibility', link: '/specification/security-and-versioning' }
       ]}, { text: 'Conformance', items: [
         { text: 'What is tested', link: '/specification/conformance/' },

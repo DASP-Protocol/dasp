@@ -4,6 +4,7 @@
   "files": {
     "specification/draft-01/envelope.schema.json": "3853369ad7c19c8298baeb4182a0b86b67ae21c29b63a94406f7e614791757bb",
     "specification/draft-01/examples/counter-profile.schema.json": "61a616e55cc3543425b87cec23d9e5e90d73629058f097d6e9ce7b140320f610",
-    "specification/draft-01/examples/counter.json": "824f0087902f30af47798b731befda7369bf98c2fc5df919574a8b6b46c4c55c"
+    "specification/draft-01/examples/counter.json": "824f0087902f30af47798b731befda7369bf98c2fc5df919574a8b6b46c4c55c",
+    "conformance/fixtures/websocket-delivery-traces.json": "2e7c27d97fcc1da5cd51e165a6060574d3a8ee720145fa67f29d2afa83cfdb8a"
   }
 }

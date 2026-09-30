@@ -8,6 +8,8 @@ The host MUST use trusted transport or application authentication context for au
 
 The host MUST check current permission on open, submit, every read, replay, and live delivery. Permission revocation must stop later delivery; queued output must be checked before release. Retry records remain protected after revocation.
 
+The [WebSocket delivery contract](websocket-live-delivery.md#dasp-ws-006) closes a connection when read permission for an attached session is revoked. It permits no protected session data or head in the close reason and no protected resync notice after revocation.
+
 Unknown and inaccessible resources SHOULD return the same `not_found` result to avoid disclosure. Bindings MUST protect credentials and message contents in transit. Deployments define storage encryption, audit access, retention, and principal policy.
 
 Receivers MUST enforce byte, depth, collection, and integer limits before execution. They MUST reject duplicate JSON keys before a parser discards them. Implementations MUST NOT create runtime atoms, classes, code, or filesystem paths from received names.

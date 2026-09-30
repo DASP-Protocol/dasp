@@ -34,10 +34,10 @@ Every binding MUST define:
 
 1. Endpoint selection and secure connection setup.
 2. Authentication and host-authority identity.
-3. How the client discovers and selects the exact DASP draft or release, profile, supported commands, schema identifiers, and limits.
+3. How the client obtains and selects the exact DASP draft or release, profile, supported commands, schema identifiers, and limits. Configuration can supply this information; automatic discovery is not required.
 4. Structured CloudEvents framing and any transport acknowledgments.
 5. Request routing, request-ID scope, reply routing, and timeout behavior.
-6. Replay paging and, if supported, live subscriptions and race-free handoff.
+6. Replay paging and, if supported, live subscriptions and race-free handoff. A live binding defines start, confirmation, first sequence, repeated setup, stop scope, resync state, and a finite replay boundary.
 7. Error handling before a request can be decoded.
 8. Backpressure, reconnect behavior, and a durability declaration.
 
@@ -60,3 +60,5 @@ Authorization policy remains a host concern. A collaboration profile or extensio
 Requirement group **DASP-PROFILE-004**.
 
 Draft-01 does not select the first production binding. A transport implementation and its conformance vectors are required before an independently built client can claim interoperability. This is an explicit remaining release decision.
+
+The selected first WebSocket binding requires the [live-delivery contract](websocket-live-delivery.md). It uses a configured `wss://` endpoint and trusted host-authority identity. The client requests one exact contract; both peers must confirm shared settings before core operations. Its successful open starts observation; connection close stops all session streams. Normal operation uses live updates, with saved replay for startup and recovery. Automatic discovery is outside this minimum binding. Exact authenticated setup, shared limit fields and values, health checks and deadlines, and tested production behavior remain incomplete. Separate polling-only bindings remain valid.

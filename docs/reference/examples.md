@@ -11,6 +11,7 @@ Select a message to inspect its complete CloudEvents JSON. These examples cover 
 | [Counter event set](../../specification/draft-01/examples/counter.json) | Full examples of every core type |
 | [Counter profile](../specification/example.md) | Commands, state, outputs, and completion rules |
 | [Recovery trace](../../conformance/fixtures/recovery-trace.json) | Lost receipt, equal retry, conflict, and two client cursors |
+| [WebSocket delivery transcripts](../../conformance/fixtures/websocket-delivery-traces.json) | Normal live delivery, fixed-boundary reconnect, and resync with a late cancelled-read reply |
 | [Invalid events](../../conformance/fixtures/invalid-events.json) | Messages rejected by validation |
 
 The event set is a catalog. The recovery trace is ordered. Both are recorded artifacts, not a live host.
