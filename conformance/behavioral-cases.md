@@ -63,8 +63,8 @@ Requirement: **DASP-CORE-007**. Status: not executed.
 Requirements: **DASP-CORE-009**, **DASP-CORE-011**, **DASP-WS-002**, **DASP-WS-003**, **DASP-WS-004**. Status: not executed.
 
 - Setup: A session with saved updates and a client with a persistent cursor.
-- Actions and failure: Commit at head capture, then during paged replay. Return a page head newer than the open boundary. Overflow host and client buffers, fail to queue resync, order resync around reopen, and deliver a late reply to a locally cancelled replay request.
-- Expected result: Open confirms before pushes for a new attachment. Replay through the fixed open boundary and buffered later events cover every saved sequence without a second application or a chasing loop. Saved identities match. Host overflow ends the affected attachment and sends resync or closes; client overflow closes and recovers. No stopped-stream update follows resync. Reopen starts new delivery and new replay requests. Cancelled-read replies are discarded.
+- Actions and failure: Commit after head capture but before confirmation receipt, then during several replay pages. Return a page head newer than the open boundary. Overflow host and client buffers, fail to queue resync, order resync around reopen, and deliver late pages and failures for locally cancelled replay requests before and after new confirmation. Follow each discarded reply with a reply to a current request.
+- Expected result: Open confirms before pushes for a new attachment, without blocking later commits. Replay through the fixed open boundary and buffered later events cover every saved sequence without a second application or a chasing loop. Saved identities match. Host overflow ends the affected attachment and sends resync or closes; client overflow closes and recovers. No stopped-stream update follows resync. Reopen starts new delivery and new replay requests. Cancelled pages and failures change no application or attachment state. Current replies still reach their callers.
 - Cleanup: stop this case's processes and remove its isolated test storage and effect records.
 
 ## RUN-CURSOR: Client state and cursor
@@ -99,8 +99,8 @@ Requirement: **DASP-CORE-012**. Status: not executed.
 Requirements: **DASP-WS-001**, **DASP-WS-002**. Status: not executed.
 
 - Setup: A selected WebSocket binding and a saved session with active delivery.
-- Actions and failure: Race commits with the first open. Repeat equal opens while output is queued; open a conflicting tuple. Resync before and after open confirmation. Delay an open reply past timeout and attempt recovery.
-- Expected result: A new attachment covers every commit above its captured head and confirms before its pushes or progress. Equal opens keep one attachment and its queued events. Conflicts preserve the old tuple and attachment. Open replies and resync follow state-transition order. At most one open is pending per session; timeout requires connection close before a new attempt.
+- Actions and failure: Race commits with the first open. Repeat equal opens during replay and live use; deliver retained-stream pushes before and after the reply, including advancement beyond its captured head. Open a conflicting tuple. Resync before and after a pending open's host decision and confirmation. Delay an open reply past timeout and attempt recovery.
+- Expected result: A new attachment covers every commit above its captured head and confirms before its pushes or progress. Equal opens keep one attachment, its queued events, recovery target, and next push position; advancement beyond an equal-open reply does not fail continuity. A new attachment below the saved applied cursor still fails continuity. Conflicts preserve the old tuple and attachment. Open replies and resync follow state-transition order. Resync before a pending successful open reply makes that reply a new attachment confirmation. At most one open is pending per session; timeout requires connection close before a new attempt.
 - Cleanup: stop this case's processes and remove its isolated sessions and captured output.
 
 ## RUN-LIVE-SCOPE: Several sessions and clients

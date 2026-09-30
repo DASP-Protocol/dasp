@@ -59,7 +59,7 @@ The client chooses the session ID. On first open, the host saves the identity, a
 
 A new session starts at cursor 0. Session creation itself does not consume an update sequence in this draft. Session expiry or deletion MUST NOT make the same ID available for an unrelated session.
 
-A selected binding can make successful open also attach live delivery. The [first WebSocket delivery contract](websocket-live-delivery.md#dasp-ws-002) uses `session.opened` to confirm that attachment before later pushes. The session tuple and core shapes remain unchanged.
+A selected binding can make successful open also attach live delivery. The [first WebSocket delivery contract](websocket-live-delivery.md#dasp-ws-002) uses `session.opened` to confirm a new attachment before its pushes. An equal open that retains an active attachment preserves its recovery boundary and delivery position; its reply does not restart recovery. The session tuple and core shapes remain unchanged.
 
 ## Command and receipt {#dasp-msg-004}
 
@@ -187,7 +187,7 @@ Progress has no saved sequence. It may be delayed, repeated, reordered, or lost.
 
 On resync, the client MUST stop treating its live stream as complete and read saved events after its own last applied cursor. The host's head is informational.
 
-The binding defines whether resync ends the attachment and how to restart it. In the [first WebSocket contract](websocket-live-delivery.md#dasp-ws-004), reopen before replay and discard late replies to locally cancelled replay requests for that session.
+The binding defines whether resync ends the attachment and how to restart it. In the [first WebSocket contract](websocket-live-delivery.md#dasp-ws-004), reopen before replay and discard late pages and failures for locally cancelled replay request IDs for that session. A pending open must finish or time out before another open is sent.
 
 ## Failure {#dasp-msg-009}
 

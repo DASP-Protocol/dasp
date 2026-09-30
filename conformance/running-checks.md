@@ -19,7 +19,7 @@ The suite reports valid events, rejected vectors, recorded trace events, and cas
 | ART-RELATIONS | Counter fixtures preserve identity, sequence, and outcome relationships |
 | ART-PROFILE | Counter payloads match the illustrative profile |
 | ART-TRACE | The recorded retry and replay trace is consistent; changed traces fail |
-| ART-LIVE-TRACE | Recorded normal delivery, fixed-boundary reconnect, resync, and cancelled-read reply examples are consistent; changed traces fail |
+| ART-LIVE-TRACE | Recorded head capture, confirmation races, equal and conflicting opens, fixed-boundary pages, resync, cancelled pages/failures, and open timeout examples are consistent; changed traces fail |
 | ART-IDENTITY | Published schema and example bytes match their SHA-256 manifest |
 
 Run all project checks with `npm run check`. This adds public-source checks, the production site build, and internal link and anchor checks.
@@ -28,6 +28,6 @@ Run all project checks with `npm run check`. This adds public-source checks, the
 
 The invalid-event vectors contain parsed JSON. They cannot test a parser's rejection of duplicate keys or invalid UTF-8. The trace checker compares expected records; it is not a host or a durable client implementation.
 
-The WebSocket transcript check uses recorded events and expected state transitions. It does not open a socket, race commits, persist a client checkpoint, or execute permissions and queue limits. Those observations remain runtime cases.
+The WebSocket transcript check separates recorded host head capture from reply receipt. It checks the saved session tuple, optional session subject, distinct event identity, selected counter payloads, and retained recovery targets. Its continuity rejection case keeps the captured head and reply equal, so another head check cannot hide a missing continuity guard. It does not open a socket, race real commits, persist a client checkpoint, or execute permissions and queue limits. Those observations remain runtime cases.
 
 Use [behavioral cases](behavioral-cases.md) when building a runtime harness. Keep unsupported cases marked not executed rather than treating them as a pass.
