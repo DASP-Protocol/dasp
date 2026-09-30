@@ -10,6 +10,7 @@ export const pages = {
   'clients/elixir/README.md': 'build/elixir.md',
   'clients/typescript/README.md': 'build/typescript.md',
   'docs/specification/README.md': 'specification/index.md',
+  'docs/specification/capabilities.md': 'specification/capabilities.md',
   'docs/specification/model.md': 'specification/model.md',
   'docs/specification/cloudevents.md': 'specification/cloudevents.md',
   'docs/specification/messages.md': 'specification/messages.md',

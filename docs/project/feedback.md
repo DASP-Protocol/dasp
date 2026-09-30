@@ -1,8 +1,8 @@
 # Status and open decisions
 
-Draft-01 defines the core contract. The schemas, recorded examples, and experimental clients can be checked locally. No production host or binding is released.
+Draft-01 defines the core, the first WebSocket delivery rules, and optional encryption and proof-of-authority rules. The schemas, recorded examples, and experimental clients can be checked locally. The [capability overview](../specification/capabilities.md) shows how these parts fit and where evidence is still required. No production host or binding is released.
 
-The next step is a persistent example host, one specified binding, and tests with both clients. That will put the recovery rules under real failure conditions.
+The next step is to complete authenticated binding setup, implement a persistent example host, and test it with both clients. That will put the recovery rules under real failure conditions.
 
 Report an ambiguity, missing failure case, or integration constraint.
 
@@ -10,9 +10,11 @@ Report an ambiguity, missing failure case, or integration constraint.
 
 ## Open decisions
 
-| Topic | Current position | Review question |
+| Topic | Current position | Open work or question |
 | --- | --- | --- |
-| First transport binding | None selected | Which transport lets you test an existing actor with the least adaptation? |
+| First transport binding | WebSocket live delivery rules are selected | Complete exact setup, shared limits, health controls, and runtime tests. |
+| Payload encryption | Optional contract; executing host can read payloads | Complete setup, independent cryptographic tests, and security review. |
+| Proof of authority | Optional reusable standing grants and exact-command grants | Test host scope enforcement, atomic budgets, recovery, and revocation. |
 | First application profile | Counter is illustrative | Which useful agent or workflow contract should be specified first? |
 | Retention | All records remain for the session lifetime | What bounded retention and recovery rules will implementations need? |
 | Data values | Safe integers; exact fractions use profile strings | Does this restriction fit the intended applications? |

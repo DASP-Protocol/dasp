@@ -71,6 +71,7 @@ export default defineConfig({
       ]}],
       '/specification/': [{ text: 'Core draft · draft-01', items: [
         { text: 'Scope and versions', link: '/specification/' },
+        { text: 'Protocol capabilities', link: '/specification/capabilities' },
         { text: 'Sessions and command lifecycle', link: '/specification/model' },
         { text: 'Messages and errors', link: '/specification/messages' },
         { text: 'CloudEvents envelope', link: '/specification/cloudevents' },

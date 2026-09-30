@@ -1,10 +1,10 @@
 # Proof of authority
 
-**Status: proposed optional binding contract. Reusable standing authority is the design basis. This specification and its security evidence require review. No complete binding interoperability is claimed.**
+**Status: optional binding contract in draft-01. Reusable standing authority is the design basis. Independent security evidence and host runtime tests remain incomplete. No complete binding interoperability is claimed.**
 
 A principal signs one standing grant for a work scope and time window. Its authenticated agent can submit many commands under that grant. Each new admission records the grant used. Admission does not consume the whole grant. A command-count budget is optional. Equal retries add no grant use or budget charge.
 
-This proposal selects the required CloudEvents extension `daspauthority`. It carries full grant evidence outside profile input. A protected command remains an ordinary core CloudEvent, including inside [encrypted delivery](payload-encryption.md). Five core requests and fourteen core message types remain unchanged. No protocol version is added.
+This contract selects the required CloudEvents extension `daspauthority`. It carries full grant evidence outside profile input. A protected command remains an ordinary core CloudEvent, including inside [encrypted delivery](payload-encryption.md). Five core requests and fourteen core message types remain unchanged. No protocol version is added.
 
 ## Roles and trust {#dasp-auth-001}
 
@@ -202,9 +202,9 @@ In encrypted mode, `daspauthority` is an attribute of the inner `dasp.v1.command
 
 An authenticated record consumes its connection number once even if grant validation rejects its command. Such rejection consumes no admission budget. Fresh ciphertext, request ID, connection, or trusted delivery key does not change semantic retry equality. Replays retain original saved facts and use current permitted reader keys. Principal grant keys and reader keys have separate purposes and lifetimes.
 
-The executing host can read inputs and grant scope under the accepted encryption boundary. Relays need neither grant interpretation nor grant-verification keys. An authority grant does not repair incomplete encryption setup or establish health-check behavior. Existing live dispatch/recovery clients expect already authenticated core traffic; this proposal adds no connection, encryption, or health-control implementation.
+The executing host can read inputs and grant scope under the accepted encryption boundary. Relays need neither grant interpretation nor grant-verification keys. An authority grant does not repair incomplete encryption setup or establish health-check behavior. Existing live dispatch/recovery clients expect already authenticated core traffic; this contract adds no connection, encryption, or health-control implementation.
 
-## Examples, checks, and review gates {#dasp-auth-008}
+## Examples, checks, and release requirements {#dasp-auth-008}
 
 Requirement group **DASP-AUTH-008**.
 
@@ -214,10 +214,10 @@ One grant permits `command-add-1` with amount 3 and `command-add-2` with amount 
 
 The [artifact checks](../../conformance/running-checks.md) verify closed shapes, original-byte parsing, signatures with one Node crypto implementation, scope examples, and recorded admission/budget decisions. These checks are not a running host, concurrent store, or secure binding. [Runtime cases](../../conformance/behavioral-cases.md#run-authority-admission-atomic-admission-and-budgets) remain unexecuted.
 
-Before interoperability or deployment claims, the complete binding MUST supply authenticated setup bytes that bind authority selection, key possession/confirmation, shared limits, health-control framing, and deadlines. The encrypted proposal's setup and independent security gates still apply. The authority contract additionally needs:
+Before interoperability or deployment claims, the complete binding MUST supply authenticated setup bytes that bind authority selection, key possession/confirmation, shared limits, health-control framing, and deadlines. The encrypted-delivery contract's setup and independent security requirements still apply. The authority contract additionally needs:
 
 1. Independent Ed25519/strict-encoding implementations and shared positive/negative acceptance vectors, including noncanonical signatures and public points.
 2. Executed concurrent admission, budget, crash recovery, revocation/release, and encrypted retry/live-delivery tests across host replicas.
 3. Review of issuer administration, scope enforcement for each supported profile, time/status trust, and audit retention.
 
-No grant-registration service, reference cache protocol, general policy language, additional core operation, or separate signature on every agent command is required by this proposal.
+No grant-registration service, reference cache protocol, general policy language, additional core operation, or separate signature on every agent command is required by this contract.
