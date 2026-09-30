@@ -58,13 +58,15 @@ A gap requires replay. Malformed, unsupported, or unknown saved events stop curs
 
 Requirement group **DASP-CORE-011**.
 
-1. Reopen the authorized session with its original actor and profile.
+1. Reopen the authorized session with its original actor and profile. A live binding confirms its attachment and supplies a fixed recovery boundary before replay begins.
 2. Read outcomes or retry unresolved commands with their original identity and data.
 3. Read updates after the last applied cursor.
 4. Validate session, identity, sequence, shape, and profile before applying each event.
-5. Continue until caught up, then use the binding's race-free live handoff.
+5. For a live binding, recover through its fixed boundary and then apply buffered live events. Do not keep reading only to chase newer page heads. For a polling-only binding, continue reads under its paging policy.
 
 The binding MUST define how replay and subscription overlap without losing committed events. A simple implementation can subscribe first, buffer live events, replay, and deduplicate by saved identity and sequence. Buffer overflow requires resync. A polling-only binding needs no live handoff.
+
+The [first WebSocket delivery contract](websocket-live-delivery.md) attaches through open, restarts delivery through reopen after resync, and stops all streams through connection close. The host owns authoritative saved history. The client owns recovery of its applied state and cursor. Reconnect, replay, and command retries do not change saved identities, immutable outcomes, or the [storage lifetime](#dasp-core-012).
 
 ## Storage lifetime {#dasp-core-012}
 

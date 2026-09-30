@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import Ajv from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { checkTrace } from '../conformance/check-trace.mjs';
+import { checkLiveTrace } from '../conformance/check-live-trace.mjs';
 
 const read = path => JSON.parse(readFileSync(path));
 const schema = read('specification/draft-01/envelope.schema.json');
@@ -73,6 +74,23 @@ check('ART-TRACE', 'Recorded lost-receipt, retry, conflict, and two-client repla
     assert.throws(() => checkTrace(broken, validate));
   }
 });
+let liveCounts;
+check('ART-LIVE-TRACE', 'Recorded open, fixed-boundary replay, and resync transcripts agree; no live runtime executed', () => {
+  const liveTrace = read('conformance/fixtures/websocket-delivery-traces.json');
+  liveCounts = checkLiveTrace(liveTrace, validate);
+  for (const mutate of [
+    t => { t.scenarios[1].steps.find(s => s.event?.type === 'dasp.v1.session.opened').event.data.cursor = 2; },
+    t => { t.scenarios[1].steps.find(s => s.event?.type === 'dasp.v1.updates').event.data.events[0].id = 'changed'; },
+    t => { t.scenarios[1].steps.find(s => s.event?.type === 'dasp.v1.updates').event.data.events.shift(); },
+    t => { t.scenarios[1].steps.find(s => s.event?.type === 'dasp.v1.updates.read').event.data.after = 4; },
+    t => { t.scenarios[0].steps = t.scenarios[0].steps.filter(s => s.event?.type !== 'dasp.v1.update' || s.event.data.sequence !== 1); },
+    t => { t.scenarios[2].steps = t.scenarios[2].steps.filter(s => s.event?.type !== 'dasp.v1.resync.required'); },
+    t => { t.scenarios[2].steps.find(s => s.event?.requestid === 'cancelled-read' && s.action === 'receive').event.requestid = 'unmatched'; }
+  ]) {
+    const broken = structuredClone(liveTrace); mutate(broken);
+    assert.throws(() => checkLiveTrace(broken, validate));
+  }
+});
 check('ART-IDENTITY', 'Previously published schema and example bytes keep their digests', () => {
   for (const [path, expected] of Object.entries(read('specification/artifacts.json').files)) {
     assert.equal(createHash('sha256').update(readFileSync(path)).digest('hex'), expected, path);
@@ -81,9 +99,9 @@ check('ART-IDENTITY', 'Previously published schema and example bytes keep their 
 const report = {
   core: 'draft-01', suite: 'draft-01-artifacts-1',
   scope: 'Recorded artifacts only; no host, client, binding, authorization, or durability execution.',
-  counts: { validEvents: events.length, invalidEvents: negatives.length, recordedTraceEvents: trace.steps.length },
+  counts: { validEvents: events.length, invalidEvents: negatives.length, recordedTraceEvents: trace.steps.length, ...liveCounts },
   results, runtime: { status: 'not-executed' }
 };
 mkdirSync('dist', { recursive: true });
 writeFileSync('dist/conformance-report.json', JSON.stringify(report, null, 2) + '\n');
-console.log(`DASP artifacts: ${events.length} valid events, ${negatives.length} rejected vectors, ${trace.steps.length} recorded trace events. ${results.length} case groups passed. Runtime cases: not executed.`);
+console.log(`DASP artifacts: ${events.length} valid events, ${negatives.length} rejected vectors, ${trace.steps.length} recorded trace events; ${liveCounts.liveScenarios} live-delivery transcripts with ${liveCounts.liveTraceSteps} steps. ${results.length} case groups passed. Runtime cases: not executed.`);

@@ -15,6 +15,7 @@ export const pages = {
   'docs/specification/messages.md': 'specification/messages.md',
   'docs/specification/recovery.md': 'specification/recovery.md',
   'docs/specification/profiles-and-bindings.md': 'specification/profiles-and-bindings.md',
+  'docs/specification/websocket-live-delivery.md': 'specification/websocket-live-delivery.md',
   'docs/specification/security-and-versioning.md': 'specification/security-and-versioning.md',
   'docs/specification/example.md': 'reference/counter.md',
   'conformance/README.md': 'specification/conformance/index.md',
@@ -41,6 +42,7 @@ export const artifacts = {
   'specification/artifacts.json': 'schemas/artifacts.json',
   'conformance/fixtures/invalid-events.json': 'fixtures/invalid-events.json',
   'conformance/fixtures/recovery-trace.json': 'fixtures/recovery-trace.json',
+  'conformance/fixtures/websocket-delivery-traces.json': 'fixtures/websocket-delivery-traces.json',
   'conformance/requirements.json': 'fixtures/requirements.json',
   'conformance/report-template.json': 'fixtures/report-template.json'
 };

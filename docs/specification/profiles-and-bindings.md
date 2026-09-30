@@ -37,7 +37,7 @@ Every binding MUST define:
 3. How the client discovers and selects the exact DASP draft or release, profile, supported commands, schema identifiers, and limits.
 4. Structured CloudEvents framing and any transport acknowledgments.
 5. Request routing, request-ID scope, reply routing, and timeout behavior.
-6. Replay paging and, if supported, live subscriptions and race-free handoff.
+6. Replay paging and, if supported, live subscriptions and race-free handoff. A live binding defines start, confirmation, first sequence, repeated setup, stop scope, resync state, and a finite replay boundary.
 7. Error handling before a request can be decoded.
 8. Backpressure, reconnect behavior, and a durability declaration.
 
@@ -60,3 +60,5 @@ Authorization policy remains a host concern. A collaboration profile or extensio
 Requirement group **DASP-PROFILE-004**.
 
 Draft-01 does not select the first production binding. A transport implementation and its conformance vectors are required before an independently built client can claim interoperability. This is an explicit remaining release decision.
+
+The selected first WebSocket binding requires the [live-delivery contract](websocket-live-delivery.md). Its successful open starts observation; connection close stops all session streams. This fixes delivery behavior without completing endpoint discovery, authenticated setup, or the tested production binding. Separate polling-only bindings remain valid.
