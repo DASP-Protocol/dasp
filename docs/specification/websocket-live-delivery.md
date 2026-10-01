@@ -18,6 +18,18 @@ The client MUST request one exact core, profile, and binding contract with its r
 
 The complete binding MUST define each shared limit's field name, unit, allowed range, direction or scope, and exceeded-limit behavior. It MUST distinguish these shared values from local controls, such as connection-rate and parser-work limits. Each implementation MUST keep local work and memory bounded. Local controls need not be sent to the peer unless the binding makes them part of selection. Local control failures MUST follow the binding's refusal, resync, or close rules; they cannot silently discard required saved facts.
 
+The resource boundaries below refer to existing rules. They do not select setup fields or new limit values.
+
+| Resource | Limit source and scope | Behavior at the limit |
+| --- | --- | --- |
+| Core message and saved event | Shared receive bounds, no larger than [DASP-ENV-004](cloudevents.md#dasp-env-004). | Reject invalid input under the binding's error or close rules. Do not admit a command whose required facts cannot fit. |
+| Replay page | Shared page bounds plus the request's limit; at most 100 events and the selected message byte limit. | Return a smaller contiguous page. A nonempty remaining interval requires at least one event under [DASP-MSG-007](messages.md#dasp-msg-007). |
+| Host output and client recovery buffers | Declared finite bounds for the selected scope; local work and memory controls can be tighter. | Use [resync or close](#dasp-ws-004) when complete delivery cannot continue. Do not prune saved history. |
+| Saved storage and admission capacity | Declared host capacity policy; not a client-selected retention period. | Refuse unsupported new work before admission. Preserve existing records under [DASP-CORE-012](recovery.md#dasp-core-012). |
+| Encrypted carrier and authority evidence, when selected | Separate [carrier bounds](payload-encryption.md#dasp-enc-006) and [proof bounds](proof-of-authority.md#dasp-auth-004), in addition to core limits. | Apply the selected contract's rejection or close rule. No larger outer bound enlarges a core payload limit. |
+
+One slow observer can require resync of its attachment or closure of its connection. This does not change another client's applied cursor or the saved history. Connection closure still ends every attachment on that connection under DASP-WS-005.
+
 One WebSocket text message MUST carry one complete structured JSON CloudEvent. Requests and direct replies retain `requestid`; push events route through their existing `session_id`. Reply type, request context, and resource identity MUST be checked before a reply is accepted. If [encrypted delivery](payload-encryption.md) is selected, each logical event uses one carrier. Authenticate and decrypt that carrier before applying these correlation, routing, replay, and cursor rules. Its outer bounds apply to the WebSocket message; core bounds apply to the decrypted event. A transport acknowledgment is not evidence of admission, completion, or application of an update.
 
 ## Open, confirmation, and repeat {#dasp-ws-002}

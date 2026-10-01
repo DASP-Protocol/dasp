@@ -251,6 +251,86 @@ defmodule DASP.LiveTest do
     end
   end
 
+  test "immediate completion is applied before the command receipt arrives" do
+    owner = self()
+
+    on_event = fn notice, live ->
+      case observer(notice, live) do
+        {:ok, next, opts} ->
+          if next.action == :save, do: send(owner, {:saved, next.checkpoint})
+          {:ok, next, opts}
+
+        other ->
+          other
+      end
+    end
+
+    channel = channel(handler_state: start(), on_event: on_event)
+    c = client(channel)
+    opening = Task.async(fn -> Client.open(c, @session) end)
+    q1 = request()
+
+    assert :ok =
+             Duplex.received(
+               channel,
+               JSON.encode!(
+                 event("session.opened", Map.put(@session, "cursor", 0), q1["requestid"])
+               )
+             )
+
+    assert {:ok, _} = Task.await(opening)
+
+    pending =
+      Task.async(fn ->
+        Client.submit(c, @session, %{
+          "command_id" => hd(@fixture["saved"])["data"]["command_id"],
+          "name" => "counter.add",
+          "input" => %{"amount" => 3}
+        })
+      end)
+
+    q2 = request()
+
+    for update <- Enum.take(@fixture["saved"], 3) do
+      assert :ok =
+               Duplex.received(
+                 channel,
+                 JSON.encode!(Map.put(update, "requestid", q2["requestid"]))
+               )
+
+      assert_receive {:saved, checkpoint}
+      assert checkpoint["cursor"] == update["data"]["sequence"]
+    end
+
+    assert Task.yield(pending, 0) == nil
+    live = Duplex.state(channel)
+    assert live.checkpoint == initial(3)
+    assert live.phase == :live
+    assert Live.next_read(live) == nil
+
+    assert :ok =
+             Duplex.received(
+               channel,
+               JSON.encode!(
+                 event(
+                   "receipt",
+                   %{
+                     "session_id" => @session["session_id"],
+                     "command_id" => q2["data"]["command_id"],
+                     "disposition" => "accepted",
+                     "admission_sequence" => 1,
+                     "error" => nil
+                   },
+                   q2["requestid"]
+                 )
+               )
+             )
+
+    assert {:ok, %{data: %{"admission_sequence" => 1}}} = Task.await(pending)
+    assert Duplex.state(channel).checkpoint == live.checkpoint
+    refute_receive {:saved, _}
+  end
+
   test "duplex dispatches concurrent replies and pushes with optional request IDs" do
     owner = self()
 

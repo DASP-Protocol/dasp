@@ -83,6 +83,43 @@ async function sent(wires, count) {
 }
 const client = transport => new Client({ source, hostSource: host, transport, validateProfile: profile, timeoutMs: 1000 });
 
+test('immediate completion is applied before the command receipt arrives', async () => {
+  let live = start(), saved = initial(), resolved = false;
+  const wires = [], incoming = [], checkpoints = [];
+  const duplex = new DuplexTransport({ hostSource: host, close() {}, send: wire => {
+    const q = JSON.parse(wire); wires.push(wire);
+    // The in-memory peer responds during send, before a caller can await its reply.
+    if (q.type === 'dasp.v1.session.open') {
+      incoming.push(duplex.receive(json(envelope('session.opened', { ...fixture.session, cursor: 0 }, q.requestid))));
+    } else if (q.type === 'dasp.v1.command') {
+      for (const event of fixture.saved.slice(0, 3)) {
+        incoming.push(duplex.receive(json({ ...event, requestid: q.requestid })));
+      }
+    }
+  }, onEvent: n => {
+    if (n.kind === 'closed') { live = live.close(); return; }
+    if (n.kind === 'timeout') { live = live.timeout(n.requestid); return; }
+    live = n.kind === 'sent' ? live.sent(n.wire) : live.received(n.wire);
+    if (live.action === 'save') { saved = live.checkpoint; checkpoints.push(saved); }
+  } });
+  const c = client(duplex.transport);
+  await c.open(fixture.session);
+  const pending = c.submit(fixture.session, { command_id: fixture.saved[0].data.command_id,
+    name: 'counter.add', input: { amount: 3 } }).then(reply => { resolved = true; return reply; });
+  const q = await sent(wires, 2);
+  await Promise.all(incoming);
+  assert.equal(resolved, false, 'Saved pushes must not resolve the command receipt');
+  assert.deepEqual(checkpoints.map(cp => cp.cursor), [1, 2, 3]);
+  assert.deepEqual(saved, initial(3), 'State, cursor, and evidence cover immediate completion');
+  assert.equal(live.phase, 'live'); assert.equal(live.nextRead(), null);
+  await duplex.receive(json(envelope('receipt', { session_id: fixture.session.session_id,
+    command_id: q.data.command_id, disposition: 'accepted', admission_sequence: 1, error: null }, q.requestid)));
+  assert.equal((await pending).data.admission_sequence, 1);
+  assert.equal(checkpoints.length, 3, 'A receipt does not apply another fact');
+  assert.deepEqual(live.checkpoint, saved);
+  duplex.close();
+});
+
 test('duplex dispatches out-of-order replies and pushes with request IDs', async () => {
   const wires = [], notices = [];
   const duplex = new DuplexTransport({ hostSource: host, send: w => { wires.push(w); }, close() {}, onEvent: n => { notices.push(n); } });
