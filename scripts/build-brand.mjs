@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { Resvg } from '@resvg/resvg-js';
 import opentype from 'opentype.js';
 
-const out = 'website/public/brand';
+const out = process.argv[2] || 'website/public/brand';
 mkdirSync(out, { recursive: true });
 const font = opentype.parse(readFileSync('assets/brand/DM-Sans.ttf').buffer);
 const blue = '#315da8', pale = '#93b8f5', ink = '#202938', dark = '#151b24', paper = '#f7f8fa';
@@ -22,7 +22,14 @@ function text(label, x, y, size, color) {
     const glyph = font.charToGlyph(letter);
     const path = glyph.getPath(x, y, size);
     path.fill = color;
-    paths += path.toSVG(2);
+    // OpenType.js 2 produces NaN when rounding numbers close to an integer.
+    // Round the coordinates first and preserve the SVG outlines and Y axis.
+    for (const command of path.commands) {
+      for (const key of ['x', 'y', 'x1', 'y1', 'x2', 'y2']) {
+        if (typeof command[key] === 'number') command[key] = Number(command[key].toFixed(2));
+      }
+    }
+    paths += path.toSVG({ decimalPlaces: 2, flipY: false, optimize: false });
     x += glyph.advanceWidth * size / font.unitsPerEm;
   }
   return paths;
