@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:example:dasp:schema:shared-context",
+  "type": "object",
+  "properties": {
+    "locale": {
+      "type": "string"
+    },
+    "trace": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

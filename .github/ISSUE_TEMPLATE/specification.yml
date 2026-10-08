@@ -1,0 +1,42 @@
+name: Specification issue
+description: Report a contract defect, ambiguity, or proposed change.
+title: "[Spec] "
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Draft and source commit
+      placeholder: draft-01, commit SHA
+    validations:
+      required: true
+  - type: input
+    id: requirement
+    attributes:
+      label: Requirement, message, or example
+      placeholder: DASP-CORE-004
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Core specification
+        - Profile or binding
+        - Conformance suite
+        - Guide or reference
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed ambiguity or defect
+      description: Include a small example. Do not include private data.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior and proposed change
+    validations:
+      required: true

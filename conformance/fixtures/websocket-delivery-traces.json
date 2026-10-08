@@ -1,0 +1,4361 @@
+{
+  "scope": "Recorded counter contract examples only. Host head capture and client reply receipt are separate actions. No host, WebSocket, client, permission, queue, cryptography, or durability behavior is executed. Saved history supplies duplicate evidence.",
+  "saved": [
+    {
+      "specversion": "1.0",
+      "id": "ws-saved-1",
+      "source": "urn:example:host:one",
+      "type": "dasp.v1.update",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "sequence": 1,
+        "kind": "command.accepted",
+        "payload": {
+          "name": "counter.add"
+        }
+      }
+    },
+    {
+      "specversion": "1.0",
+      "id": "ws-saved-2",
+      "source": "urn:example:host:one",
+      "type": "dasp.v1.update",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "sequence": 2,
+        "kind": "application",
+        "payload": {
+          "name": "counter.changed",
+          "data": {
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "specversion": "1.0",
+      "id": "ws-saved-3",
+      "source": "urn:example:host:one",
+      "type": "dasp.v1.update",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-1",
+        "sequence": 3,
+        "kind": "command.outcome",
+        "payload": {
+          "status": "completed",
+          "output": {
+            "value": 3
+          },
+          "error": null
+        }
+      }
+    },
+    {
+      "specversion": "1.0",
+      "id": "ws-saved-4",
+      "source": "urn:example:host:one",
+      "type": "dasp.v1.update",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-2",
+        "sequence": 4,
+        "kind": "command.accepted",
+        "payload": {
+          "name": "counter.add"
+        }
+      }
+    },
+    {
+      "specversion": "1.0",
+      "id": "ws-saved-5",
+      "source": "urn:example:host:one",
+      "type": "dasp.v1.update",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-2",
+        "sequence": 5,
+        "kind": "application",
+        "payload": {
+          "name": "counter.changed",
+          "data": {
+            "value": 6
+          }
+        }
+      }
+    },
+    {
+      "specversion": "1.0",
+      "id": "ws-saved-6",
+      "source": "urn:example:host:one",
+      "type": "dasp.v1.update",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-2",
+        "sequence": 6,
+        "kind": "command.outcome",
+        "payload": {
+          "status": "completed",
+          "output": {
+            "value": 6
+          },
+          "error": null
+        }
+      }
+    },
+    {
+      "specversion": "1.0",
+      "id": "ws-saved-7",
+      "source": "urn:example:host:one",
+      "type": "dasp.v1.update",
+      "datacontenttype": "application/json",
+      "data": {
+        "session_id": "session-counter",
+        "command_id": "command-add-3",
+        "sequence": 7,
+        "kind": "command.accepted",
+        "payload": {
+          "name": "counter.add"
+        }
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "normal",
+      "initial": {
+        "cursor": 0,
+        "state": {
+          "value": 0
+        },
+        "head": 0
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "normal-open"
+          },
+          "id": "normal-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "normal-open",
+          "head": 0,
+          "id": "normal-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 0
+            },
+            "requestid": "normal-open"
+          },
+          "id": "normal-3"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-command-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.command",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "name": "counter.add",
+              "input": {
+                "amount": 3
+              }
+            },
+            "requestid": "normal-command"
+          },
+          "id": "normal-4"
+        },
+        {
+          "action": "commit",
+          "sequence": 1,
+          "id": "normal-5"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-receipt-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.receipt",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "disposition": "accepted",
+              "admission_sequence": 1,
+              "error": null
+            },
+            "requestid": "normal-command"
+          },
+          "id": "normal-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-1",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 1,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "normal-7"
+        },
+        {
+          "action": "commit",
+          "sequence": 2,
+          "id": "normal-8"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-2",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 2,
+              "kind": "application",
+              "payload": {
+                "name": "counter.changed",
+                "data": {
+                  "value": 3
+                }
+              }
+            }
+          },
+          "id": "normal-9"
+        },
+        {
+          "action": "commit",
+          "sequence": 3,
+          "id": "normal-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-3",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 3,
+              "kind": "command.outcome",
+              "payload": {
+                "status": "completed",
+                "output": {
+                  "value": 3
+                },
+                "error": null
+              }
+            }
+          },
+          "id": "normal-11"
+        },
+        {
+          "action": "close",
+          "id": "normal-12"
+        }
+      ],
+      "expected": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "applied": [
+          1,
+          2,
+          3
+        ],
+        "replayReads": 0,
+        "discardedReplies": 0,
+        "phase": "closed",
+        "failedReplies": 0,
+        "target": 0,
+        "nextPush": 4
+      }
+    },
+    {
+      "id": "reconnect",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "reconnect-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "reconnect-open",
+          "head": 6,
+          "id": "reconnect-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "reconnect-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "reconnect-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "reconnect-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 3
+            },
+            "requestid": "reconnect-read"
+          },
+          "id": "reconnect-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 6,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "reconnect-read"
+          },
+          "id": "reconnect-7"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 1,
+        "discardedReplies": 0,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 6,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "resync",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "resync-open",
+          "head": 6,
+          "id": "resync-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "resync-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "resync-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 3
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "overflow-notice",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.resync.required",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "reason": "overflow",
+              "head": 7
+            }
+          },
+          "id": "resync-7"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 6,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-8"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "resync-9"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "restarted-open",
+          "head": 7,
+          "id": "resync-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 7
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "resync-11"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 4
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-12"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 7,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-7",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-3",
+                    "sequence": 7,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-13"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 2,
+        "discardedReplies": 1,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 7,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "commit-before-confirmation",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "commit-before-confirmation-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "reconnect-open",
+          "head": 6,
+          "id": "commit-before-confirmation-2"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "commit-before-confirmation-3"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "commit-before-confirmation-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "commit-before-confirmation-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 3
+            },
+            "requestid": "reconnect-read"
+          },
+          "id": "commit-before-confirmation-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 6,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "reconnect-read"
+          },
+          "id": "commit-before-confirmation-7"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 1,
+        "discardedReplies": 0,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 6,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "equal-open-during-live",
+      "initial": {
+        "cursor": 0,
+        "state": {
+          "value": 0
+        },
+        "head": 0
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "normal-open"
+          },
+          "id": "equal-open-during-live-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "normal-open",
+          "head": 0,
+          "id": "equal-open-during-live-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 0
+            },
+            "requestid": "normal-open"
+          },
+          "id": "equal-open-during-live-3"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-command-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.command",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "name": "counter.add",
+              "input": {
+                "amount": 3
+              }
+            },
+            "requestid": "normal-command"
+          },
+          "id": "equal-open-during-live-4"
+        },
+        {
+          "action": "commit",
+          "sequence": 1,
+          "id": "equal-open-during-live-5"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-receipt-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.receipt",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "disposition": "accepted",
+              "admission_sequence": 1,
+              "error": null
+            },
+            "requestid": "normal-command"
+          },
+          "id": "equal-open-during-live-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-1",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 1,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "equal-open-during-live-7"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "equal-live-session.open",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "equal-live"
+          },
+          "id": "equal-open-during-live-8"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "equal-live",
+          "head": 1,
+          "id": "equal-open-during-live-9"
+        },
+        {
+          "action": "commit",
+          "sequence": 2,
+          "id": "equal-open-during-live-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-2",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 2,
+              "kind": "application",
+              "payload": {
+                "name": "counter.changed",
+                "data": {
+                  "value": 3
+                }
+              }
+            }
+          },
+          "id": "equal-open-during-live-11"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "equal-live-session.opened",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 1
+            },
+            "requestid": "equal-live"
+          },
+          "id": "equal-open-during-live-12"
+        },
+        {
+          "action": "commit",
+          "sequence": 3,
+          "id": "equal-open-during-live-13"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-3",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 3,
+              "kind": "command.outcome",
+              "payload": {
+                "status": "completed",
+                "output": {
+                  "value": 3
+                },
+                "error": null
+              }
+            }
+          },
+          "id": "equal-open-during-live-14"
+        },
+        {
+          "action": "close",
+          "id": "equal-open-during-live-15"
+        }
+      ],
+      "expected": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "applied": [
+          1,
+          2,
+          3
+        ],
+        "replayReads": 0,
+        "discardedReplies": 0,
+        "phase": "closed",
+        "failedReplies": 0,
+        "target": 0,
+        "nextPush": 4
+      }
+    },
+    {
+      "id": "equal-open-during-replay",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "equal-open-during-replay-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "reconnect-open",
+          "head": 6,
+          "id": "equal-open-during-replay-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "equal-open-during-replay-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "equal-open-during-replay-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "equal-open-during-replay-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "equal-replay-session.open",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "equal-replay"
+          },
+          "id": "equal-open-during-replay-6"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "equal-replay",
+          "head": 7,
+          "id": "equal-open-during-replay-7"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "equal-replay-session.opened",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 7
+            },
+            "requestid": "equal-replay"
+          },
+          "id": "equal-open-during-replay-8"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 3
+            },
+            "requestid": "reconnect-read"
+          },
+          "id": "equal-open-during-replay-9"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 6,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "reconnect-read"
+          },
+          "id": "equal-open-during-replay-10"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 1,
+        "discardedReplies": 0,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 6,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "conflicting-open-preserves-stream",
+      "initial": {
+        "cursor": 0,
+        "state": {
+          "value": 0
+        },
+        "head": 0
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "normal-open"
+          },
+          "id": "conflicting-open-preserves-stream-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "normal-open",
+          "head": 0,
+          "id": "conflicting-open-preserves-stream-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 0
+            },
+            "requestid": "normal-open"
+          },
+          "id": "conflicting-open-preserves-stream-3"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-command-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.command",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "name": "counter.add",
+              "input": {
+                "amount": 3
+              }
+            },
+            "requestid": "normal-command"
+          },
+          "id": "conflicting-open-preserves-stream-4"
+        },
+        {
+          "action": "commit",
+          "sequence": 1,
+          "id": "conflicting-open-preserves-stream-5"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-receipt-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.receipt",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "disposition": "accepted",
+              "admission_sequence": 1,
+              "error": null
+            },
+            "requestid": "normal-command"
+          },
+          "id": "conflicting-open-preserves-stream-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-1",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 1,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "conflicting-open-preserves-stream-7"
+        },
+        {
+          "action": "commit",
+          "sequence": 2,
+          "id": "conflicting-open-preserves-stream-8"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-2",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 2,
+              "kind": "application",
+              "payload": {
+                "name": "counter.changed",
+                "data": {
+                  "value": 3
+                }
+              }
+            }
+          },
+          "id": "conflicting-open-preserves-stream-9"
+        },
+        {
+          "action": "commit",
+          "sequence": 3,
+          "id": "conflicting-open-preserves-stream-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-3",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 3,
+              "kind": "command.outcome",
+              "payload": {
+                "status": "completed",
+                "output": {
+                  "value": 3
+                },
+                "error": null
+              }
+            }
+          },
+          "id": "conflicting-open-preserves-stream-11"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "conflicting-open-session.open",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "different-actor",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "conflicting-open"
+          },
+          "id": "conflicting-open-preserves-stream-12"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "conflicting-open",
+          "head": 3,
+          "id": "conflicting-open-preserves-stream-13"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "conflicting-open-failure",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.failure",
+            "datacontenttype": "application/json",
+            "data": {
+              "error": {
+                "code": "conflict",
+                "message": "Session tuple conflicts",
+                "retryable": false
+              }
+            },
+            "requestid": "conflicting-open"
+          },
+          "id": "conflicting-open-preserves-stream-14"
+        },
+        {
+          "action": "close",
+          "id": "conflicting-open-preserves-stream-15"
+        }
+      ],
+      "expected": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "applied": [
+          1,
+          2,
+          3
+        ],
+        "replayReads": 0,
+        "discardedReplies": 0,
+        "phase": "closed",
+        "failedReplies": 1,
+        "target": 0,
+        "nextPush": 4
+      }
+    },
+    {
+      "id": "page-overlaps-buffer",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "page-overlaps-buffer-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "reconnect-open",
+          "head": 6,
+          "id": "page-overlaps-buffer-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "page-overlaps-buffer-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "page-overlaps-buffer-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "page-overlaps-buffer-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 4
+            },
+            "requestid": "reconnect-read"
+          },
+          "id": "page-overlaps-buffer-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 7,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-7",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-3",
+                    "sequence": 7,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "reconnect-read"
+          },
+          "id": "page-overlaps-buffer-7"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 1,
+        "discardedReplies": 0,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 6,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "resync-late-page-after-confirmation",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-late-page-after-confirmation-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "resync-open",
+          "head": 6,
+          "id": "resync-late-page-after-confirmation-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-late-page-after-confirmation-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "resync-late-page-after-confirmation-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "resync-late-page-after-confirmation-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 3
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-late-page-after-confirmation-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "overflow-notice",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.resync.required",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "reason": "overflow",
+              "head": 7
+            }
+          },
+          "id": "resync-late-page-after-confirmation-7"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "resync-late-page-after-confirmation-8"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "restarted-open",
+          "head": 7,
+          "id": "resync-late-page-after-confirmation-9"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 7
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "resync-late-page-after-confirmation-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 6,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-late-page-after-confirmation-11"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 4
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-late-page-after-confirmation-12"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 7,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-7",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-3",
+                    "sequence": 7,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-late-page-after-confirmation-13"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 2,
+        "discardedReplies": 1,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 7,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "resync-late-failure-before-confirmation",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-late-failure-before-confirmation-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "resync-open",
+          "head": 6,
+          "id": "resync-late-failure-before-confirmation-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-late-failure-before-confirmation-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "resync-late-failure-before-confirmation-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "resync-late-failure-before-confirmation-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 3
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-late-failure-before-confirmation-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "overflow-notice",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.resync.required",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "reason": "overflow",
+              "head": 7
+            }
+          },
+          "id": "resync-late-failure-before-confirmation-7"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-read-failure",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.failure",
+            "datacontenttype": "application/json",
+            "data": {
+              "error": {
+                "code": "unavailable",
+                "message": "Read unavailable",
+                "retryable": true
+              }
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-late-failure-before-confirmation-8"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "resync-late-failure-before-confirmation-9"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "restarted-open",
+          "head": 7,
+          "id": "resync-late-failure-before-confirmation-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 7
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "resync-late-failure-before-confirmation-11"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 4
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-late-failure-before-confirmation-12"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 7,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-7",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-3",
+                    "sequence": 7,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-late-failure-before-confirmation-13"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 2,
+        "discardedReplies": 1,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 7,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "resync-late-failure-after-confirmation",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-late-failure-after-confirmation-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "resync-open",
+          "head": 6,
+          "id": "resync-late-failure-after-confirmation-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-late-failure-after-confirmation-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "resync-late-failure-after-confirmation-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "resync-late-failure-after-confirmation-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 3
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-late-failure-after-confirmation-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "overflow-notice",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.resync.required",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "reason": "overflow",
+              "head": 7
+            }
+          },
+          "id": "resync-late-failure-after-confirmation-7"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "resync-late-failure-after-confirmation-8"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "restarted-open",
+          "head": 7,
+          "id": "resync-late-failure-after-confirmation-9"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 7
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "resync-late-failure-after-confirmation-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-read-failure",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.failure",
+            "datacontenttype": "application/json",
+            "data": {
+              "error": {
+                "code": "unavailable",
+                "message": "Read unavailable",
+                "retryable": true
+              }
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-late-failure-after-confirmation-11"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 4
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-late-failure-after-confirmation-12"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 7,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-7",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-3",
+                    "sequence": 7,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-late-failure-after-confirmation-13"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 2,
+        "discardedReplies": 1,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 7,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "resync-before-pending-open-confirmation",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-before-pending-open-confirmation-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "resync-open",
+          "head": 6,
+          "id": "resync-before-pending-open-confirmation-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "resync-open"
+          },
+          "id": "resync-before-pending-open-confirmation-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "resync-before-pending-open-confirmation-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "resync-before-pending-open-confirmation-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 3
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-before-pending-open-confirmation-6"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "pending-open-session.open",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "pending-open"
+          },
+          "id": "resync-before-pending-open-confirmation-7"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "overflow-notice",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.resync.required",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "reason": "overflow",
+              "head": 7
+            }
+          },
+          "id": "resync-before-pending-open-confirmation-8"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 6,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "resync-before-pending-open-confirmation-9"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "pending-open",
+          "head": 7,
+          "id": "resync-before-pending-open-confirmation-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "pending-open-session.opened",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 7
+            },
+            "requestid": "pending-open"
+          },
+          "id": "resync-before-pending-open-confirmation-11"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 4
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-before-pending-open-confirmation-12"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 7,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-7",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-3",
+                    "sequence": 7,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "resync-before-pending-open-confirmation-13"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 2,
+        "discardedReplies": 1,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 7,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "open-confirmation-before-resync",
+      "initial": {
+        "cursor": 0,
+        "state": {
+          "value": 0
+        },
+        "head": 0
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "normal-open"
+          },
+          "id": "open-confirmation-before-resync-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "normal-open",
+          "head": 0,
+          "id": "open-confirmation-before-resync-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 0
+            },
+            "requestid": "normal-open"
+          },
+          "id": "open-confirmation-before-resync-3"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-command-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.command",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "name": "counter.add",
+              "input": {
+                "amount": 3
+              }
+            },
+            "requestid": "normal-command"
+          },
+          "id": "open-confirmation-before-resync-4"
+        },
+        {
+          "action": "commit",
+          "sequence": 1,
+          "id": "open-confirmation-before-resync-5"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "normal-receipt-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.receipt",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "disposition": "accepted",
+              "admission_sequence": 1,
+              "error": null
+            },
+            "requestid": "normal-command"
+          },
+          "id": "open-confirmation-before-resync-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-1",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 1,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "open-confirmation-before-resync-7"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "equal-before-resync-session.open",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "equal-before-resync"
+          },
+          "id": "open-confirmation-before-resync-8"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "equal-before-resync",
+          "head": 1,
+          "id": "open-confirmation-before-resync-9"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "equal-before-resync-session.opened",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 1
+            },
+            "requestid": "equal-before-resync"
+          },
+          "id": "open-confirmation-before-resync-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "notice-after-equal-resync.required",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.resync.required",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "reason": "interrupted",
+              "head": 1
+            }
+          },
+          "id": "open-confirmation-before-resync-11"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "new-after-resync-session.open",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "new-after-resync"
+          },
+          "id": "open-confirmation-before-resync-12"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "new-after-resync",
+          "head": 1,
+          "id": "open-confirmation-before-resync-13"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "new-after-resync-session.opened",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 1
+            },
+            "requestid": "new-after-resync"
+          },
+          "id": "open-confirmation-before-resync-14"
+        },
+        {
+          "action": "commit",
+          "sequence": 2,
+          "id": "open-confirmation-before-resync-15"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-2",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 2,
+              "kind": "application",
+              "payload": {
+                "name": "counter.changed",
+                "data": {
+                  "value": 3
+                }
+              }
+            }
+          },
+          "id": "open-confirmation-before-resync-16"
+        },
+        {
+          "action": "commit",
+          "sequence": 3,
+          "id": "open-confirmation-before-resync-17"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-3",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-1",
+              "sequence": 3,
+              "kind": "command.outcome",
+              "payload": {
+                "status": "completed",
+                "output": {
+                  "value": 3
+                },
+                "error": null
+              }
+            }
+          },
+          "id": "open-confirmation-before-resync-18"
+        },
+        {
+          "action": "close",
+          "id": "open-confirmation-before-resync-19"
+        }
+      ],
+      "expected": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "applied": [
+          1,
+          2,
+          3
+        ],
+        "replayReads": 0,
+        "discardedReplies": 0,
+        "phase": "closed",
+        "failedReplies": 0,
+        "target": 1,
+        "nextPush": 4
+      }
+    },
+    {
+      "id": "current-failure-after-cancelled-failure",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "resync-open"
+          },
+          "id": "current-failure-after-cancelled-failure-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "resync-open",
+          "head": 6,
+          "id": "current-failure-after-cancelled-failure-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "resync-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "resync-open"
+          },
+          "id": "current-failure-after-cancelled-failure-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "current-failure-after-cancelled-failure-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "current-failure-after-cancelled-failure-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 3
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "current-failure-after-cancelled-failure-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "overflow-notice",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.resync.required",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "reason": "overflow",
+              "head": 7
+            }
+          },
+          "id": "current-failure-after-cancelled-failure-7"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "cancelled-read-failure",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.failure",
+            "datacontenttype": "application/json",
+            "data": {
+              "error": {
+                "code": "unavailable",
+                "message": "Read unavailable",
+                "retryable": true
+              }
+            },
+            "requestid": "cancelled-read"
+          },
+          "id": "current-failure-after-cancelled-failure-8"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "current-failure-after-cancelled-failure-9"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "restarted-open",
+          "head": 7,
+          "id": "current-failure-after-cancelled-failure-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 7
+            },
+            "requestid": "restarted-open"
+          },
+          "id": "current-failure-after-cancelled-failure-11"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "current-failing-read",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 4
+            },
+            "requestid": "current-failing-read"
+          },
+          "id": "current-failure-after-cancelled-failure-12"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "current-failing-read-failure",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.failure",
+            "datacontenttype": "application/json",
+            "data": {
+              "error": {
+                "code": "unavailable",
+                "message": "Try a new read",
+                "retryable": true
+              }
+            },
+            "requestid": "current-failing-read"
+          },
+          "id": "current-failure-after-cancelled-failure-13"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-read-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 4
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "current-failure-after-cancelled-failure-14"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "restarted-page-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 7,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                },
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-7",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-3",
+                    "sequence": 7,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "restarted-read"
+          },
+          "id": "current-failure-after-cancelled-failure-15"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 3,
+        "discardedReplies": 1,
+        "phase": "live",
+        "failedReplies": 1,
+        "target": 7,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "multi-page-fixed-recovery",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "multi-page-fixed-recovery-1"
+        },
+        {
+          "action": "handle-open",
+          "requestid": "reconnect-open",
+          "head": 6,
+          "id": "multi-page-fixed-recovery-2"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-opened-event",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.session.opened",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              },
+              "cursor": 6
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "multi-page-fixed-recovery-3"
+        },
+        {
+          "action": "commit",
+          "sequence": 7,
+          "id": "multi-page-fixed-recovery-4"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "ws-saved-7",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.update",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "command_id": "command-add-3",
+              "sequence": 7,
+              "kind": "command.accepted",
+              "payload": {
+                "name": "counter.add"
+              }
+            }
+          },
+          "id": "multi-page-fixed-recovery-5"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "multi-read-4-updates.read",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "limit": 1
+            },
+            "requestid": "multi-read-4"
+          },
+          "id": "multi-page-fixed-recovery-6"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "multi-read-4-updates",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 3,
+              "next": 4,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-4",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 4,
+                    "kind": "command.accepted",
+                    "payload": {
+                      "name": "counter.add"
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "multi-read-4"
+          },
+          "id": "multi-page-fixed-recovery-7"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "multi-read-5-updates.read",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 4,
+              "limit": 1
+            },
+            "requestid": "multi-read-5"
+          },
+          "id": "multi-page-fixed-recovery-8"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "multi-read-5-updates",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 4,
+              "next": 5,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-5",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 5,
+                    "kind": "application",
+                    "payload": {
+                      "name": "counter.changed",
+                      "data": {
+                        "value": 6
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "multi-read-5"
+          },
+          "id": "multi-page-fixed-recovery-9"
+        },
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "multi-read-6-updates.read",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.updates.read",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 5,
+              "limit": 1
+            },
+            "requestid": "multi-read-6"
+          },
+          "id": "multi-page-fixed-recovery-10"
+        },
+        {
+          "action": "receive",
+          "event": {
+            "specversion": "1.0",
+            "id": "multi-read-6-updates",
+            "source": "urn:example:host:one",
+            "type": "dasp.v1.updates",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "after": 5,
+              "next": 6,
+              "head": 7,
+              "events": [
+                {
+                  "specversion": "1.0",
+                  "id": "ws-saved-6",
+                  "source": "urn:example:host:one",
+                  "type": "dasp.v1.update",
+                  "datacontenttype": "application/json",
+                  "data": {
+                    "session_id": "session-counter",
+                    "command_id": "command-add-2",
+                    "sequence": 6,
+                    "kind": "command.outcome",
+                    "payload": {
+                      "status": "completed",
+                      "output": {
+                        "value": 6
+                      },
+                      "error": null
+                    }
+                  }
+                }
+              ]
+            },
+            "requestid": "multi-read-6"
+          },
+          "id": "multi-page-fixed-recovery-11"
+        }
+      ],
+      "expected": {
+        "cursor": 7,
+        "state": {
+          "value": 6
+        },
+        "applied": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "replayReads": 3,
+        "discardedReplies": 0,
+        "phase": "live",
+        "failedReplies": 0,
+        "target": 6,
+        "nextPush": 8
+      }
+    },
+    {
+      "id": "open-timeout-closes-connection",
+      "initial": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "head": 6
+      },
+      "steps": [
+        {
+          "action": "send",
+          "event": {
+            "specversion": "1.0",
+            "id": "reconnect-open-event",
+            "source": "urn:example:client:one",
+            "type": "dasp.v1.session.open",
+            "datacontenttype": "application/json",
+            "data": {
+              "session_id": "session-counter",
+              "actor_id": "counter-main",
+              "profile": {
+                "id": "urn:example:dasp:counter",
+                "version": "1"
+              }
+            },
+            "requestid": "reconnect-open"
+          },
+          "id": "open-timeout-closes-connection-1"
+        },
+        {
+          "action": "open-timeout",
+          "id": "open-timeout-closes-connection-2"
+        }
+      ],
+      "expected": {
+        "cursor": 3,
+        "state": {
+          "value": 3
+        },
+        "applied": [],
+        "replayReads": 0,
+        "discardedReplies": 0,
+        "failedReplies": 0,
+        "phase": "closed",
+        "target": null,
+        "nextPush": null
+      }
+    }
+  ],
+  "session": {
+    "session_id": "session-counter",
+    "actor_id": "counter-main",
+    "profile": {
+      "id": "urn:example:dasp:counter",
+      "version": "1"
+    }
+  }
+}

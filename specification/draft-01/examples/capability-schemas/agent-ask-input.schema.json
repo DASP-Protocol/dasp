@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:example:dasp:schema:agent-ask-input",
+  "title": "Agent ask input",
+  "x-example-annotation": "This annotation is not part of the JSON Schema vocabulary.",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string"
+    },
+    "budget": {
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01
+    },
+    "context": {
+      "$ref": "urn:example:dasp:schema:shared-context"
+    },
+    "outline": {
+      "$ref": "#/$defs/node"
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "node": {
+      "$id": "urn:example:dasp:schema:agent-ask-input:node",
+      "$dynamicAnchor": "node",
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$dynamicRef": "#node"
+          }
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

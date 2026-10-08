@@ -1,0 +1,402 @@
+[
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.list",
+    "kind": "request",
+    "start": "start:agent-42:request-1",
+    "actor": "actor:agent-42",
+    "limits": {
+      "page_items": 1,
+      "view_items": 1000,
+      "detail_items": 4,
+      "control_bytes": 65536,
+      "presentation_bytes": 8192,
+      "resource_bytes": 1048576,
+      "closure_resources": 16,
+      "closure_bytes": 4194304,
+      "opaque_bytes": 4096,
+      "live_snapshots": 2,
+      "snapshot_retention_ms": 300000
+    },
+    "advertised_view": {
+      "type": "urn:example:dasp:view:workspace",
+      "value": "workspace:example"
+    }
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.list",
+    "kind": "reply",
+    "actor": "actor:agent-42",
+    "profile": {
+      "uri": "urn:example:dasp:profile:agent",
+      "version": "1.0.0",
+      "content_ref": "urn:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "core": {
+        "id": "https://dasp-protocol.github.io/dasp/contracts/core",
+        "version": "draft-01",
+        "content_ref": "urn:sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    "snapshot": "snapshot:agent-42:1",
+    "resolved_view": "view:agent-42:workspace-example:1",
+    "page": "page:agent-42:1:1",
+    "summaries": [
+      {
+        "capability": {
+          "profile_uri": "urn:example:dasp:profile:agent",
+          "profile_version": "1.0.0",
+          "command": "agent.ask"
+        },
+        "profile_requirement": "required",
+        "label": "Ask",
+        "description": "Ask the actor one question."
+      }
+    ],
+    "complete": false,
+    "continuation": "continuation:agent-42:1:2"
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.list",
+    "kind": "request",
+    "continuation": "continuation:agent-42:1:2"
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.list",
+    "kind": "reply",
+    "actor": "actor:agent-42",
+    "profile": {
+      "uri": "urn:example:dasp:profile:agent",
+      "version": "1.0.0",
+      "content_ref": "urn:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "core": {
+        "id": "https://dasp-protocol.github.io/dasp/contracts/core",
+        "version": "draft-01",
+        "content_ref": "urn:sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    "snapshot": "snapshot:agent-42:1",
+    "resolved_view": "view:agent-42:workspace-example:1",
+    "page": "page:agent-42:1:2",
+    "summaries": [
+      {
+        "capability": {
+          "profile_uri": "urn:example:dasp:profile:agent",
+          "profile_version": "1.0.0",
+          "command": "agent.delegate"
+        },
+        "profile_requirement": "optional",
+        "label": "Delegate",
+        "description": "Delegate work to an independently discovered actor."
+      }
+    ],
+    "complete": true
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.get",
+    "kind": "request",
+    "snapshot": "snapshot:agent-42:1",
+    "capabilities": [
+      {
+        "profile_uri": "urn:example:dasp:profile:agent",
+        "profile_version": "1.0.0",
+        "command": "agent.delegate"
+      },
+      {
+        "profile_uri": "urn:example:dasp:profile:agent",
+        "profile_version": "1.0.0",
+        "command": "agent.ask"
+      }
+    ]
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.get",
+    "kind": "reply",
+    "profile": {
+      "uri": "urn:example:dasp:profile:agent",
+      "version": "1.0.0",
+      "content_ref": "urn:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "core": {
+        "id": "https://dasp-protocol.github.io/dasp/contracts/core",
+        "version": "draft-01",
+        "content_ref": "urn:sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    "snapshot": "snapshot:agent-42:1",
+    "resolved_view": "view:agent-42:workspace-example:1",
+    "details": [
+      {
+        "capability": {
+          "profile_uri": "urn:example:dasp:profile:agent",
+          "profile_version": "1.0.0",
+          "command": "agent.delegate"
+        },
+        "profile_requirement": "optional",
+        "label": "Delegate",
+        "description": "Delegate work to an independently discovered actor.",
+        "schemas": {
+          "input_root": "resource:agent-ask-input",
+          "output_root": "resource:allow-any",
+          "resources": [
+            {
+              "resource": "resource:agent-ask-input",
+              "media_type": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "schema_id": "urn:example:dasp:schema:agent-ask-input",
+              "byte_length": 1060,
+              "digest": {
+                "algorithm": "sha-256",
+                "media_type": "application/schema+json",
+                "value": "77d916f06cc29ab1ef60060c35a0eead931bf3c70662ee828f39bb9d49ba70c7"
+              }
+            },
+            {
+              "resource": "resource:allow-any",
+              "media_type": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "byte_length": 5,
+              "digest": {
+                "algorithm": "sha-256",
+                "media_type": "application/schema+json",
+                "value": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74"
+              }
+            },
+            {
+              "resource": "resource:shared-context",
+              "media_type": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "schema_id": "urn:example:dasp:schema:shared-context",
+              "byte_length": 281,
+              "digest": {
+                "algorithm": "sha-256",
+                "media_type": "application/schema+json",
+                "value": "37e31276538901791f9512ffdef195a7ec12aa64249af96c88296e0e25239e64"
+              }
+            }
+          ],
+          "vocabularies": [
+            {
+              "uri": "https://json-schema.org/draft/2020-12/vocab/core",
+              "required": true
+            },
+            {
+              "uri": "urn:example:dasp:vocabulary:agent-handoff",
+              "required": true
+            }
+          ],
+          "closed": true
+        }
+      },
+      {
+        "capability": {
+          "profile_uri": "urn:example:dasp:profile:agent",
+          "profile_version": "1.0.0",
+          "command": "agent.ask"
+        },
+        "profile_requirement": "required",
+        "label": "Ask",
+        "description": "Ask the actor one question.",
+        "schemas": {
+          "input_root": "resource:agent-ask-input",
+          "output_root": "resource:allow-any",
+          "resources": [
+            {
+              "resource": "resource:agent-ask-input",
+              "media_type": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "schema_id": "urn:example:dasp:schema:agent-ask-input",
+              "byte_length": 1060,
+              "digest": {
+                "algorithm": "sha-256",
+                "media_type": "application/schema+json",
+                "value": "77d916f06cc29ab1ef60060c35a0eead931bf3c70662ee828f39bb9d49ba70c7"
+              }
+            },
+            {
+              "resource": "resource:allow-any",
+              "media_type": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "byte_length": 5,
+              "digest": {
+                "algorithm": "sha-256",
+                "media_type": "application/schema+json",
+                "value": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74"
+              }
+            },
+            {
+              "resource": "resource:shared-context",
+              "media_type": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "schema_id": "urn:example:dasp:schema:shared-context",
+              "byte_length": 281,
+              "digest": {
+                "algorithm": "sha-256",
+                "media_type": "application/schema+json",
+                "value": "37e31276538901791f9512ffdef195a7ec12aa64249af96c88296e0e25239e64"
+              }
+            }
+          ],
+          "vocabularies": [
+            {
+              "uri": "https://json-schema.org/draft/2020-12/vocab/core",
+              "required": true
+            },
+            {
+              "uri": "urn:example:dasp:vocabulary:agent-handoff",
+              "required": true
+            }
+          ],
+          "closed": true
+        }
+      }
+    ]
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.resource.read",
+    "kind": "request",
+    "snapshot": "snapshot:agent-42:1",
+    "resource": "resource:agent-ask-input"
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.resource.read",
+    "kind": "reply",
+    "snapshot": "snapshot:agent-42:1",
+    "resource": {
+      "resource": "resource:agent-ask-input",
+      "media_type": "application/schema+json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "schema_id": "urn:example:dasp:schema:agent-ask-input",
+      "byte_length": 1060,
+      "digest": {
+        "algorithm": "sha-256",
+        "media_type": "application/schema+json",
+        "value": "77d916f06cc29ab1ef60060c35a0eead931bf3c70662ee828f39bb9d49ba70c7"
+      }
+    }
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.resource.read",
+    "kind": "request",
+    "snapshot": "snapshot:agent-42:1",
+    "resource": "resource:allow-any"
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.resource.read",
+    "kind": "reply",
+    "snapshot": "snapshot:agent-42:1",
+    "resource": {
+      "resource": "resource:allow-any",
+      "media_type": "application/schema+json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "byte_length": 5,
+      "digest": {
+        "algorithm": "sha-256",
+        "media_type": "application/schema+json",
+        "value": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74"
+      }
+    }
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.resource.read",
+    "kind": "request",
+    "snapshot": "snapshot:agent-42:1",
+    "resource": "resource:shared-context"
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.resource.read",
+    "kind": "reply",
+    "snapshot": "snapshot:agent-42:1",
+    "resource": {
+      "resource": "resource:shared-context",
+      "media_type": "application/schema+json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "schema_id": "urn:example:dasp:schema:shared-context",
+      "byte_length": 281,
+      "digest": {
+        "algorithm": "sha-256",
+        "media_type": "application/schema+json",
+        "value": "37e31276538901791f9512ffdef195a7ec12aa64249af96c88296e0e25239e64"
+      }
+    }
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.snapshot.release",
+    "kind": "request",
+    "snapshot": "snapshot:agent-42:1"
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.snapshot.release",
+    "kind": "reply",
+    "snapshot": "snapshot:agent-42:1",
+    "released": true
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.list",
+    "kind": "failure",
+    "code": "unavailable"
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.list",
+    "kind": "failure",
+    "code": "item_too_large",
+    "limit": {
+      "name": "control_bytes",
+      "maximum": 65536,
+      "actual": 70000
+    }
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.get",
+    "kind": "failure",
+    "code": "request_limit",
+    "limit": {
+      "name": "detail_items",
+      "maximum": 4,
+      "actual": 5
+    }
+  },
+  {
+    "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+    "version": "draft-01",
+    "operation": "capabilities.list",
+    "kind": "failure",
+    "code": "view_too_large",
+    "limit": {
+      "name": "view_items",
+      "maximum": 1000,
+      "actual": 1001
+    }
+  }
+]

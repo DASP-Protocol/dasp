@@ -1,0 +1,761 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dasp-protocol.github.io/dasp/schemas/draft-01/capability-discovery.schema.json",
+  "title": "DASP draft-01 capability-discovery control document",
+  "description": "Closed control documents for the optional capability-discovery setup contract. Exact schema resource bytes are transferred separately as application/schema+json.",
+  "type": "object",
+  "properties": {
+    "contract": {
+      "const": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery"
+    },
+    "version": {
+      "const": "draft-01"
+    },
+    "operation": {
+      "enum": [
+        "capabilities.list",
+        "capabilities.get",
+        "capabilities.resource.read",
+        "capabilities.snapshot.release"
+      ]
+    },
+    "kind": {
+      "enum": [
+        "request",
+        "reply",
+        "failure"
+      ]
+    }
+  },
+  "required": [
+    "contract",
+    "version",
+    "operation",
+    "kind"
+  ],
+  "oneOf": [
+    {
+      "$ref": "#/$defs/listStartRequest"
+    },
+    {
+      "$ref": "#/$defs/listContinuationRequest"
+    },
+    {
+      "$ref": "#/$defs/listReply"
+    },
+    {
+      "$ref": "#/$defs/getRequest"
+    },
+    {
+      "$ref": "#/$defs/getReply"
+    },
+    {
+      "$ref": "#/$defs/resourceReadRequest"
+    },
+    {
+      "$ref": "#/$defs/resourceReadReply"
+    },
+    {
+      "$ref": "#/$defs/snapshotReleaseRequest"
+    },
+    {
+      "$ref": "#/$defs/snapshotReleaseReply"
+    },
+    {
+      "$ref": "#/$defs/failure"
+    }
+  ],
+  "unevaluatedProperties": false,
+  "$defs": {
+    "opaque": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "identifier": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 4096
+    },
+    "versionValue": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "commandName": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+    },
+    "presentation": {
+      "type": "string",
+      "maxLength": 8192
+    },
+    "positiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "selectedLimits": {
+      "type": "object",
+      "properties": {
+        "page_items": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "view_items": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "detail_items": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "control_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "presentation_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "resource_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "closure_resources": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "closure_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "opaque_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "live_snapshots": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "snapshot_retention_ms": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      },
+      "required": [
+        "page_items",
+        "view_items",
+        "detail_items",
+        "control_bytes",
+        "presentation_bytes",
+        "resource_bytes",
+        "closure_resources",
+        "closure_bytes",
+        "opaque_bytes",
+        "live_snapshots",
+        "snapshot_retention_ms"
+      ],
+      "additionalProperties": false
+    },
+    "advertisedViewSelector": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/identifier"
+        },
+        "value": {
+          "$ref": "#/$defs/opaque"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "contractDescriptor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "version": {
+          "$ref": "#/$defs/versionValue"
+        },
+        "content_ref": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "content_ref"
+      ],
+      "additionalProperties": false
+    },
+    "actorProfile": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "$ref": "#/$defs/identifier"
+        },
+        "version": {
+          "$ref": "#/$defs/versionValue"
+        },
+        "content_ref": {
+          "$ref": "#/$defs/identifier"
+        },
+        "core": {
+          "$ref": "#/$defs/contractDescriptor"
+        }
+      },
+      "required": [
+        "uri",
+        "version",
+        "content_ref",
+        "core"
+      ],
+      "additionalProperties": false
+    },
+    "capabilityIdentity": {
+      "type": "object",
+      "properties": {
+        "profile_uri": {
+          "$ref": "#/$defs/identifier"
+        },
+        "profile_version": {
+          "$ref": "#/$defs/versionValue"
+        },
+        "command": {
+          "$ref": "#/$defs/commandName"
+        }
+      },
+      "required": [
+        "profile_uri",
+        "profile_version",
+        "command"
+      ],
+      "additionalProperties": false
+    },
+    "capabilitySummary": {
+      "type": "object",
+      "properties": {
+        "capability": {
+          "$ref": "#/$defs/capabilityIdentity"
+        },
+        "profile_requirement": {
+          "enum": [
+            "required",
+            "optional"
+          ]
+        },
+        "label": {
+          "$ref": "#/$defs/presentation"
+        },
+        "description": {
+          "$ref": "#/$defs/presentation"
+        }
+      },
+      "required": [
+        "capability",
+        "profile_requirement"
+      ],
+      "additionalProperties": false
+    },
+    "digest": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "const": "sha-256"
+        },
+        "media_type": {
+          "const": "application/schema+json"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "algorithm",
+        "media_type",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "resourceDescriptor": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "$ref": "#/$defs/opaque"
+        },
+        "media_type": {
+          "const": "application/schema+json"
+        },
+        "dialect": {
+          "$ref": "#/$defs/identifier"
+        },
+        "schema_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "byte_length": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "resource",
+        "media_type",
+        "dialect",
+        "byte_length"
+      ],
+      "additionalProperties": false
+    },
+    "vocabularyDescriptor": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "$ref": "#/$defs/identifier"
+        },
+        "required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "uri",
+        "required"
+      ],
+      "additionalProperties": false
+    },
+    "schemaManifest": {
+      "type": "object",
+      "properties": {
+        "input_root": {
+          "$ref": "#/$defs/opaque"
+        },
+        "output_root": {
+          "$ref": "#/$defs/opaque"
+        },
+        "resources": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/resourceDescriptor"
+          }
+        },
+        "vocabularies": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/vocabularyDescriptor"
+          }
+        },
+        "closed": {
+          "const": true
+        }
+      },
+      "required": [
+        "input_root",
+        "output_root",
+        "resources",
+        "vocabularies",
+        "closed"
+      ],
+      "additionalProperties": false
+    },
+    "capabilityDetail": {
+      "type": "object",
+      "properties": {
+        "capability": {
+          "$ref": "#/$defs/capabilityIdentity"
+        },
+        "profile_requirement": {
+          "enum": [
+            "required",
+            "optional"
+          ]
+        },
+        "label": {
+          "$ref": "#/$defs/presentation"
+        },
+        "description": {
+          "$ref": "#/$defs/presentation"
+        },
+        "schemas": {
+          "$ref": "#/$defs/schemaManifest"
+        }
+      },
+      "required": [
+        "capability",
+        "profile_requirement",
+        "schemas"
+      ],
+      "additionalProperties": false
+    },
+    "limitDetail": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "enum": [
+            "page_items",
+            "view_items",
+            "detail_items",
+            "control_bytes",
+            "presentation_bytes",
+            "resource_bytes",
+            "closure_resources",
+            "closure_bytes",
+            "opaque_bytes",
+            "live_snapshots",
+            "snapshot_retention_ms"
+          ]
+        },
+        "maximum": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "actual": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "name",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "listStartRequest": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "capabilities.list"
+        },
+        "kind": {
+          "const": "request"
+        },
+        "start": {
+          "$ref": "#/$defs/opaque"
+        },
+        "actor": {
+          "$ref": "#/$defs/opaque"
+        },
+        "limits": {
+          "$ref": "#/$defs/selectedLimits"
+        },
+        "advertised_view": {
+          "$ref": "#/$defs/advertisedViewSelector"
+        }
+      },
+      "required": [
+        "start",
+        "actor",
+        "limits"
+      ]
+    },
+    "listContinuationRequest": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "capabilities.list"
+        },
+        "kind": {
+          "const": "request"
+        },
+        "continuation": {
+          "$ref": "#/$defs/opaque"
+        }
+      },
+      "required": [
+        "continuation"
+      ]
+    },
+    "listReply": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "capabilities.list"
+        },
+        "kind": {
+          "const": "reply"
+        },
+        "actor": {
+          "$ref": "#/$defs/opaque"
+        },
+        "profile": {
+          "$ref": "#/$defs/actorProfile"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/opaque"
+        },
+        "resolved_view": {
+          "$ref": "#/$defs/opaque"
+        },
+        "page": {
+          "$ref": "#/$defs/opaque"
+        },
+        "summaries": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/capabilitySummary"
+          }
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "continuation": {
+          "$ref": "#/$defs/opaque"
+        }
+      },
+      "required": [
+        "actor",
+        "profile",
+        "snapshot",
+        "resolved_view",
+        "page",
+        "summaries",
+        "complete"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            },
+            "required": [
+              "complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "continuation": false
+            }
+          },
+          "else": {
+            "properties": {
+              "continuation": {
+                "$ref": "#/$defs/opaque"
+              },
+              "summaries": {
+                "type": "array",
+                "minItems": 1
+              }
+            },
+            "required": [
+              "continuation"
+            ]
+          }
+        }
+      ]
+    },
+    "getRequest": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "capabilities.get"
+        },
+        "kind": {
+          "const": "request"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/opaque"
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/capabilityIdentity"
+          }
+        }
+      },
+      "required": [
+        "snapshot",
+        "capabilities"
+      ]
+    },
+    "getReply": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "capabilities.get"
+        },
+        "kind": {
+          "const": "reply"
+        },
+        "profile": {
+          "$ref": "#/$defs/actorProfile"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/opaque"
+        },
+        "resolved_view": {
+          "$ref": "#/$defs/opaque"
+        },
+        "details": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/capabilityDetail"
+          }
+        }
+      },
+      "required": [
+        "profile",
+        "snapshot",
+        "resolved_view",
+        "details"
+      ]
+    },
+    "resourceReadRequest": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "capabilities.resource.read"
+        },
+        "kind": {
+          "const": "request"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/opaque"
+        },
+        "resource": {
+          "$ref": "#/$defs/opaque"
+        }
+      },
+      "required": [
+        "snapshot",
+        "resource"
+      ]
+    },
+    "resourceReadReply": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "capabilities.resource.read"
+        },
+        "kind": {
+          "const": "reply"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/opaque"
+        },
+        "resource": {
+          "$ref": "#/$defs/resourceDescriptor"
+        }
+      },
+      "required": [
+        "snapshot",
+        "resource"
+      ]
+    },
+    "snapshotReleaseRequest": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "capabilities.snapshot.release"
+        },
+        "kind": {
+          "const": "request"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/opaque"
+        }
+      },
+      "required": [
+        "snapshot"
+      ]
+    },
+    "snapshotReleaseReply": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "capabilities.snapshot.release"
+        },
+        "kind": {
+          "const": "reply"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/opaque"
+        },
+        "released": {
+          "const": true
+        }
+      },
+      "required": [
+        "snapshot",
+        "released"
+      ]
+    },
+    "failure": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "failure"
+        },
+        "code": {
+          "enum": [
+            "unsupported_contract",
+            "invalid_request",
+            "unavailable",
+            "invalid_continuation",
+            "stale_snapshot",
+            "request_limit",
+            "item_too_large",
+            "view_too_large",
+            "snapshot_capacity",
+            "resource_unavailable",
+            "contract_violation"
+          ]
+        },
+        "limit": {
+          "$ref": "#/$defs/limitDetail"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "unavailable"
+              }
+            },
+            "required": [
+              "code"
+            ]
+          },
+          "then": {
+            "properties": {
+              "limit": false
+            }
+          },
+          "else": true
+        },
+        {
+          "if": {
+            "properties": {
+              "limit": {}
+            },
+            "required": [
+              "limit"
+            ]
+          },
+          "then": {
+            "properties": {
+              "code": {
+                "enum": [
+                  "request_limit",
+                  "item_too_large",
+                  "view_too_large",
+                  "snapshot_capacity"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

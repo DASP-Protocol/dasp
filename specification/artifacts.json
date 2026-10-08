@@ -1,0 +1,23 @@
+{
+  "algorithm": "sha256",
+  "core": "draft-01",
+  "files": {
+    "specification/draft-01/envelope.schema.json": "3853369ad7c19c8298baeb4182a0b86b67ae21c29b63a94406f7e614791757bb",
+    "specification/draft-01/capability-discovery.schema.json": "2a12199cd16d73492ea0bb1cc7e7dac0f3fbc3cbcb0bb702df3fe24d07a8c22b",
+    "specification/draft-01/examples/capability-discovery.json": "d91cb0439c90c859df28996fd4bbaecef0660fc116e30c44d1555199b0cf6aef",
+    "specification/draft-01/examples/capability-schemas/agent-ask-input.schema.json": "77d916f06cc29ab1ef60060c35a0eead931bf3c70662ee828f39bb9d49ba70c7",
+    "specification/draft-01/examples/capability-schemas/allow-any.schema.json": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+    "specification/draft-01/examples/capability-schemas/shared-context.schema.json": "37e31276538901791f9512ffdef195a7ec12aa64249af96c88296e0e25239e64",
+    "conformance/fixtures/capability-discovery.json": "52d22f160747d154a1cd155c550141f536bb1701a92ccdda49c478ad2ba6da92",
+    "specification/draft-01/examples/counter-profile.schema.json": "61a616e55cc3543425b87cec23d9e5e90d73629058f097d6e9ce7b140320f610",
+    "specification/draft-01/examples/counter.json": "824f0087902f30af47798b731befda7369bf98c2fc5df919574a8b6b46c4c55c",
+    "conformance/fixtures/websocket-delivery-traces.json": "2e7c27d97fcc1da5cd51e165a6060574d3a8ee720145fa67f29d2afa83cfdb8a",
+    "specification/draft-01/bindings/encrypted-carrier.schema.json": "d72acb7e1f59acdab4b9691b624e00dafc456385012362e70c6bb9746f8fe0e1",
+    "conformance/fixtures/encrypted-carriers.json": "9c7a085b7ad9d0ab1a97d884fb53688e1f8ae57a173992554853227ba0cb03cb",
+    "conformance/fixtures/encrypted-header-vectors.json": "d57f4d35c3df798dbf5ec3451213e956f6c8093beabc0005c3769b9d91f45178",
+    "specification/draft-01/bindings/authority-grant.schema.json": "114179c59addb180bc22a6f5b7b56eee1322ef1082205b62cbe7a9d4d48cabaf",
+    "specification/draft-01/examples/counter-authority.schema.json": "e68e254255f5acfaff36f9313f3084d88ba7147566148bb8c28f2e3f4b1d6867",
+    "conformance/fixtures/authority-grants.json": "d90b3917ec46cbbf99472cfc58e74653d2f9c84ee14da6503f3490e67a0dfd9f",
+    "conformance/fixtures/authority-traces.json": "e38ea15c9db4774cfb296b0775c0bf51560081fa5456e49acaa0abce8a22f7e2"
+  }
+}

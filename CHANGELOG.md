@@ -1,0 +1,37 @@
+# Changes
+
+## Draft review changes
+
+- Change CloudEvents types from `dasp.<operation>.v1` to `dasp.v1.<operation>`. This is a breaking draft change. Update clients and hosts together; the old names are not aliases. Refresh schema and example digests for these revised draft artifacts.
+- Add an interactive command trace with sequence diagrams and full message JSON.
+
+
+## Unreleased — review preparation
+
+- Synchronize the documentation site with capability discovery, full JSON
+  Schema resources, and extension boundaries. Add a progressive
+  discovery guide, update the builder paths and evidence index, and add
+  publication checks for protocol-page and artifact coverage.
+- Add an optional capability-discovery setup contract. It reveals one actor's
+  immutable profile and a complete advertised command view through bounded
+  summaries, selective details, and exact JSON Schema resources. Add shared
+  artifacts and experimental client helpers without adding core message
+  types. The selected `view_items` limit bounds the complete advertised view.
+  Artifact checks do not establish binding interoperability.
+- Define WebSocket live delivery through session open, fixed-boundary replay, resync, and connection-close stop. Add matching recovery and duplex dispatch code to both clients.
+- Add optional encrypted-delivery rules and reusable proof-of-authority grants to the draft. Preserve core message shapes, retry equality, and saved history. Record incomplete setup and security evidence as release requirements.
+- Add a protocol capability overview that connects the core, binding contracts, clients, and conformance evidence.
+- Base the Elixir client on Jido Signal 2.3. Return signals from client calls and pass signals to profile validators and reducers. Preserve the DASP wire format with an explicit codec.
+- Keep TypeScript's Node type definitions on the minimum supported Node 22 version.
+
+- Add experimental Elixir and TypeScript client packages for draft-01 with transport adapters, strict decoding, reply checks, and checkpoint recovery.
+- Test both packages against shared draft vectors and recorded recovery cases. Check standalone archive installation.
+- Add client CI across supported runtimes and weekly Dependabot updates for npm, Mix, and GitHub Actions.
+- Add package usage guides and recorded adapter examples.
+- Define DASP through a guide, builder paths, normative core, conformance coverage, and technical reference.
+- Keep public project content separate from local research and tools.
+- Add recorded recovery examples, reusable negative vectors, requirement references, and runtime case definitions.
+- Add source and built-site publication checks and local release bundle preparation.
+- Preserve the existing draft-01 schema and example bytes.
+
+No host, client, or transport interoperability release is claimed.

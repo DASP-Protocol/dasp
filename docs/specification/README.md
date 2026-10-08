@@ -1,0 +1,66 @@
+# Scope and versions
+
+**Status: draft-01. Working review draft; not a released interoperability contract.**
+
+Start with the [protocol capabilities](capabilities.md) for a combined view of the core, live delivery, encryption, authority, and clients. Use this section to implement the contract. For an explanation with messages, start with [Follow a command](../build/walkthrough.md).
+
+## Scope and authority
+
+The capability-discovery contract, model, envelope, message definitions, recovery rules, profile and binding requirements, extension requirements, and security/version rules are normative for this draft. Capability discovery applies only when its exact setup contract and binding mapping are selected. The live-delivery and optional encryption and authority requirements apply when their contracts are selected. A selected extension is mandatory in its scope. Saved session protection requirements continue across connections. The designated [JSON Schema](../../specification/draft-01/envelope.schema.json) defines structural constraints. Prose defines behavior and cross-message rules. Both must agree; a conflict is a specification defect.
+
+Guides, diagrams, examples, and design questions are informative. A proposal does not add a core operation. Tests provide evidence only for the cases they execute; they cannot override a requirement.
+
+The core requires no chat interface, actor runtime, storage engine, or programming language. Profiles provide application meaning. Bindings provide transport behavior. No production binding, profile, host, or DASP client is released.
+
+## Conventions
+
+Uppercase requirement terms, including MUST, MUST NOT, SHOULD, and MAY, use the meanings in BCP 14, [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119.html) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174.html). Lowercase words have their ordinary meanings.
+
+Each normative section has a stable requirement or requirement-group ID. A group identifies all constraints in that section, including its field tables. The [coverage index](../../conformance/README.md) links those IDs to executed artifact checks and planned runtime cases. An ID alone does not imply that a runtime test exists.
+
+## Layers
+
+| Layer | Responsibility |
+| --- | --- |
+| CloudEvents 1.0 | Event identity, source, type, and metadata |
+| Capability-discovery setup subprotocol | Reveals one actor profile and a bounded advertised command view before profile confirmation |
+| DASP core | Sessions, commands, admission, updates, outcomes, views, and recovery |
+| Application profile | Inputs, outputs, state, completion, concurrency, and domain rules |
+| Transport binding | Selection, authentication, connection, routing, and delivery |
+| DASP extension | Additional selected behavior, dependencies, protection, and recovery requirements |
+| Implementation | Runtime, storage, scheduling, and execution |
+
+DASP uses [CloudEvents 1.0.2](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md) and its [JSON event format](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/json-format.md). The wire value of `specversion` is `"1.0"`. CloudEvents does not supply DASP's retry, ordering, or durability rules.
+
+## Read the contract
+
+1. [Capability discovery](capability-discovery.md)
+2. [Model and lifecycle](model.md)
+3. [CloudEvents envelope](cloudevents.md)
+4. [Message shapes](messages.md)
+5. [Admission and recovery](recovery.md)
+6. [Profiles and bindings](profiles-and-bindings.md)
+7. [Extension contracts](extensions.md)
+8. [Security and versions](security-and-versioning.md)
+
+Capability discovery occurs after selection and authentication of its exact
+binding mapping. Normal core and extension selection, actor profile
+confirmation, and `session.open` occur after discovery. A client with exact
+configured actor-profile knowledge can omit discovery only under its explicit
+local policy.
+
+Then inspect the [counter example](example.md) and [conformance coverage](../../conformance/README.md). Use the source commit with `draft-01` when citing this evolving draft. See [release preparation](../project/releases.md) for fixed-artifact packaging.
+
+## First WebSocket delivery contract
+
+[WebSocket live delivery](websocket-live-delivery.md) defines subscriptions through session open, fixed-boundary replay, resync, and connection-close stop. It adds no core operation or field. The minimum binding uses a configured secure endpoint, trusted host identity, and one exact contract selection. Normal operation needs no periodic history polling. The minimum binding has no [capability-discovery](capability-discovery.md) mapping. A later exact mapping can add that optional setup contract without changing the core. A complete production binding still needs exact authenticated setup, shared limit fields and values, health checks and deadlines, and runtime conformance evidence.
+
+## Optional binding rules
+
+[Encrypted CloudEvent delivery](payload-encryption.md) defines optional carrier, key, and recovery rules within the unreleased draft. Issue #5 tracks the work needed for a complete binding. These rules do not change the core message set. Its accepted design scope permits the executing host to read payloads, requires recovery history or attachment refusal, accepts the static reader-key compromise limit, and uses configured trusted keys and the defined setup phases. Exact setup, shared limits, health checks, and independent security evidence remain incomplete. The requirement index records artifact evidence and unexecuted runtime cases without claiming a complete interoperable binding.
+
+[Proof of authority](proof-of-authority.md) defines reusable standing grants carried in a required, selected CloudEvents extension. It keeps profile input, core shapes, semantic retry equality, and encrypted carrier shapes unchanged. Each new admission records its grant use and optional budget charge. Equal authorized retries remain recovery of saved intent. The signed artifacts and recorded decisions do not establish a secure complete binding or a durable host.
+
+## Conformance
+
+Read [what is tested](../../conformance/README.md), [run the checks](../../conformance/running-checks.md), and inspect the [runtime test cases](../../conformance/behavioral-cases.md). Passing the artifact suite alone does not establish host conformance.

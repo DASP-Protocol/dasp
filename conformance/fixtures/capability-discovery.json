@@ -1,0 +1,227 @@
+{
+  "contract": "https://dasp-protocol.github.io/dasp/contracts/capability-discovery",
+  "version": "draft-01",
+  "status": "recorded-artifact-only",
+  "encoding": "UTF-8 compact JSON with the property order produced by the shared fixture template",
+  "actor": "actor:scale",
+  "profile": {
+    "uri": "urn:example:dasp:profile:scale",
+    "version": "1.0.0",
+    "content_ref": "urn:sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "core": {
+      "id": "https://dasp-protocol.github.io/dasp/contracts/core",
+      "version": "draft-01",
+      "content_ref": "urn:sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  },
+  "catalog": {
+    "summary_count": 1000,
+    "command_prefix": "command.",
+    "command_width": 4,
+    "optional_every": 10,
+    "required_count": 900,
+    "optional_count": 100,
+    "resolved_view": "view:scale:all",
+    "snapshot": "snapshot:scale:0001"
+  },
+  "paging": {
+    "item_bound": {
+      "page_items": 100,
+      "view_items": 1000,
+      "control_bytes": 1048576,
+      "expected_pages": 10,
+      "expected_nonterminal_pages": 9,
+      "expected_nonterminal_page_bytes": 15487,
+      "expected_terminal_page_bytes": 15440
+    },
+    "byte_bound": {
+      "page_items": 100,
+      "view_items": 1000,
+      "control_bytes": 6163,
+      "expected_page_items": 37,
+      "expected_pages": 28,
+      "expected_nonterminal_pages": 27,
+      "expected_terminal_items": 1,
+      "expected_nonterminal_page_bytes": 6163,
+      "expected_terminal_page_bytes": 788,
+      "rejected_candidate_items": 38,
+      "rejected_candidate_bytes": 6311
+    }
+  },
+  "selective_details": {
+    "selected_commands": [
+      "command.0000",
+      "command.0001",
+      "command.0002",
+      "command.0003",
+      "command.0004",
+      "command.0005",
+      "command.0006",
+      "command.0007",
+      "command.0008",
+      "command.0009"
+    ],
+    "batch_items": 4,
+    "expected_request_count": 3,
+    "expected_batch_sizes": [4, 4, 2],
+    "shared_resources": [
+      "resource:agent-ask-input",
+      "resource:allow-any",
+      "resource:shared-context"
+    ],
+    "expected_unique_resource_reads": 3,
+    "expected_unselected_resource_reads": 0
+  },
+  "operation_counts": {
+    "item_bound_list_requests": 10,
+    "byte_bound_list_requests": 28,
+    "selected_detail_requests": 3,
+    "unique_resource_reads": 3,
+    "unselected_resource_reads": 0,
+    "release_requests": 1
+  },
+  "idempotency": {
+    "start": "start:scale:0001",
+    "repeated_start_count": 100,
+    "expected_unique_snapshots": 1,
+    "expected_unique_first_pages": 1
+  },
+  "snapshot_capacity": {
+    "live_snapshot_limit": 2,
+    "start_sequence": ["start:capacity:a", "start:capacity:b", "start:capacity:c"],
+    "expected_sequence": ["snapshot:capacity:a", "snapshot:capacity:b", "snapshot_capacity"],
+    "release": "snapshot:capacity:a",
+    "expected_after_release": "snapshot:capacity:c"
+  },
+  "resource_stream": {
+    "resource": "resource:agent-ask-input",
+    "trusted_fixture_file": "specification/draft-01/examples/capability-schemas/agent-ask-input.schema.json",
+    "media_type": "application/schema+json",
+    "byte_length": 1060,
+    "chunk_bytes": [256, 256, 256, 256, 36],
+    "digest": {
+      "algorithm": "sha-256",
+      "value": "77d916f06cc29ab1ef60060c35a0eead931bf3c70662ee828f39bb9d49ba70c7"
+    }
+  },
+  "ownership": {
+    "profile_universe": [
+      {"command": "base.read", "requirement": "required"},
+      {"command": "vision.inspect", "requirement": "optional"}
+    ],
+    "actors": [
+      {
+        "actor": "actor:vision",
+        "effective": ["base.read", "vision.inspect"],
+        "advertised": ["base.read", "vision.inspect"]
+      },
+      {
+        "actor": "actor:text",
+        "effective": ["base.read"],
+        "advertised": ["base.read"]
+      }
+    ],
+    "forbidden_out_of_profile": "admin.secret"
+  },
+  "identity_cases": [
+    {"case": "valid-expired-same-context", "expected_failure": "stale_snapshot"},
+    {"case": "random", "expected_failure": "unavailable"},
+    {"case": "forged", "expected_failure": "unavailable"},
+    {"case": "cross-actor", "expected_failure": "unavailable"},
+    {"case": "cross-context", "expected_failure": "unavailable"},
+    {"case": "wrong-version", "expected_failure": "unavailable"}
+  ],
+  "flow_interruptions": {
+    "disclosure_contraction": {
+      "expected_failure": "unavailable",
+      "discard_incomplete_enumeration": true,
+      "replacement_snapshot_forbidden": true
+    },
+    "connection_loss": {
+      "old_identity_failure": "unavailable",
+      "new_enumeration_required": true,
+      "reuse_old_start_forbidden": true
+    }
+  },
+  "limit_failures": {
+    "view": {
+      "view_items": 999,
+      "actual_items": 1000,
+      "expected_failure": "view_too_large",
+      "expected_page_count": 0
+    },
+    "item": {
+      "summary_bytes": 8193,
+      "presentation_bytes": 8192,
+      "expected_failure": "item_too_large",
+      "empty_continuation_forbidden": true
+    },
+    "closure": {
+      "declared_bytes": 1346,
+      "closure_bytes": 1345,
+      "expected_failure": "item_too_large",
+      "expected_resource_reads": 0
+    },
+    "selector": {
+      "opaque_bytes": 4096,
+      "oversized_bytes": 4097,
+      "nested_value_forbidden": true,
+      "expected_actor_lookups": 0
+    }
+  },
+  "unsafe_resource_identities": [
+    "https://example.invalid/schema.json",
+    "file:///etc/passwd",
+    "../../private/schema.json",
+    "urn:example:module:execute-me"
+  ],
+  "profile_cases": {
+    "session_assertions": [
+      {"profile_uri": "urn:example:dasp:profile:scale", "profile_version": "1.0.0", "expected": "accepted"},
+      {"profile_uri": "urn:example:dasp:profile:scale", "profile_version": "2.0.0", "expected": "rejected-before-session"}
+    ],
+    "changed_content_ref": "urn:sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "changed_content_ref_expected": "compatibility-rejected-before-session",
+    "refresh_profile_drift_expected": "contract_violation",
+    "sessions": [
+      {"session": "session:scale:a", "history": "history:scale:a", "cursor": 3},
+      {"session": "session:scale:b", "history": "history:scale:b", "cursor": 7}
+    ]
+  },
+  "profile_interaction": {
+    "thread": {
+      "session": "session:scale:a",
+      "thread_id": "thread:one",
+      "command_ids": ["command-id:1", "command-id:2"],
+      "history": "history:scale:a",
+      "cursor_sequence": [4, 5]
+    },
+    "turns": [
+      {"command_id": "command-id:1", "turn_id": null, "meaning": "same-as-command"},
+      {"command_id": "command-id:2", "turn_id": "turn:user-pair:1", "meaning": "groups-two-commands"}
+    ],
+    "child_handoff": {
+      "parent_actor": "actor:scale",
+      "parent_session": "session:scale:a",
+      "parent_snapshot": "snapshot:scale:0001",
+      "child_actor": "actor:child",
+      "child_profile_uri": "urn:example:dasp:profile:child",
+      "child_profile_version": "1.0.0",
+      "child_session": "session:child:a",
+      "child_snapshot": "snapshot:child:0001",
+      "shared_authority": false,
+      "shared_history": false,
+      "shared_cursor": false
+    }
+  },
+  "untrusted_values": [
+    "</script><script>run()</script>",
+    "$(touch should-not-run)",
+    "file:///etc/passwd",
+    "https://example.invalid/fetch-me"
+  ],
+  "later_admission": {
+    "advertised_command": "command.0001",
+    "expected": "admission-rejected-without-discovery-violation"
+  }
+}

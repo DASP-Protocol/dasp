@@ -1,0 +1,125 @@
+{
+  "status": "private-fork draft-01; local client and queue tests; host and binding cases not executed",
+  "requirements": [
+    {
+      "id": "DASP-CONN-001",
+      "document": "docs/specification/connection-management.md",
+      "anchor": "dasp-conn-001",
+      "title": "Connection management: State and lifetime",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "clientTestFiles": [],
+      "clientCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-CONN-RECOVERY",
+        "RUN-CONN-SETUP"
+      ]
+    },
+    {
+      "id": "DASP-CONN-002",
+      "document": "docs/specification/connection-management.md",
+      "anchor": "dasp-conn-002",
+      "title": "Connection management: Session isolation and failure",
+      "evidence": "local-client-tests-only",
+      "artifactCases": [],
+      "clientTestFiles": [
+        "clients/typescript/test/management.test.mjs",
+        "clients/elixir/test/management_test.exs"
+      ],
+      "clientCases": [
+        "separate-dispatchers",
+        "session-scope"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-CONN-ISOLATION",
+        "RUN-CONN-BINDING"
+      ]
+    },
+    {
+      "id": "DASP-CONN-003",
+      "document": "docs/specification/connection-management.md",
+      "anchor": "dasp-conn-003",
+      "title": "Connection management: Bounded and fair output",
+      "evidence": "local-client-tests-only",
+      "artifactCases": [],
+      "clientTestFiles": [
+        "clients/typescript/test/management.test.mjs",
+        "clients/elixir/test/management_test.exs"
+      ],
+      "clientCases": [
+        "output-order",
+        "control-reserves",
+        "control-burst",
+        "session-bounds",
+        "progress-replacement",
+        "resync-discard",
+        "active-lease"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-CONN-OUTPUT",
+        "RUN-CONN-ISOLATION"
+      ]
+    },
+    {
+      "id": "DASP-CONN-004",
+      "document": "docs/specification/connection-management.md",
+      "anchor": "dasp-conn-004",
+      "title": "Connection management: Graceful drain",
+      "evidence": "local-client-tests-only",
+      "artifactCases": [],
+      "clientTestFiles": [
+        "clients/typescript/test/management.test.mjs",
+        "clients/elixir/test/management_test.exs"
+      ],
+      "clientCases": [
+        "drain-admission",
+        "fixed-deadline",
+        "lost-receipt-retry",
+        "ordered-close",
+        "invalid-deadline"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-CONN-DRAIN",
+        "RUN-CONN-RECOVERY"
+      ]
+    },
+    {
+      "id": "DASP-CONN-005",
+      "document": "docs/specification/connection-management.md",
+      "anchor": "dasp-conn-005",
+      "title": "Connection management: Fresh setup and early data",
+      "evidence": "local-client-tests-only",
+      "artifactCases": [],
+      "clientTestFiles": [
+        "clients/typescript/test/management.test.mjs",
+        "clients/elixir/test/management_test.exs"
+      ],
+      "clientCases": [
+        "driver-readiness"
+      ],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-CONN-SETUP"
+      ]
+    },
+    {
+      "id": "DASP-CONN-006",
+      "document": "docs/specification/connection-management.md",
+      "anchor": "dasp-conn-006",
+      "title": "Connection management: Transport evolution and remaining work",
+      "evidence": "not-executed",
+      "artifactCases": [],
+      "clientTestFiles": [],
+      "clientCases": [],
+      "runtime": "not-executed",
+      "runtimeCases": [
+        "RUN-CONN-RECOVERY",
+        "RUN-CONN-BINDING"
+      ]
+    }
+  ]
+}
