@@ -2,6 +2,8 @@
 
 DASP defines the contract between an actor host and its clients: commands, saved outcomes, and recovery across connections. Use it to connect an interface, tool, or test driver to the same durable actor session.
 
+[![DASP on StartupScores](https://startupscores.com/badge/dasp.svg?style=shield&v=combo&theme=dark)](https://startupscores.com/open-source/dasp)
+
 **Status: draft-01, a working review draft.** The core can change. Experimental Elixir and TypeScript client packages are available in this repository. No transport binding or production profile is released.
 
 The [Elixir client](clients/elixir/README.md) is built on [Jido Signal](https://github.com/agentjido/jido_signal). This is an implementation dependency; the DASP specification and TypeScript client remain independent of Jido.
